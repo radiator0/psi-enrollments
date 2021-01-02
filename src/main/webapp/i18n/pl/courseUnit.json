@@ -1,0 +1,28 @@
+{
+  "enrollmentsApp": {
+    "courseUnit": {
+      "home": {
+        "title": "Course Unit",
+        "createLabel": "Dodaj Course Unit",
+        "createOrEditLabel": "Dodaj lub edytuj: Course Unit",
+        "notFound": "No Course Units found"
+      },
+      "created": "Utworzono nowy obiekt typu Course Unit z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Course Unit z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Course Unit z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Course Unit {{ id }}?"
+      },
+      "detail": {
+        "title": "Course Unit"
+      },
+      "code": "Code",
+      "ects": "Ects",
+      "isGroupOfCourses": "Is Group Of Courses",
+      "isStream": "Is Stream",
+      "isSelectable": "Is Selectable",
+      "course": "Course",
+      "selectableModule": "Selectable Module"
+    }
+  }
+}

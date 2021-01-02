@@ -1,0 +1,26 @@
+{
+  "enrollmentsApp": {
+    "semester": {
+      "home": {
+        "title": "Semester",
+        "createLabel": "Dodaj Semester",
+        "createOrEditLabel": "Dodaj lub edytuj: Semester",
+        "notFound": "No Semesters found"
+      },
+      "created": "Utworzono nowy obiekt typu Semester z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Semester z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Semester z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Semester {{ id }}?"
+      },
+      "detail": {
+        "title": "Semester"
+      },
+      "number": "Number",
+      "semesterType": "Semester Type",
+      "startDate": "Start Date",
+      "enrollmentDate": "Enrollment Date",
+      "fieldOfStudy": "Field Of Study"
+    }
+  }
+}

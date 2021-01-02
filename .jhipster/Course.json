@@ -1,0 +1,79 @@
+{
+    "name": "Course",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "shortName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "code",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "ects",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "form",
+            "fieldType": "ClassType",
+            "fieldValues": "Project,Laboratory,Exercises,Seminar,Lecture",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "enrollmentDate",
+            "otherEntityRelationshipName": "course",
+            "relationshipName": "enrollmentDate"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "classGroup",
+            "otherEntityRelationshipName": "course",
+            "relationshipName": "classGroup"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "specialty",
+            "otherEntityRelationshipName": "course",
+            "relationshipName": "specialty",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "courseUnit",
+            "otherEntityRelationshipName": "course",
+            "relationshipName": "courseUnit",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20210102225851",
+    "entityTableName": "course",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

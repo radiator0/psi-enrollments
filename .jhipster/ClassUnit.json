@@ -1,0 +1,43 @@
+{
+    "name": "ClassUnit",
+    "fields": [
+        {
+            "fieldName": "day",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "startTime",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "endTime",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "classGroup",
+            "otherEntityRelationshipName": "classUnit",
+            "relationshipName": "classGroup",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "room",
+            "otherEntityRelationshipName": "classUnit",
+            "relationshipName": "room",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20210102225901",
+    "entityTableName": "class_unit",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

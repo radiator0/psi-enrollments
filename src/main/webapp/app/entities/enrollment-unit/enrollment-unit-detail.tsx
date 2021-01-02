@@ -1,0 +1,81 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col } from 'reactstrap';
+import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './enrollment-unit.reducer';
+import { IEnrollmentUnit } from 'app/shared/model/enrollment-unit.model';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+
+export interface IEnrollmentUnitDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+
+export class EnrollmentUnitDetail extends React.Component<IEnrollmentUnitDetailProps> {
+  componentDidMount() {
+    this.props.getEntity(this.props.match.params.id);
+  }
+
+  render() {
+    const { enrollmentUnitEntity } = this.props;
+    return (
+      <Row>
+        <Col md="8">
+          <h2>
+            <Translate contentKey="enrollmentsApp.enrollmentUnit.detail.title">EnrollmentUnit</Translate> [<b>{enrollmentUnitEntity.id}</b>]
+          </h2>
+          <dl className="jh-entity-details">
+            <dt>
+              <span id="startDate">
+                <Translate contentKey="enrollmentsApp.enrollmentUnit.startDate">Start Date</Translate>
+              </span>
+            </dt>
+            <dd>
+              <TextFormat value={enrollmentUnitEntity.startDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
+            <dt>
+              <span id="endDate">
+                <Translate contentKey="enrollmentsApp.enrollmentUnit.endDate">End Date</Translate>
+              </span>
+            </dt>
+            <dd>
+              <TextFormat value={enrollmentUnitEntity.endDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
+            <dt>
+              <Translate contentKey="enrollmentsApp.enrollmentUnit.enrollmentDate">Enrollment Date</Translate>
+            </dt>
+            <dd>{enrollmentUnitEntity.enrollmentDateId ? enrollmentUnitEntity.enrollmentDateId : ''}</dd>
+          </dl>
+          <Button tag={Link} to="/entity/enrollment-unit" replace color="info">
+            <FontAwesomeIcon icon="arrow-left" />{' '}
+            <span className="d-none d-md-inline">
+              <Translate contentKey="entity.action.back">Back</Translate>
+            </span>
+          </Button>
+          &nbsp;
+          <Button tag={Link} to={`/entity/enrollment-unit/${enrollmentUnitEntity.id}/edit`} replace color="primary">
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
+            <span className="d-none d-md-inline">
+              <Translate contentKey="entity.action.edit">Edit</Translate>
+            </span>
+          </Button>
+        </Col>
+      </Row>
+    );
+  }
+}
+
+const mapStateToProps = ({ enrollmentUnit }: IRootState) => ({
+  enrollmentUnitEntity: enrollmentUnit.entity
+});
+
+const mapDispatchToProps = { getEntity };
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EnrollmentUnitDetail);

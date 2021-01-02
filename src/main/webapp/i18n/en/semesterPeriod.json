@@ -1,0 +1,10 @@
+{
+  "enrollmentsApp": {
+    "SemesterPeriod": {
+      "null": "",
+      "Whole": "Whole",
+      "FirstHalf": "FirstHalf",
+      "SecondHalf": "SecondHalf"
+    }
+  }
+}

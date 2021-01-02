@@ -1,0 +1,32 @@
+{
+  "enrollmentsApp": {
+    "classGroup": {
+      "home": {
+        "title": "Class Group",
+        "createLabel": "Dodaj Class Group",
+        "createOrEditLabel": "Dodaj lub edytuj: Class Group",
+        "notFound": "No Class Groups found"
+      },
+      "created": "Utworzono nowy obiekt typu Class Group z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Class Group z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Class Group z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Class Group {{ id }}?"
+      },
+      "detail": {
+        "title": "Class Group"
+      },
+      "code": "Code",
+      "isEnrollmentAboveLimitAllowed": "Is Enrollment Above Limit Allowed",
+      "peopleLimit": "People Limit",
+      "enrolledCount": "Enrolled Count",
+      "isFull": "Is Full",
+      "request": "Request",
+      "enrollment": "Enrollment",
+      "classUnit": "Class Unit",
+      "classSchedule": "Class Schedule",
+      "course": "Course",
+      "lecturer": "Lecturer"
+    }
+  }
+}

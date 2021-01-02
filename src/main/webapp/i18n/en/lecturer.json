@@ -1,0 +1,27 @@
+{
+  "enrollmentsApp": {
+    "lecturer": {
+      "home": {
+        "title": "Lecturers",
+        "createLabel": "Create a new Lecturer",
+        "createOrEditLabel": "Create or edit a Lecturer",
+        "notFound": "No Lecturers found"
+      },
+      "created": "A new Lecturer is created with identifier {{ param }}",
+      "updated": "A Lecturer is updated with identifier {{ param }}",
+      "deleted": "A Lecturer is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Lecturer {{ id }}?"
+      },
+      "detail": {
+        "title": "Lecturer"
+      },
+      "firstName": "First Name",
+      "secondName": "Second Name",
+      "lastName": "Last Name",
+      "mail": "Mail",
+      "title": "Title",
+      "classGroup": "Class Group"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "enrollmentsApp": {
+    "StudyForm": {
+      "null": "",
+      "Stationary": "Stationary",
+      "NonStationary": "NonStationary"
+    }
+  }
+}

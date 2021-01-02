@@ -1,0 +1,65 @@
+{
+    "name": "StudyProgram",
+    "fields": [
+        {
+            "fieldName": "startYear",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "endYear",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "startingSemesterType",
+            "fieldType": "SemesterType",
+            "fieldValues": "Winter,Summer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "studyType",
+            "fieldType": "StudyType",
+            "fieldValues": "Engineering,Masters,Bachelor,Unified",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "studyForm",
+            "fieldType": "StudyForm",
+            "fieldValues": "Stationary,NonStationary",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "fieldOfStudy",
+            "otherEntityRelationshipName": "studyProgram",
+            "relationshipName": "fieldOfStudy"
+        }
+    ],
+    "changelogDate": "20210102225842",
+    "entityTableName": "study_program",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

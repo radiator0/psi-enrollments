@@ -1,0 +1,10 @@
+{
+  "enrollmentsApp": {
+    "WeekType": {
+      "null": "",
+      "All": "All",
+      "Even": "Even",
+      "Odd": "Odd"
+    }
+  }
+}

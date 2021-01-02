@@ -1,0 +1,25 @@
+{
+  "enrollmentsApp": {
+    "enrollmentRight": {
+      "home": {
+        "title": "Enrollment Right",
+        "createLabel": "Dodaj Enrollment Right",
+        "createOrEditLabel": "Dodaj lub edytuj: Enrollment Right",
+        "notFound": "No Enrollment Rights found"
+      },
+      "created": "Utworzono nowy obiekt typu Enrollment Right z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Enrollment Right z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Enrollment Right z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Enrollment Right {{ id }}?"
+      },
+      "detail": {
+        "title": "Enrollment Right"
+      },
+      "startDate": "Start Date",
+      "enrollmentDate": "Enrollment Date",
+      "specialty": "Specialty",
+      "student": "Student"
+    }
+  }
+}

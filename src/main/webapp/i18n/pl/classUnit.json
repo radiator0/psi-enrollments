@@ -1,0 +1,26 @@
+{
+  "enrollmentsApp": {
+    "classUnit": {
+      "home": {
+        "title": "Class Unit",
+        "createLabel": "Dodaj Class Unit",
+        "createOrEditLabel": "Dodaj lub edytuj: Class Unit",
+        "notFound": "No Class Units found"
+      },
+      "created": "Utworzono nowy obiekt typu Class Unit z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Class Unit z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Class Unit z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Class Unit {{ id }}?"
+      },
+      "detail": {
+        "title": "Class Unit"
+      },
+      "day": "Day",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "classGroup": "Class Group",
+      "room": "Room"
+    }
+  }
+}

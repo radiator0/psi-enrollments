@@ -1,0 +1,28 @@
+{
+  "enrollmentsApp": {
+    "classSchedule": {
+      "home": {
+        "title": "Class Schedules",
+        "createLabel": "Create a new Class Schedule",
+        "createOrEditLabel": "Create or edit a Class Schedule",
+        "notFound": "No Class Schedules found"
+      },
+      "created": "A new Class Schedule is created with identifier {{ param }}",
+      "updated": "A Class Schedule is updated with identifier {{ param }}",
+      "deleted": "A Class Schedule is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Class Schedule {{ id }}?"
+      },
+      "detail": {
+        "title": "Class Schedule"
+      },
+      "dayOfWeek": "Day Of Week",
+      "weekType": "Week Type",
+      "semesterPeriod": "Semester Period",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "classGroup": "Class Group",
+      "room": "Room"
+    }
+  }
+}

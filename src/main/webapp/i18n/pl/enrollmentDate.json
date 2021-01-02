@@ -1,0 +1,29 @@
+{
+  "enrollmentsApp": {
+    "enrollmentDate": {
+      "home": {
+        "title": "Enrollment Date",
+        "createLabel": "Dodaj Enrollment Date",
+        "createOrEditLabel": "Dodaj lub edytuj: Enrollment Date",
+        "notFound": "No Enrollment Dates found"
+      },
+      "created": "Utworzono nowy obiekt typu Enrollment Date z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Enrollment Date z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Enrollment Date z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Enrollment Date {{ id }}?"
+      },
+      "detail": {
+        "title": "Enrollment Date"
+      },
+      "name": "Name",
+      "isPreEnrollment": "Is Pre Enrollment",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "enrollmentUnit": "Enrollment Unit",
+      "enrollmentRight": "Enrollment Right",
+      "semester": "Semester",
+      "course": "Course"
+    }
+  }
+}

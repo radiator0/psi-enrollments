@@ -1,0 +1,26 @@
+{
+  "enrollmentsApp": {
+    "classUnit": {
+      "home": {
+        "title": "Class Units",
+        "createLabel": "Create a new Class Unit",
+        "createOrEditLabel": "Create or edit a Class Unit",
+        "notFound": "No Class Units found"
+      },
+      "created": "A new Class Unit is created with identifier {{ param }}",
+      "updated": "A Class Unit is updated with identifier {{ param }}",
+      "deleted": "A Class Unit is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Class Unit {{ id }}?"
+      },
+      "detail": {
+        "title": "Class Unit"
+      },
+      "day": "Day",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "classGroup": "Class Group",
+      "room": "Room"
+    }
+  }
+}

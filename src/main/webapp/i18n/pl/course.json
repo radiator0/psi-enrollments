@@ -1,0 +1,30 @@
+{
+  "enrollmentsApp": {
+    "course": {
+      "home": {
+        "title": "Course",
+        "createLabel": "Dodaj Course",
+        "createOrEditLabel": "Dodaj lub edytuj: Course",
+        "notFound": "No Courses found"
+      },
+      "created": "Utworzono nowy obiekt typu Course z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Course z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Course z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Course {{ id }}?"
+      },
+      "detail": {
+        "title": "Course"
+      },
+      "name": "Name",
+      "shortName": "Short Name",
+      "code": "Code",
+      "ects": "Ects",
+      "form": "Form",
+      "enrollmentDate": "Enrollment Date",
+      "classGroup": "Class Group",
+      "specialty": "Specialty",
+      "courseUnit": "Course Unit"
+    }
+  }
+}

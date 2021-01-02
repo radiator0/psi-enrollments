@@ -1,0 +1,25 @@
+{
+  "enrollmentsApp": {
+    "enrollmentRight": {
+      "home": {
+        "title": "Enrollment Rights",
+        "createLabel": "Create a new Enrollment Right",
+        "createOrEditLabel": "Create or edit a Enrollment Right",
+        "notFound": "No Enrollment Rights found"
+      },
+      "created": "A new Enrollment Right is created with identifier {{ param }}",
+      "updated": "A Enrollment Right is updated with identifier {{ param }}",
+      "deleted": "A Enrollment Right is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Enrollment Right {{ id }}?"
+      },
+      "detail": {
+        "title": "Enrollment Right"
+      },
+      "startDate": "Start Date",
+      "enrollmentDate": "Enrollment Date",
+      "specialty": "Specialty",
+      "student": "Student"
+    }
+  }
+}

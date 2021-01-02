@@ -1,0 +1,27 @@
+{
+  "enrollmentsApp": {
+    "studyProgram": {
+      "home": {
+        "title": "Study Program",
+        "createLabel": "Dodaj Study Program",
+        "createOrEditLabel": "Dodaj lub edytuj: Study Program",
+        "notFound": "No Study Programs found"
+      },
+      "created": "Utworzono nowy obiekt typu Study Program z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Study Program z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Study Program z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Study Program {{ id }}?"
+      },
+      "detail": {
+        "title": "Study Program"
+      },
+      "startYear": "Start Year",
+      "endYear": "End Year",
+      "startingSemesterType": "Starting Semester Type",
+      "studyType": "Study Type",
+      "studyForm": "Study Form",
+      "fieldOfStudy": "Field Of Study"
+    }
+  }
+}

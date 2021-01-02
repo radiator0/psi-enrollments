@@ -1,0 +1,94 @@
+{
+    "name": "ClassGroup",
+    "fields": [
+        {
+            "fieldName": "code",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "isEnrollmentAboveLimitAllowed",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "peopleLimit",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "enrolledCount",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "isFull",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "request",
+            "otherEntityRelationshipName": "classGroup",
+            "relationshipName": "request"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "enrollment",
+            "otherEntityRelationshipName": "classGroup",
+            "relationshipName": "enrollment"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "classUnit",
+            "otherEntityRelationshipName": "classGroup",
+            "relationshipName": "classUnit"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "classSchedule",
+            "otherEntityRelationshipName": "classGroup",
+            "relationshipName": "classSchedule"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "course",
+            "otherEntityRelationshipName": "classGroup",
+            "relationshipName": "course",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "lecturer",
+            "otherEntityRelationshipName": "classGroup",
+            "relationshipName": "lecturer",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20210102225852",
+    "entityTableName": "class_group",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

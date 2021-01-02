@@ -1,0 +1,71 @@
+{
+    "name": "EnrollmentDate",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "isPreEnrollment",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "enrollmentUnit",
+            "otherEntityRelationshipName": "enrollmentDate",
+            "relationshipName": "enrollmentUnit"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "enrollmentRight",
+            "otherEntityRelationshipName": "enrollmentDate",
+            "relationshipName": "enrollmentRight"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "semester",
+            "otherEntityRelationshipName": "enrollmentDate",
+            "relationshipName": "semester",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "course",
+            "otherEntityRelationshipName": "enrollmentDate",
+            "relationshipName": "course",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20210102225846",
+    "entityTableName": "enrollment_date",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

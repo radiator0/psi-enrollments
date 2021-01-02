@@ -1,0 +1,12 @@
+{
+  "enrollmentsApp": {
+    "ClassType": {
+      "null": "",
+      "Project": "Project",
+      "Laboratory": "Laboratory",
+      "Exercises": "Exercises",
+      "Seminar": "Seminar",
+      "Lecture": "Lecture"
+    }
+  }
+}

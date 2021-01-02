@@ -1,0 +1,95 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col } from 'reactstrap';
+import { Translate, ICrudGetAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './course-unit.reducer';
+import { ICourseUnit } from 'app/shared/model/course-unit.model';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+
+export interface ICourseUnitDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+
+export class CourseUnitDetail extends React.Component<ICourseUnitDetailProps> {
+  componentDidMount() {
+    this.props.getEntity(this.props.match.params.id);
+  }
+
+  render() {
+    const { courseUnitEntity } = this.props;
+    return (
+      <Row>
+        <Col md="8">
+          <h2>
+            <Translate contentKey="enrollmentsApp.courseUnit.detail.title">CourseUnit</Translate> [<b>{courseUnitEntity.id}</b>]
+          </h2>
+          <dl className="jh-entity-details">
+            <dt>
+              <span id="code">
+                <Translate contentKey="enrollmentsApp.courseUnit.code">Code</Translate>
+              </span>
+            </dt>
+            <dd>{courseUnitEntity.code}</dd>
+            <dt>
+              <span id="ects">
+                <Translate contentKey="enrollmentsApp.courseUnit.ects">Ects</Translate>
+              </span>
+            </dt>
+            <dd>{courseUnitEntity.ects}</dd>
+            <dt>
+              <span id="isGroupOfCourses">
+                <Translate contentKey="enrollmentsApp.courseUnit.isGroupOfCourses">Is Group Of Courses</Translate>
+              </span>
+            </dt>
+            <dd>{courseUnitEntity.isGroupOfCourses ? 'true' : 'false'}</dd>
+            <dt>
+              <span id="isStream">
+                <Translate contentKey="enrollmentsApp.courseUnit.isStream">Is Stream</Translate>
+              </span>
+            </dt>
+            <dd>{courseUnitEntity.isStream ? 'true' : 'false'}</dd>
+            <dt>
+              <span id="isSelectable">
+                <Translate contentKey="enrollmentsApp.courseUnit.isSelectable">Is Selectable</Translate>
+              </span>
+            </dt>
+            <dd>{courseUnitEntity.isSelectable ? 'true' : 'false'}</dd>
+            <dt>
+              <Translate contentKey="enrollmentsApp.courseUnit.selectableModule">Selectable Module</Translate>
+            </dt>
+            <dd>{courseUnitEntity.selectableModuleId ? courseUnitEntity.selectableModuleId : ''}</dd>
+          </dl>
+          <Button tag={Link} to="/entity/course-unit" replace color="info">
+            <FontAwesomeIcon icon="arrow-left" />{' '}
+            <span className="d-none d-md-inline">
+              <Translate contentKey="entity.action.back">Back</Translate>
+            </span>
+          </Button>
+          &nbsp;
+          <Button tag={Link} to={`/entity/course-unit/${courseUnitEntity.id}/edit`} replace color="primary">
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
+            <span className="d-none d-md-inline">
+              <Translate contentKey="entity.action.edit">Edit</Translate>
+            </span>
+          </Button>
+        </Col>
+      </Row>
+    );
+  }
+}
+
+const mapStateToProps = ({ courseUnit }: IRootState) => ({
+  courseUnitEntity: courseUnit.entity
+});
+
+const mapDispatchToProps = { getEntity };
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CourseUnitDetail);

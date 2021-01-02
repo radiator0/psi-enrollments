@@ -1,0 +1,25 @@
+{
+  "enrollmentsApp": {
+    "fieldOfStudy": {
+      "home": {
+        "title": "Field Of Studies",
+        "createLabel": "Create a new Field Of Study",
+        "createOrEditLabel": "Create or edit a Field Of Study",
+        "notFound": "No Field Of Studies found"
+      },
+      "created": "A new Field Of Study is created with identifier {{ param }}",
+      "updated": "A Field Of Study is updated with identifier {{ param }}",
+      "deleted": "A Field Of Study is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Field Of Study {{ id }}?"
+      },
+      "detail": {
+        "title": "Field Of Study"
+      },
+      "name": "Name",
+      "uniqueName": "Unique Name",
+      "semester": "Semester",
+      "studyProgram": "Study Program"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "enrollmentsApp": {
+    "fieldOfStudy": {
+      "home": {
+        "title": "Field Of Study",
+        "createLabel": "Dodaj Field Of Study",
+        "createOrEditLabel": "Dodaj lub edytuj: Field Of Study",
+        "notFound": "No Field Of Studies found"
+      },
+      "created": "Utworzono nowy obiekt typu Field Of Study z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Field Of Study z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Field Of Study z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Field Of Study {{ id }}?"
+      },
+      "detail": {
+        "title": "Field Of Study"
+      },
+      "name": "Name",
+      "uniqueName": "Unique Name",
+      "semester": "Semester",
+      "studyProgram": "Study Program"
+    }
+  }
+}

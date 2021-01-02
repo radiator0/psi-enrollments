@@ -1,0 +1,23 @@
+{
+  "enrollmentsApp": {
+    "selectableModule": {
+      "home": {
+        "title": "Selectable Modules",
+        "createLabel": "Create a new Selectable Module",
+        "createOrEditLabel": "Create or edit a Selectable Module",
+        "notFound": "No Selectable Modules found"
+      },
+      "created": "A new Selectable Module is created with identifier {{ param }}",
+      "updated": "A Selectable Module is updated with identifier {{ param }}",
+      "deleted": "A Selectable Module is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Selectable Module {{ id }}?"
+      },
+      "detail": {
+        "title": "Selectable Module"
+      },
+      "name": "Name",
+      "courseUnit": "Course Unit"
+    }
+  }
+}

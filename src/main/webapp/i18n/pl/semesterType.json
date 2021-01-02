@@ -1,0 +1,9 @@
+{
+  "enrollmentsApp": {
+    "SemesterType": {
+      "null": "",
+      "Winter": "Winter",
+      "Summer": "Summer"
+    }
+  }
+}

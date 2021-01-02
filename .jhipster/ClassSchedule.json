@@ -1,0 +1,63 @@
+{
+    "name": "ClassSchedule",
+    "fields": [
+        {
+            "fieldName": "dayOfWeek",
+            "fieldType": "DayOfWeek",
+            "fieldValues": "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "weekType",
+            "fieldType": "WeekType",
+            "fieldValues": "All,Even,Odd"
+        },
+        {
+            "fieldName": "semesterPeriod",
+            "fieldType": "SemesterPeriod",
+            "fieldValues": "Whole,FirstHalf,SecondHalf"
+        },
+        {
+            "fieldName": "startTime",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "endTime",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "classGroup",
+            "otherEntityRelationshipName": "classSchedule",
+            "relationshipName": "classGroup",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "room",
+            "otherEntityRelationshipName": "classSchedule",
+            "relationshipName": "room",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20210102225858",
+    "entityTableName": "class_schedule",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

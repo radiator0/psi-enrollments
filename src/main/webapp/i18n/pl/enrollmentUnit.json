@@ -1,0 +1,24 @@
+{
+  "enrollmentsApp": {
+    "enrollmentUnit": {
+      "home": {
+        "title": "Enrollment Unit",
+        "createLabel": "Dodaj Enrollment Unit",
+        "createOrEditLabel": "Dodaj lub edytuj: Enrollment Unit",
+        "notFound": "No Enrollment Units found"
+      },
+      "created": "Utworzono nowy obiekt typu Enrollment Unit z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Enrollment Unit z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Enrollment Unit z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Enrollment Unit {{ id }}?"
+      },
+      "detail": {
+        "title": "Enrollment Unit"
+      },
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "enrollmentDate": "Enrollment Date"
+    }
+  }
+}

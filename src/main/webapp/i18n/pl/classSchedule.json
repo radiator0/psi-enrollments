@@ -1,0 +1,28 @@
+{
+  "enrollmentsApp": {
+    "classSchedule": {
+      "home": {
+        "title": "Class Schedule",
+        "createLabel": "Dodaj Class Schedule",
+        "createOrEditLabel": "Dodaj lub edytuj: Class Schedule",
+        "notFound": "No Class Schedules found"
+      },
+      "created": "Utworzono nowy obiekt typu Class Schedule z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Class Schedule z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Class Schedule z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Class Schedule {{ id }}?"
+      },
+      "detail": {
+        "title": "Class Schedule"
+      },
+      "dayOfWeek": "Day Of Week",
+      "weekType": "Week Type",
+      "semesterPeriod": "Semester Period",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "classGroup": "Class Group",
+      "room": "Room"
+    }
+  }
+}

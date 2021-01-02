@@ -1,0 +1,43 @@
+{
+    "name": "Room",
+    "fields": [
+        {
+            "fieldName": "number",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "classSchedule",
+            "otherEntityRelationshipName": "room",
+            "relationshipName": "classSchedule"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "classUnit",
+            "otherEntityRelationshipName": "room",
+            "relationshipName": "classUnit"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "building",
+            "otherEntityRelationshipName": "room",
+            "relationshipName": "building",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20210102225900",
+    "entityTableName": "room",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}
