@@ -1,0 +1,216 @@
+
+
+enum SemesterType{
+	Winter,
+    Summer
+}
+
+enum StudyType{
+	Engineering,
+    Masters,
+    Bachelor,
+    Unified
+}
+
+enum StudyForm{
+	Stationary,
+    NonStationary
+}
+
+enum ClassType{
+	Project,
+    Laboratory,
+    Exercises,
+    Seminar,
+    Lecture
+}
+
+enum DayOfWeek {
+	Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday
+}
+
+enum WeekType {
+	All,
+    Even,
+    Odd
+}
+
+enum SemesterPeriod {
+	Whole,
+    FirstHalf,
+    SecondHalf
+}
+
+relationship OneToMany {
+	StudyProgram to FieldOfStudy,
+    FieldOfStudy to Semester,
+    Semester to EnrollmentDate,
+  	EnrollmentDate to EnrollmentUnit,
+    EnrollmentDate to EnrollmentRight,
+    Specialty to EnrollmentRight,
+    Course to EnrollmentDate,
+    CourseUnit to Course,
+    SelectableModule to CourseUnit,
+    Course to ClassGroup,
+    ClassGroup to Request,
+    Student to Request,
+    Student to EnrollmentRight,
+    Student to Enrollment,
+    ClassGroup to Enrollment,
+    Lecturer to ClassGroup,
+   	ClassGroup to ClassUnit,
+    ClassGroup to ClassSchedule,
+    Room to ClassSchedule,
+    Building to Room,
+    Room to ClassUnit
+}
+
+relationship OneToOne {
+    AppUser{internalUser} to User
+}
+
+relationship ManyToMany {
+	Course to Specialty
+}
+
+entity StudyProgram {
+    startYear Integer required min(0),
+    endYear Integer required min(0),
+    startingSemesterType SemesterType required,
+    studyType StudyType required,
+    studyForm StudyForm required
+}
+
+entity FieldOfStudy {
+    name String required,
+    uniqueName String unique required
+}
+
+entity Semester {
+    number Integer required min(0),
+    semesterType SemesterType required,
+    startDate LocalDate required
+}
+
+entity EnrollmentUnit {
+    startDate LocalDate required,
+    endDate LocalDate required
+}
+
+entity EnrollmentDate {
+    name String required,
+    isPreEnrollment Boolean required,
+    startDate LocalDate required,
+    endDate LocalDate required
+}
+
+entity EnrollmentRight {
+    startDate LocalDate required
+}
+
+entity Student {
+    firstName String required,
+    secondName String,
+    lastName String required,
+    mail String required,
+    title String
+}
+
+entity Request {
+    uuid UUID unique required,
+    date LocalDate required,
+    text String required,
+    isExamined Boolean required
+}
+
+entity Specialty {
+    name String required
+}
+
+entity Course {
+    name String required,
+    shortName String,
+    code String required,
+    ects Integer required min(0),
+    form ClassType required
+}
+
+entity ClassGroup {
+    code String required,
+    isEnrollmentAboveLimitAllowed Boolean required,
+    peopleLimit Integer required min(0),
+    enrolledCount Integer required min(0),
+    isFull Boolean required
+}
+
+entity Enrollment {
+    date LocalDate required,
+    isAdministrative Boolean required
+}
+
+entity Lecturer {
+	firstName String required,
+    secondName String,
+    lastName String required,
+    mail String required,
+    title String
+}
+
+@skipClient
+entity AppUser {
+    firstName String required,
+    secondName String,
+    lastName String required,
+    mail String required,
+    title String
+}
+
+entity CourseUnit {
+    code String,
+    ects Integer min(0),
+    isGroupOfCourses Boolean required,
+    isStream Boolean required,
+    isSelectable Boolean required
+}
+
+entity SelectableModule {
+    name String
+}
+
+entity ClassSchedule {
+    dayOfWeek DayOfWeek required,
+    weekType WeekType,
+    semesterPeriod SemesterPeriod,
+    startTime Instant required,
+    endTime Instant required
+}
+
+entity Building {
+    name String required,
+    place String required,
+    postcode String required,
+    street String required,
+    number String required,
+    longitude Double required,
+    latitude Double required
+}
+
+entity Room {
+    number String required
+}
+
+entity ClassUnit {
+    day LocalDate,
+    startTime Instant,
+    endTime Instant
+}
+
+service all with serviceClass except AppUser
+dto all with mapstruct except AppUser
+paginate ClassGroup, Request  with pagination
