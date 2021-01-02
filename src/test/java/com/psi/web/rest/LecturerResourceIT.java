@@ -36,21 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = EnrollmentsApp.class)
 public class LecturerResourceIT {
 
-    private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_SECOND_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_SECOND_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_MAIL = "AAAAAAAAAA";
-    private static final String UPDATED_MAIL = "BBBBBBBBBB";
-
-    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
-    private static final String UPDATED_TITLE = "BBBBBBBBBB";
-
     @Autowired
     private LecturerRepository lecturerRepository;
 
@@ -98,12 +83,7 @@ public class LecturerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Lecturer createEntity(EntityManager em) {
-        Lecturer lecturer = new Lecturer()
-            .firstName(DEFAULT_FIRST_NAME)
-            .secondName(DEFAULT_SECOND_NAME)
-            .lastName(DEFAULT_LAST_NAME)
-            .mail(DEFAULT_MAIL)
-            .title(DEFAULT_TITLE);
+        Lecturer lecturer = new Lecturer();
         return lecturer;
     }
     /**
@@ -113,12 +93,7 @@ public class LecturerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Lecturer createUpdatedEntity(EntityManager em) {
-        Lecturer lecturer = new Lecturer()
-            .firstName(UPDATED_FIRST_NAME)
-            .secondName(UPDATED_SECOND_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .mail(UPDATED_MAIL)
-            .title(UPDATED_TITLE);
+        Lecturer lecturer = new Lecturer();
         return lecturer;
     }
 
@@ -127,28 +102,6 @@ public class LecturerResourceIT {
         lecturer = createEntity(em);
     }
 
-    @Test
-    @Transactional
-    public void createLecturer() throws Exception {
-        int databaseSizeBeforeCreate = lecturerRepository.findAll().size();
-
-        // Create the Lecturer
-        LecturerDTO lecturerDTO = lecturerMapper.toDto(lecturer);
-        restLecturerMockMvc.perform(post("/api/lecturers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(lecturerDTO)))
-            .andExpect(status().isCreated());
-
-        // Validate the Lecturer in the database
-        List<Lecturer> lecturerList = lecturerRepository.findAll();
-        assertThat(lecturerList).hasSize(databaseSizeBeforeCreate + 1);
-        Lecturer testLecturer = lecturerList.get(lecturerList.size() - 1);
-        assertThat(testLecturer.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
-        assertThat(testLecturer.getSecondName()).isEqualTo(DEFAULT_SECOND_NAME);
-        assertThat(testLecturer.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
-        assertThat(testLecturer.getMail()).isEqualTo(DEFAULT_MAIL);
-        assertThat(testLecturer.getTitle()).isEqualTo(DEFAULT_TITLE);
-    }
 
     @Test
     @Transactional
@@ -237,15 +190,9 @@ public class LecturerResourceIT {
         // Get all the lecturerList
         restLecturerMockMvc.perform(get("/api/lecturers?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(lecturer.getId().intValue())))
-            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME)))
-            .andExpect(jsonPath("$.[*].secondName").value(hasItem(DEFAULT_SECOND_NAME)))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
-            .andExpect(jsonPath("$.[*].mail").value(hasItem(DEFAULT_MAIL)))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)));
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
-    
+
     @Test
     @Transactional
     public void getLecturer() throws Exception {
@@ -255,13 +202,7 @@ public class LecturerResourceIT {
         // Get the lecturer
         restLecturerMockMvc.perform(get("/api/lecturers/{id}", lecturer.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(lecturer.getId().intValue()))
-            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME))
-            .andExpect(jsonPath("$.secondName").value(DEFAULT_SECOND_NAME))
-            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
-            .andExpect(jsonPath("$.mail").value(DEFAULT_MAIL))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE));
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
 
     @Test
@@ -270,42 +211,6 @@ public class LecturerResourceIT {
         // Get the lecturer
         restLecturerMockMvc.perform(get("/api/lecturers/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
-    }
-
-    @Test
-    @Transactional
-    public void updateLecturer() throws Exception {
-        // Initialize the database
-        lecturerRepository.saveAndFlush(lecturer);
-
-        int databaseSizeBeforeUpdate = lecturerRepository.findAll().size();
-
-        // Update the lecturer
-        Lecturer updatedLecturer = lecturerRepository.findById(lecturer.getId()).get();
-        // Disconnect from session so that the updates on updatedLecturer are not directly saved in db
-        em.detach(updatedLecturer);
-        updatedLecturer
-            .firstName(UPDATED_FIRST_NAME)
-            .secondName(UPDATED_SECOND_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .mail(UPDATED_MAIL)
-            .title(UPDATED_TITLE);
-        LecturerDTO lecturerDTO = lecturerMapper.toDto(updatedLecturer);
-
-        restLecturerMockMvc.perform(put("/api/lecturers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(lecturerDTO)))
-            .andExpect(status().isOk());
-
-        // Validate the Lecturer in the database
-        List<Lecturer> lecturerList = lecturerRepository.findAll();
-        assertThat(lecturerList).hasSize(databaseSizeBeforeUpdate);
-        Lecturer testLecturer = lecturerList.get(lecturerList.size() - 1);
-        assertThat(testLecturer.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
-        assertThat(testLecturer.getSecondName()).isEqualTo(UPDATED_SECOND_NAME);
-        assertThat(testLecturer.getLastName()).isEqualTo(UPDATED_LAST_NAME);
-        assertThat(testLecturer.getMail()).isEqualTo(UPDATED_MAIL);
-        assertThat(testLecturer.getTitle()).isEqualTo(UPDATED_TITLE);
     }
 
     @Test

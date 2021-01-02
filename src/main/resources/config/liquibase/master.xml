@@ -27,7 +27,6 @@
     <include file="config/liquibase/changelog/20210102225852_added_entity_ClassGroup.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210102225853_added_entity_Enrollment.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210102225854_added_entity_Lecturer.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210102225855_added_entity_AppUser.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210102225856_added_entity_CourseUnit.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210102225857_added_entity_SelectableModule.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210102225858_added_entity_ClassSchedule.xml" relativeToChangelogFile="false"/>
@@ -44,7 +43,6 @@
     <include file="config/liquibase/changelog/20210102225851_added_entity_constraints_Course.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210102225852_added_entity_constraints_ClassGroup.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210102225853_added_entity_constraints_Enrollment.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210102225855_added_entity_constraints_AppUser.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210102225856_added_entity_constraints_CourseUnit.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210102225858_added_entity_constraints_ClassSchedule.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210102225900_added_entity_constraints_Room.xml" relativeToChangelogFile="false"/>

@@ -36,21 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = EnrollmentsApp.class)
 public class StudentResourceIT {
 
-    private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_SECOND_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_SECOND_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_MAIL = "AAAAAAAAAA";
-    private static final String UPDATED_MAIL = "BBBBBBBBBB";
-
-    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
-    private static final String UPDATED_TITLE = "BBBBBBBBBB";
-
     @Autowired
     private StudentRepository studentRepository;
 
@@ -98,12 +83,7 @@ public class StudentResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Student createEntity(EntityManager em) {
-        Student student = new Student()
-            .firstName(DEFAULT_FIRST_NAME)
-            .secondName(DEFAULT_SECOND_NAME)
-            .lastName(DEFAULT_LAST_NAME)
-            .mail(DEFAULT_MAIL)
-            .title(DEFAULT_TITLE);
+        Student student = new Student();
         return student;
     }
     /**
@@ -113,41 +93,13 @@ public class StudentResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Student createUpdatedEntity(EntityManager em) {
-        Student student = new Student()
-            .firstName(UPDATED_FIRST_NAME)
-            .secondName(UPDATED_SECOND_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .mail(UPDATED_MAIL)
-            .title(UPDATED_TITLE);
+        Student student = new Student();
         return student;
     }
 
     @BeforeEach
     public void initTest() {
         student = createEntity(em);
-    }
-
-    @Test
-    @Transactional
-    public void createStudent() throws Exception {
-        int databaseSizeBeforeCreate = studentRepository.findAll().size();
-
-        // Create the Student
-        StudentDTO studentDTO = studentMapper.toDto(student);
-        restStudentMockMvc.perform(post("/api/students")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
-            .andExpect(status().isCreated());
-
-        // Validate the Student in the database
-        List<Student> studentList = studentRepository.findAll();
-        assertThat(studentList).hasSize(databaseSizeBeforeCreate + 1);
-        Student testStudent = studentList.get(studentList.size() - 1);
-        assertThat(testStudent.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
-        assertThat(testStudent.getSecondName()).isEqualTo(DEFAULT_SECOND_NAME);
-        assertThat(testStudent.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
-        assertThat(testStudent.getMail()).isEqualTo(DEFAULT_MAIL);
-        assertThat(testStudent.getTitle()).isEqualTo(DEFAULT_TITLE);
     }
 
     @Test
@@ -236,16 +188,9 @@ public class StudentResourceIT {
 
         // Get all the studentList
         restStudentMockMvc.perform(get("/api/students?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(student.getId().intValue())))
-            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME)))
-            .andExpect(jsonPath("$.[*].secondName").value(hasItem(DEFAULT_SECOND_NAME)))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
-            .andExpect(jsonPath("$.[*].mail").value(hasItem(DEFAULT_MAIL)))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)));
+            .andExpect(status().isOk());
     }
-    
+
     @Test
     @Transactional
     public void getStudent() throws Exception {
@@ -254,14 +199,7 @@ public class StudentResourceIT {
 
         // Get the student
         restStudentMockMvc.perform(get("/api/students/{id}", student.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(student.getId().intValue()))
-            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME))
-            .andExpect(jsonPath("$.secondName").value(DEFAULT_SECOND_NAME))
-            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
-            .andExpect(jsonPath("$.mail").value(DEFAULT_MAIL))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE));
+            .andExpect(status().isOk());
     }
 
     @Test
@@ -270,42 +208,6 @@ public class StudentResourceIT {
         // Get the student
         restStudentMockMvc.perform(get("/api/students/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
-    }
-
-    @Test
-    @Transactional
-    public void updateStudent() throws Exception {
-        // Initialize the database
-        studentRepository.saveAndFlush(student);
-
-        int databaseSizeBeforeUpdate = studentRepository.findAll().size();
-
-        // Update the student
-        Student updatedStudent = studentRepository.findById(student.getId()).get();
-        // Disconnect from session so that the updates on updatedStudent are not directly saved in db
-        em.detach(updatedStudent);
-        updatedStudent
-            .firstName(UPDATED_FIRST_NAME)
-            .secondName(UPDATED_SECOND_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .mail(UPDATED_MAIL)
-            .title(UPDATED_TITLE);
-        StudentDTO studentDTO = studentMapper.toDto(updatedStudent);
-
-        restStudentMockMvc.perform(put("/api/students")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
-            .andExpect(status().isOk());
-
-        // Validate the Student in the database
-        List<Student> studentList = studentRepository.findAll();
-        assertThat(studentList).hasSize(databaseSizeBeforeUpdate);
-        Student testStudent = studentList.get(studentList.size() - 1);
-        assertThat(testStudent.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
-        assertThat(testStudent.getSecondName()).isEqualTo(UPDATED_SECOND_NAME);
-        assertThat(testStudent.getLastName()).isEqualTo(UPDATED_LAST_NAME);
-        assertThat(testStudent.getMail()).isEqualTo(UPDATED_MAIL);
-        assertThat(testStudent.getTitle()).isEqualTo(UPDATED_TITLE);
     }
 
     @Test

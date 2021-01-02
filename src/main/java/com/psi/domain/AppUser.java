@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "app_user")
-public class AppUser implements Serializable {
+public abstract class AppUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
