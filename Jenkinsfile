@@ -11,7 +11,7 @@ node {
     }
      
     stage('Test') {
-         sh 'npm test-ci'
+         sh 'npm run test-ci'
     }  
     
     stage('Packaging') {
