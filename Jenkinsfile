@@ -1,6 +1,6 @@
 node {
     stage('Cloning Git') {
-        git branch: ' origin/f/jenkins', url: 'https://github.com/radiator0/psi-enrollments.git'
+        checkout scm
     }
         
     stage('Install dependencies') {
