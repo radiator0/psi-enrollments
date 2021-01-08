@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@types/enzyme": "3.10.7",
-    "@types/jest-diff": "26.6.2",
+    "@types/jest-diff": "24.3.0",
     "@types/jest": "24.0.25",
     "@types/lodash": "4.14.123",
     "@types/node": "10.14.3",
