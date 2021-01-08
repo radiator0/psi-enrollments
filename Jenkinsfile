@@ -1,7 +1,7 @@
 node {
     env.NODEJS_HOME = "${tool 'node'}"
     env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"
-    env.NODE_ENV=test
+    env.NODE_ENV="test"
     
     stage('Cloning Git') {
         checkout scm
