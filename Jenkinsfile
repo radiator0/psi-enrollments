@@ -7,7 +7,7 @@ pipeline {
         
     stage('Cloning Git') {
       steps {
-        git branch: ' f/jenkins', url: 'https://github.com/radiator0/psi-enrollments.git'
+        git branch: ' origin/f/jenkins', url: 'https://github.com/radiator0/psi-enrollments.git'
       }
     }
         
