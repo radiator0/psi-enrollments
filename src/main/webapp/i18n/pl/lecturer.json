@@ -1,0 +1,27 @@
+{
+  "enrollmentsApp": {
+    "lecturer": {
+      "home": {
+        "title": "Lecturer",
+        "createLabel": "Dodaj Lecturer",
+        "createOrEditLabel": "Dodaj lub edytuj: Lecturer",
+        "notFound": "No Lecturers found"
+      },
+      "created": "Utworzono nowy obiekt typu Lecturer z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Lecturer z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Lecturer z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Lecturer {{ id }}?"
+      },
+      "detail": {
+        "title": "Lecturer"
+      },
+      "firstName": "First Name",
+      "secondName": "Second Name",
+      "lastName": "Last Name",
+      "mail": "Mail",
+      "title": "Title",
+      "classGroup": "Class Group"
+    }
+  }
+}

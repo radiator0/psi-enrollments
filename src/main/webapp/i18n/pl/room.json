@@ -1,0 +1,25 @@
+{
+  "enrollmentsApp": {
+    "room": {
+      "home": {
+        "title": "Room",
+        "createLabel": "Dodaj Room",
+        "createOrEditLabel": "Dodaj lub edytuj: Room",
+        "notFound": "No Rooms found"
+      },
+      "created": "Utworzono nowy obiekt typu Room z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Room z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Room z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Room {{ id }}?"
+      },
+      "detail": {
+        "title": "Room"
+      },
+      "number": "Number",
+      "classSchedule": "Class Schedule",
+      "classUnit": "Class Unit",
+      "building": "Building"
+    }
+  }
+}

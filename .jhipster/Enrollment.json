@@ -1,0 +1,42 @@
+{
+  "name": "Enrollment",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isAdministrative",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "student",
+      "otherEntityRelationshipName": "enrollment",
+      "relationshipName": "student",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "classGroup",
+      "otherEntityRelationshipName": "enrollment",
+      "relationshipName": "classGroup",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210112223037",
+  "entityTableName": "enrollment",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

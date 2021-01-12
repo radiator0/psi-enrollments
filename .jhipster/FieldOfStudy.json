@@ -1,0 +1,41 @@
+{
+  "name": "FieldOfStudy",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "uniqueName",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "semester",
+      "otherEntityRelationshipName": "fieldOfStudy",
+      "relationshipName": "semester"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "studyProgram",
+      "otherEntityRelationshipName": "fieldOfStudy",
+      "relationshipName": "studyProgram",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210112222037",
+  "entityTableName": "field_of_study",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

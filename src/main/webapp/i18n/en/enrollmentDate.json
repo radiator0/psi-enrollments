@@ -1,0 +1,29 @@
+{
+  "enrollmentsApp": {
+    "enrollmentDate": {
+      "home": {
+        "title": "Enrollment Dates",
+        "createLabel": "Create a new Enrollment Date",
+        "createOrEditLabel": "Create or edit a Enrollment Date",
+        "notFound": "No Enrollment Dates found"
+      },
+      "created": "A new Enrollment Date is created with identifier {{ param }}",
+      "updated": "A Enrollment Date is updated with identifier {{ param }}",
+      "deleted": "A Enrollment Date is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Enrollment Date {{ id }}?"
+      },
+      "detail": {
+        "title": "Enrollment Date"
+      },
+      "name": "Name",
+      "isPreEnrollment": "Is Pre Enrollment",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "enrollmentUnit": "Enrollment Unit",
+      "enrollmentRight": "Enrollment Right",
+      "semester": "Semester",
+      "course": "Course"
+    }
+  }
+}

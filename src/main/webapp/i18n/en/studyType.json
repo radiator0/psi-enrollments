@@ -1,0 +1,11 @@
+{
+  "enrollmentsApp": {
+    "StudyType": {
+      "null": "",
+      "Engineering": "Engineering",
+      "Masters": "Masters",
+      "Bachelor": "Bachelor",
+      "Unified": "Unified"
+    }
+  }
+}

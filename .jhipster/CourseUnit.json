@@ -1,0 +1,56 @@
+{
+  "name": "CourseUnit",
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ects",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isGroupOfCourses",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isStream",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isSelectable",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "course",
+      "otherEntityRelationshipName": "courseUnit",
+      "relationshipName": "course"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "selectableModule",
+      "otherEntityRelationshipName": "courseUnit",
+      "relationshipName": "selectableModule",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210112223337",
+  "entityTableName": "course_unit",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

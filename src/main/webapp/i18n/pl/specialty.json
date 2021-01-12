@@ -1,0 +1,24 @@
+{
+  "enrollmentsApp": {
+    "specialty": {
+      "home": {
+        "title": "Specialty",
+        "createLabel": "Dodaj Specialty",
+        "createOrEditLabel": "Dodaj lub edytuj: Specialty",
+        "notFound": "No Specialties found"
+      },
+      "created": "Utworzono nowy obiekt typu Specialty z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Specialty z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Specialty z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Specialty {{ id }}?"
+      },
+      "detail": {
+        "title": "Specialty"
+      },
+      "name": "Name",
+      "enrollmentRight": "Enrollment Right",
+      "course": "Course"
+    }
+  }
+}

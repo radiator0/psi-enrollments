@@ -1,0 +1,11 @@
+id;day_of_week;week_type;semester_period;start_time;end_time
+1;Wednesday;Odd;FirstHalf;2021-01-12T09:04:50;2021-01-12T07:48:57
+2;Sunday;All;Whole;2021-01-12T01:37:23;2021-01-12T10:04:21
+3;Sunday;Even;Whole;2021-01-12T02:24:48;2021-01-12T09:18:14
+4;Monday;All;SecondHalf;2021-01-12T17:42:40;2021-01-12T21:02:06
+5;Saturday;Even;Whole;2021-01-12T07:02:41;2021-01-12T22:26:28
+6;Friday;Even;Whole;2021-01-12T03:01:47;2021-01-12T11:47:50
+7;Saturday;Odd;SecondHalf;2021-01-12T06:44:29;2021-01-12T16:15:27
+8;Thursday;Odd;FirstHalf;2021-01-12T17:56:13;2021-01-12T20:27:19
+9;Saturday;Odd;SecondHalf;2021-01-12T10:33:36;2021-01-12T10:24:34
+10;Sunday;Even;FirstHalf;2021-01-12T00:37:20;2021-01-12T05:27:16

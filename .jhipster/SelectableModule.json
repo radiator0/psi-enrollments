@@ -1,0 +1,28 @@
+{
+  "name": "SelectableModule",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "courseUnit",
+      "otherEntityRelationshipName": "selectableModule",
+      "relationshipName": "courseUnit"
+    }
+  ],
+  "changelogDate": "20210112223437",
+  "entityTableName": "selectable_module",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

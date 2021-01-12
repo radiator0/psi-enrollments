@@ -1,0 +1,48 @@
+{
+  "name": "Semester",
+  "fields": [
+    {
+      "fieldName": "number",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "semesterType",
+      "fieldType": "SemesterType",
+      "fieldValues": "Winter,Summer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "enrollmentDate",
+      "otherEntityRelationshipName": "semester",
+      "relationshipName": "enrollmentDate"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "fieldOfStudy",
+      "otherEntityRelationshipName": "semester",
+      "relationshipName": "fieldOfStudy",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210112222137",
+  "entityTableName": "semester",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

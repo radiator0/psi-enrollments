@@ -1,0 +1,25 @@
+{
+  "enrollmentsApp": {
+    "enrollment": {
+      "home": {
+        "title": "Enrollment",
+        "createLabel": "Dodaj Enrollment",
+        "createOrEditLabel": "Dodaj lub edytuj: Enrollment",
+        "notFound": "No Enrollments found"
+      },
+      "created": "Utworzono nowy obiekt typu Enrollment z identyfikatorem {{ param }}",
+      "updated": "Uaktualniono obiekt typu Enrollment z identyfikatorem {{ param }}",
+      "deleted": "Usunięto obiekt typu Enrollment z identyfikatorem {{ param }}",
+      "delete": {
+        "question": "Czy na pewno chcesz usunąć Enrollment {{ id }}?"
+      },
+      "detail": {
+        "title": "Enrollment"
+      },
+      "date": "Date",
+      "isAdministrative": "Is Administrative",
+      "student": "Student",
+      "classGroup": "Class Group"
+    }
+  }
+}

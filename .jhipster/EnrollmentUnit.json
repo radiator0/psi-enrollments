@@ -1,0 +1,35 @@
+{
+  "name": "EnrollmentUnit",
+  "fields": [
+    {
+      "fieldName": "startDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "endDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "enrollmentDate",
+      "otherEntityRelationshipName": "enrollmentUnit",
+      "relationshipName": "enrollmentDate",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210112222237",
+  "entityTableName": "enrollment_unit",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

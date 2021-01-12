@@ -1,0 +1,59 @@
+{
+  "name": "Student",
+  "fields": [
+    {
+      "fieldName": "firstName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "secondName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "mail",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "title",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "request",
+      "otherEntityRelationshipName": "student",
+      "relationshipName": "request"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "enrollmentRight",
+      "otherEntityRelationshipName": "student",
+      "relationshipName": "enrollmentRight"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "enrollment",
+      "otherEntityRelationshipName": "student",
+      "relationshipName": "enrollment"
+    }
+  ],
+  "changelogDate": "20210112222537",
+  "entityTableName": "student",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}
