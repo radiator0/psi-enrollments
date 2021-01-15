@@ -570,7 +570,14 @@
                             <image>adoptopenjdk:11-jre-hotspot</image>
                         </from>
                         <to>
-                            <image>enrollments:latest</image>
+							<auth>
+								<username>${USERNAME}</username>
+								<password>${PASSWORD}</password>
+							</auth>
+                            <image>pbr20s1/psi-enrollments</image>
+						    <tags>
+								<tag>latest</tag>
+						    </tags>
                         </to>
                         <container>
                             <entrypoint>
