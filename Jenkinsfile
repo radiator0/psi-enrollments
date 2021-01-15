@@ -1,3 +1,4 @@
+properties([pipelineTriggers([githubPush()])])
 node {
     env.NODEJS_HOME = "${tool 'nodejs'}"
     env.PATH="${env.NODEJS_HOME}/bin:${env.PATH}"

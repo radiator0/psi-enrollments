@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: smee-client
+spec:
+  containers:
+  - name: smee-client-container
+    image: deltaprojects/smee-client
+    args:
+      - "-u https://smee.io/qBISU80M18oYJP49 -t http://192.168.99.105:31001/github-webhook/"
+  restartPolicy: OnFailure
