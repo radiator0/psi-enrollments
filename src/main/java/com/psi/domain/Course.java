@@ -47,9 +47,6 @@ public class Course implements Serializable {
     private ClassType form;
 
     @OneToMany(mappedBy = "course")
-    private Set<EnrollmentDate> enrollmentDates = new HashSet<>();
-
-    @OneToMany(mappedBy = "course")
     private Set<ClassGroup> classGroups = new HashSet<>();
 
     @ManyToMany
@@ -57,6 +54,11 @@ public class Course implements Serializable {
                joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "specialty_id", referencedColumnName = "id"))
     private Set<Specialty> specialties = new HashSet<>();
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "courses", allowSetters = true)
+    private EnrollmentDate enrollmentDate;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "courses", allowSetters = true)
@@ -136,31 +138,6 @@ public class Course implements Serializable {
         this.form = form;
     }
 
-    public Set<EnrollmentDate> getEnrollmentDates() {
-        return enrollmentDates;
-    }
-
-    public Course enrollmentDates(Set<EnrollmentDate> enrollmentDates) {
-        this.enrollmentDates = enrollmentDates;
-        return this;
-    }
-
-    public Course addEnrollmentDate(EnrollmentDate enrollmentDate) {
-        this.enrollmentDates.add(enrollmentDate);
-        enrollmentDate.setCourse(this);
-        return this;
-    }
-
-    public Course removeEnrollmentDate(EnrollmentDate enrollmentDate) {
-        this.enrollmentDates.remove(enrollmentDate);
-        enrollmentDate.setCourse(null);
-        return this;
-    }
-
-    public void setEnrollmentDates(Set<EnrollmentDate> enrollmentDates) {
-        this.enrollmentDates = enrollmentDates;
-    }
-
     public Set<ClassGroup> getClassGroups() {
         return classGroups;
     }
@@ -209,6 +186,19 @@ public class Course implements Serializable {
 
     public void setSpecialties(Set<Specialty> specialties) {
         this.specialties = specialties;
+    }
+
+    public EnrollmentDate getEnrollmentDate() {
+        return enrollmentDate;
+    }
+
+    public Course enrollmentDate(EnrollmentDate enrollmentDate) {
+        this.enrollmentDate = enrollmentDate;
+        return this;
+    }
+
+    public void setEnrollmentDate(EnrollmentDate enrollmentDate) {
+        this.enrollmentDate = enrollmentDate;
     }
 
     public CourseUnit getCourseUnit() {

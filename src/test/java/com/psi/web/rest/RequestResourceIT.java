@@ -2,6 +2,8 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.Request;
+import com.psi.domain.ClassGroup;
+import com.psi.domain.Student;
 import com.psi.repository.RequestRepository;
 import com.psi.service.RequestService;
 import com.psi.service.dto.RequestDTO;
@@ -76,6 +78,26 @@ public class RequestResourceIT {
             .date(DEFAULT_DATE)
             .text(DEFAULT_TEXT)
             .isExamined(DEFAULT_IS_EXAMINED);
+        // Add required entity
+        ClassGroup classGroup;
+        if (TestUtil.findAll(em, ClassGroup.class).isEmpty()) {
+            classGroup = ClassGroupResourceIT.createEntity(em);
+            em.persist(classGroup);
+            em.flush();
+        } else {
+            classGroup = TestUtil.findAll(em, ClassGroup.class).get(0);
+        }
+        request.setClassGroup(classGroup);
+        // Add required entity
+        Student student;
+        if (TestUtil.findAll(em, Student.class).isEmpty()) {
+            student = StudentResourceIT.createEntity(em);
+            em.persist(student);
+            em.flush();
+        } else {
+            student = TestUtil.findAll(em, Student.class).get(0);
+        }
+        request.setStudent(student);
         return request;
     }
     /**
@@ -90,6 +112,26 @@ public class RequestResourceIT {
             .date(UPDATED_DATE)
             .text(UPDATED_TEXT)
             .isExamined(UPDATED_IS_EXAMINED);
+        // Add required entity
+        ClassGroup classGroup;
+        if (TestUtil.findAll(em, ClassGroup.class).isEmpty()) {
+            classGroup = ClassGroupResourceIT.createUpdatedEntity(em);
+            em.persist(classGroup);
+            em.flush();
+        } else {
+            classGroup = TestUtil.findAll(em, ClassGroup.class).get(0);
+        }
+        request.setClassGroup(classGroup);
+        // Add required entity
+        Student student;
+        if (TestUtil.findAll(em, Student.class).isEmpty()) {
+            student = StudentResourceIT.createUpdatedEntity(em);
+            em.persist(student);
+            em.flush();
+        } else {
+            student = TestUtil.findAll(em, Student.class).get(0);
+        }
+        request.setStudent(student);
         return request;
     }
 

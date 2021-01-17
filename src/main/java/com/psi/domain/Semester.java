@@ -43,7 +43,8 @@ public class Semester implements Serializable {
     @OneToMany(mappedBy = "semester")
     private Set<EnrollmentDate> enrollmentDates = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "semesters", allowSetters = true)
     private FieldOfStudy fieldOfStudy;
 

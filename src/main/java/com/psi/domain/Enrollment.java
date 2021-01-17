@@ -30,11 +30,13 @@ public class Enrollment implements Serializable {
     @Column(name = "is_administrative", nullable = false)
     private Boolean isAdministrative;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "enrollments", allowSetters = true)
     private Student student;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "enrollments", allowSetters = true)
     private ClassGroup classGroup;
 

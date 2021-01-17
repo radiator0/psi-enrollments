@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -45,7 +46,7 @@ public class ClassUnitResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/class-units")
-    public ResponseEntity<ClassUnitDTO> createClassUnit(@RequestBody ClassUnitDTO classUnitDTO) throws URISyntaxException {
+    public ResponseEntity<ClassUnitDTO> createClassUnit(@Valid @RequestBody ClassUnitDTO classUnitDTO) throws URISyntaxException {
         log.debug("REST request to save ClassUnit : {}", classUnitDTO);
         if (classUnitDTO.getId() != null) {
             throw new BadRequestAlertException("A new classUnit cannot already have an ID", ENTITY_NAME, "idexists");
@@ -66,7 +67,7 @@ public class ClassUnitResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/class-units")
-    public ResponseEntity<ClassUnitDTO> updateClassUnit(@RequestBody ClassUnitDTO classUnitDTO) throws URISyntaxException {
+    public ResponseEntity<ClassUnitDTO> updateClassUnit(@Valid @RequestBody ClassUnitDTO classUnitDTO) throws URISyntaxException {
         log.debug("REST request to update ClassUnit : {}", classUnitDTO);
         if (classUnitDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

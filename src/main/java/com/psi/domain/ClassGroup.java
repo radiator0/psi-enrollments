@@ -57,13 +57,14 @@ public class ClassGroup implements Serializable {
     @OneToMany(mappedBy = "classGroup")
     private Set<ClassSchedule> classSchedules = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "classGroups", allowSetters = true)
     private Course course;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "classGroups", allowSetters = true)
-    private Lecturer lecturer;
+    private Lecturer mainLecturer;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -252,17 +253,17 @@ public class ClassGroup implements Serializable {
         this.course = course;
     }
 
-    public Lecturer getLecturer() {
-        return lecturer;
+    public Lecturer getMainLecturer() {
+        return mainLecturer;
     }
 
-    public ClassGroup lecturer(Lecturer lecturer) {
-        this.lecturer = lecturer;
+    public ClassGroup mainLecturer(Lecturer lecturer) {
+        this.mainLecturer = lecturer;
         return this;
     }
 
-    public void setLecturer(Lecturer lecturer) {
-        this.lecturer = lecturer;
+    public void setMainLecturer(Lecturer lecturer) {
+        this.mainLecturer = lecturer;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

@@ -134,8 +134,7 @@ export const RequestUpdate = (props: IRequestUpdateProps) => {
                 <Label for="request-classGroup">
                   <Translate contentKey="enrollmentsApp.request.classGroup">Class Group</Translate>
                 </Label>
-                <AvInput id="request-classGroup" type="select" className="form-control" name="classGroupId">
-                  <option value="" key="0" />
+                <AvInput id="request-classGroup" type="select" className="form-control" name="classGroupId" required>
                   {classGroups
                     ? classGroups.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -144,13 +143,15 @@ export const RequestUpdate = (props: IRequestUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="request-student">
                   <Translate contentKey="enrollmentsApp.request.student">Student</Translate>
                 </Label>
-                <AvInput id="request-student" type="select" className="form-control" name="studentId">
-                  <option value="" key="0" />
+                <AvInput id="request-student" type="select" className="form-control" name="studentId" required>
                   {students
                     ? students.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -159,6 +160,9 @@ export const RequestUpdate = (props: IRequestUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/request" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

@@ -30,7 +30,8 @@ public class EnrollmentUnit implements Serializable {
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "enrollmentUnits", allowSetters = true)
     private EnrollmentDate enrollmentDate;
 

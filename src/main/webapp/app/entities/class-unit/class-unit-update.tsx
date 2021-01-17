@@ -91,7 +91,15 @@ export const ClassUnitUpdate = (props: IClassUnitUpdateProps) => {
                 <Label id="dayLabel" for="class-unit-day">
                   <Translate contentKey="enrollmentsApp.classUnit.day">Day</Translate>
                 </Label>
-                <AvField id="class-unit-day" type="date" className="form-control" name="day" />
+                <AvField
+                  id="class-unit-day"
+                  type="date"
+                  className="form-control"
+                  name="day"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
               </AvGroup>
               <AvGroup>
                 <Label id="startTimeLabel" for="class-unit-startTime">
@@ -104,6 +112,9 @@ export const ClassUnitUpdate = (props: IClassUnitUpdateProps) => {
                   name="startTime"
                   placeholder={'YYYY-MM-DD HH:mm'}
                   value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.classUnitEntity.startTime)}
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
                 />
               </AvGroup>
               <AvGroup>
@@ -117,14 +128,16 @@ export const ClassUnitUpdate = (props: IClassUnitUpdateProps) => {
                   name="endTime"
                   placeholder={'YYYY-MM-DD HH:mm'}
                   value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.classUnitEntity.endTime)}
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
                 />
               </AvGroup>
               <AvGroup>
                 <Label for="class-unit-classGroup">
                   <Translate contentKey="enrollmentsApp.classUnit.classGroup">Class Group</Translate>
                 </Label>
-                <AvInput id="class-unit-classGroup" type="select" className="form-control" name="classGroupId">
-                  <option value="" key="0" />
+                <AvInput id="class-unit-classGroup" type="select" className="form-control" name="classGroupId" required>
                   {classGroups
                     ? classGroups.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -133,6 +146,9 @@ export const ClassUnitUpdate = (props: IClassUnitUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="class-unit-room">

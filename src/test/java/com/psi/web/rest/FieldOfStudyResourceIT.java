@@ -2,6 +2,7 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.FieldOfStudy;
+import com.psi.domain.StudyProgram;
 import com.psi.repository.FieldOfStudyRepository;
 import com.psi.service.FieldOfStudyService;
 import com.psi.service.dto.FieldOfStudyDTO;
@@ -65,6 +66,16 @@ public class FieldOfStudyResourceIT {
         FieldOfStudy fieldOfStudy = new FieldOfStudy()
             .name(DEFAULT_NAME)
             .uniqueName(DEFAULT_UNIQUE_NAME);
+        // Add required entity
+        StudyProgram studyProgram;
+        if (TestUtil.findAll(em, StudyProgram.class).isEmpty()) {
+            studyProgram = StudyProgramResourceIT.createEntity(em);
+            em.persist(studyProgram);
+            em.flush();
+        } else {
+            studyProgram = TestUtil.findAll(em, StudyProgram.class).get(0);
+        }
+        fieldOfStudy.setStudyProgram(studyProgram);
         return fieldOfStudy;
     }
     /**
@@ -77,6 +88,16 @@ public class FieldOfStudyResourceIT {
         FieldOfStudy fieldOfStudy = new FieldOfStudy()
             .name(UPDATED_NAME)
             .uniqueName(UPDATED_UNIQUE_NAME);
+        // Add required entity
+        StudyProgram studyProgram;
+        if (TestUtil.findAll(em, StudyProgram.class).isEmpty()) {
+            studyProgram = StudyProgramResourceIT.createUpdatedEntity(em);
+            em.persist(studyProgram);
+            em.flush();
+        } else {
+            studyProgram = TestUtil.findAll(em, StudyProgram.class).get(0);
+        }
+        fieldOfStudy.setStudyProgram(studyProgram);
         return fieldOfStudy;
     }
 

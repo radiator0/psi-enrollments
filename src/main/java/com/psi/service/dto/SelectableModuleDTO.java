@@ -1,5 +1,6 @@
 package com.psi.service.dto;
 
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**

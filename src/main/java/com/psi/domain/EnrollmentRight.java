@@ -26,7 +26,8 @@ public class EnrollmentRight implements Serializable {
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "enrollmentRights", allowSetters = true)
     private EnrollmentDate enrollmentDate;
 
@@ -34,7 +35,8 @@ public class EnrollmentRight implements Serializable {
     @JsonIgnoreProperties(value = "enrollmentRights", allowSetters = true)
     private Specialty specialty;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "enrollmentRights", allowSetters = true)
     private Student student;
 

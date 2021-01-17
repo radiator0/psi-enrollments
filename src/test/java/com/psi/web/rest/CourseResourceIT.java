@@ -2,6 +2,7 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.Course;
+import com.psi.domain.EnrollmentDate;
 import com.psi.repository.CourseRepository;
 import com.psi.service.CourseService;
 import com.psi.service.dto.CourseDTO;
@@ -92,6 +93,16 @@ public class CourseResourceIT {
             .code(DEFAULT_CODE)
             .ects(DEFAULT_ECTS)
             .form(DEFAULT_FORM);
+        // Add required entity
+        EnrollmentDate enrollmentDate;
+        if (TestUtil.findAll(em, EnrollmentDate.class).isEmpty()) {
+            enrollmentDate = EnrollmentDateResourceIT.createEntity(em);
+            em.persist(enrollmentDate);
+            em.flush();
+        } else {
+            enrollmentDate = TestUtil.findAll(em, EnrollmentDate.class).get(0);
+        }
+        course.setEnrollmentDate(enrollmentDate);
         return course;
     }
     /**
@@ -107,6 +118,16 @@ public class CourseResourceIT {
             .code(UPDATED_CODE)
             .ects(UPDATED_ECTS)
             .form(UPDATED_FORM);
+        // Add required entity
+        EnrollmentDate enrollmentDate;
+        if (TestUtil.findAll(em, EnrollmentDate.class).isEmpty()) {
+            enrollmentDate = EnrollmentDateResourceIT.createUpdatedEntity(em);
+            em.persist(enrollmentDate);
+            em.flush();
+        } else {
+            enrollmentDate = TestUtil.findAll(em, EnrollmentDate.class).get(0);
+        }
+        course.setEnrollmentDate(enrollmentDate);
         return course;
     }
 

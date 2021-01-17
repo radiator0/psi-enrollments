@@ -105,7 +105,7 @@ export const ClassGroup = (props: IClassGroupProps) => {
                   <Translate contentKey="enrollmentsApp.classGroup.course">Course</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="enrollmentsApp.classGroup.lecturer">Lecturer</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="enrollmentsApp.classGroup.mainLecturer">Main Lecturer</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -124,7 +124,9 @@ export const ClassGroup = (props: IClassGroupProps) => {
                   <td>{classGroup.enrolledCount}</td>
                   <td>{classGroup.isFull ? 'true' : 'false'}</td>
                   <td>{classGroup.courseId ? <Link to={`course/${classGroup.courseId}`}>{classGroup.courseId}</Link> : ''}</td>
-                  <td>{classGroup.lecturerId ? <Link to={`lecturer/${classGroup.lecturerId}`}>{classGroup.lecturerId}</Link> : ''}</td>
+                  <td>
+                    {classGroup.mainLecturerId ? <Link to={`lecturer/${classGroup.mainLecturerId}`}>{classGroup.mainLecturerId}</Link> : ''}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${classGroup.id}`} color="info" size="sm">

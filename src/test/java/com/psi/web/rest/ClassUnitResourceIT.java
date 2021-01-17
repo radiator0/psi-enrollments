@@ -2,6 +2,7 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.ClassUnit;
+import com.psi.domain.ClassGroup;
 import com.psi.repository.ClassUnitRepository;
 import com.psi.service.ClassUnitService;
 import com.psi.service.dto.ClassUnitDTO;
@@ -73,6 +74,16 @@ public class ClassUnitResourceIT {
             .day(DEFAULT_DAY)
             .startTime(DEFAULT_START_TIME)
             .endTime(DEFAULT_END_TIME);
+        // Add required entity
+        ClassGroup classGroup;
+        if (TestUtil.findAll(em, ClassGroup.class).isEmpty()) {
+            classGroup = ClassGroupResourceIT.createEntity(em);
+            em.persist(classGroup);
+            em.flush();
+        } else {
+            classGroup = TestUtil.findAll(em, ClassGroup.class).get(0);
+        }
+        classUnit.setClassGroup(classGroup);
         return classUnit;
     }
     /**
@@ -86,6 +97,16 @@ public class ClassUnitResourceIT {
             .day(UPDATED_DAY)
             .startTime(UPDATED_START_TIME)
             .endTime(UPDATED_END_TIME);
+        // Add required entity
+        ClassGroup classGroup;
+        if (TestUtil.findAll(em, ClassGroup.class).isEmpty()) {
+            classGroup = ClassGroupResourceIT.createUpdatedEntity(em);
+            em.persist(classGroup);
+            em.flush();
+        } else {
+            classGroup = TestUtil.findAll(em, ClassGroup.class).get(0);
+        }
+        classUnit.setClassGroup(classGroup);
         return classUnit;
     }
 
@@ -134,6 +155,66 @@ public class ClassUnitResourceIT {
         assertThat(classUnitList).hasSize(databaseSizeBeforeCreate);
     }
 
+
+    @Test
+    @Transactional
+    public void checkDayIsRequired() throws Exception {
+        int databaseSizeBeforeTest = classUnitRepository.findAll().size();
+        // set the field null
+        classUnit.setDay(null);
+
+        // Create the ClassUnit, which fails.
+        ClassUnitDTO classUnitDTO = classUnitMapper.toDto(classUnit);
+
+
+        restClassUnitMockMvc.perform(post("/api/class-units")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(classUnitDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<ClassUnit> classUnitList = classUnitRepository.findAll();
+        assertThat(classUnitList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkStartTimeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = classUnitRepository.findAll().size();
+        // set the field null
+        classUnit.setStartTime(null);
+
+        // Create the ClassUnit, which fails.
+        ClassUnitDTO classUnitDTO = classUnitMapper.toDto(classUnit);
+
+
+        restClassUnitMockMvc.perform(post("/api/class-units")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(classUnitDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<ClassUnit> classUnitList = classUnitRepository.findAll();
+        assertThat(classUnitList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEndTimeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = classUnitRepository.findAll().size();
+        // set the field null
+        classUnit.setEndTime(null);
+
+        // Create the ClassUnit, which fails.
+        ClassUnitDTO classUnitDTO = classUnitMapper.toDto(classUnit);
+
+
+        restClassUnitMockMvc.perform(post("/api/class-units")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(classUnitDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<ClassUnit> classUnitList = classUnitRepository.findAll();
+        assertThat(classUnitList).hasSize(databaseSizeBeforeTest);
+    }
 
     @Test
     @Transactional

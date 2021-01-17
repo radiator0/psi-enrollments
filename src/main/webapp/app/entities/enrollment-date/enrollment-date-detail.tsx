@@ -61,10 +61,6 @@ export const EnrollmentDateDetail = (props: IEnrollmentDateDetailProps) => {
             <Translate contentKey="enrollmentsApp.enrollmentDate.semester">Semester</Translate>
           </dt>
           <dd>{enrollmentDateEntity.semesterId ? enrollmentDateEntity.semesterId : ''}</dd>
-          <dt>
-            <Translate contentKey="enrollmentsApp.enrollmentDate.course">Course</Translate>
-          </dt>
-          <dd>{enrollmentDateEntity.courseId ? enrollmentDateEntity.courseId : ''}</dd>
         </dl>
         <Button tag={Link} to="/enrollment-date" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -46,13 +46,13 @@ public class EnrollmentDate implements Serializable {
     @OneToMany(mappedBy = "enrollmentDate")
     private Set<EnrollmentRight> enrollmentRights = new HashSet<>();
 
-    @ManyToOne
+    @OneToMany(mappedBy = "enrollmentDate")
+    private Set<Course> courses = new HashSet<>();
+
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "enrollmentDates", allowSetters = true)
     private Semester semester;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "enrollmentDates", allowSetters = true)
-    private Course course;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -165,6 +165,31 @@ public class EnrollmentDate implements Serializable {
         this.enrollmentRights = enrollmentRights;
     }
 
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public EnrollmentDate courses(Set<Course> courses) {
+        this.courses = courses;
+        return this;
+    }
+
+    public EnrollmentDate addCourse(Course course) {
+        this.courses.add(course);
+        course.setEnrollmentDate(this);
+        return this;
+    }
+
+    public EnrollmentDate removeCourse(Course course) {
+        this.courses.remove(course);
+        course.setEnrollmentDate(null);
+        return this;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
     public Semester getSemester() {
         return semester;
     }
@@ -176,19 +201,6 @@ public class EnrollmentDate implements Serializable {
 
     public void setSemester(Semester semester) {
         this.semester = semester;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public EnrollmentDate course(Course course) {
-        this.course = course;
-        return this;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

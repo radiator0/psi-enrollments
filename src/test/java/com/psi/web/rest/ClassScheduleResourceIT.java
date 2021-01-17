@@ -2,6 +2,8 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.ClassSchedule;
+import com.psi.domain.Lecturer;
+import com.psi.domain.ClassGroup;
 import com.psi.repository.ClassScheduleRepository;
 import com.psi.service.ClassScheduleService;
 import com.psi.service.dto.ClassScheduleDTO;
@@ -82,6 +84,26 @@ public class ClassScheduleResourceIT {
             .semesterPeriod(DEFAULT_SEMESTER_PERIOD)
             .startTime(DEFAULT_START_TIME)
             .endTime(DEFAULT_END_TIME);
+        // Add required entity
+        Lecturer lecturer;
+        if (TestUtil.findAll(em, Lecturer.class).isEmpty()) {
+            lecturer = LecturerResourceIT.createEntity(em);
+            em.persist(lecturer);
+            em.flush();
+        } else {
+            lecturer = TestUtil.findAll(em, Lecturer.class).get(0);
+        }
+        classSchedule.setLecturer(lecturer);
+        // Add required entity
+        ClassGroup classGroup;
+        if (TestUtil.findAll(em, ClassGroup.class).isEmpty()) {
+            classGroup = ClassGroupResourceIT.createEntity(em);
+            em.persist(classGroup);
+            em.flush();
+        } else {
+            classGroup = TestUtil.findAll(em, ClassGroup.class).get(0);
+        }
+        classSchedule.setClassGroup(classGroup);
         return classSchedule;
     }
     /**
@@ -97,6 +119,26 @@ public class ClassScheduleResourceIT {
             .semesterPeriod(UPDATED_SEMESTER_PERIOD)
             .startTime(UPDATED_START_TIME)
             .endTime(UPDATED_END_TIME);
+        // Add required entity
+        Lecturer lecturer;
+        if (TestUtil.findAll(em, Lecturer.class).isEmpty()) {
+            lecturer = LecturerResourceIT.createUpdatedEntity(em);
+            em.persist(lecturer);
+            em.flush();
+        } else {
+            lecturer = TestUtil.findAll(em, Lecturer.class).get(0);
+        }
+        classSchedule.setLecturer(lecturer);
+        // Add required entity
+        ClassGroup classGroup;
+        if (TestUtil.findAll(em, ClassGroup.class).isEmpty()) {
+            classGroup = ClassGroupResourceIT.createUpdatedEntity(em);
+            em.persist(classGroup);
+            em.flush();
+        } else {
+            classGroup = TestUtil.findAll(em, ClassGroup.class).get(0);
+        }
+        classSchedule.setClassGroup(classGroup);
         return classSchedule;
     }
 

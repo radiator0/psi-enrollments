@@ -106,8 +106,7 @@ export const EnrollmentRightUpdate = (props: IEnrollmentRightUpdateProps) => {
                 <Label for="enrollment-right-enrollmentDate">
                   <Translate contentKey="enrollmentsApp.enrollmentRight.enrollmentDate">Enrollment Date</Translate>
                 </Label>
-                <AvInput id="enrollment-right-enrollmentDate" type="select" className="form-control" name="enrollmentDateId">
-                  <option value="" key="0" />
+                <AvInput id="enrollment-right-enrollmentDate" type="select" className="form-control" name="enrollmentDateId" required>
                   {enrollmentDates
                     ? enrollmentDates.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -116,6 +115,9 @@ export const EnrollmentRightUpdate = (props: IEnrollmentRightUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="enrollment-right-specialty">
@@ -136,8 +138,7 @@ export const EnrollmentRightUpdate = (props: IEnrollmentRightUpdateProps) => {
                 <Label for="enrollment-right-student">
                   <Translate contentKey="enrollmentsApp.enrollmentRight.student">Student</Translate>
                 </Label>
-                <AvInput id="enrollment-right-student" type="select" className="form-control" name="studentId">
-                  <option value="" key="0" />
+                <AvInput id="enrollment-right-student" type="select" className="form-control" name="studentId" required>
                   {students
                     ? students.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -146,6 +147,9 @@ export const EnrollmentRightUpdate = (props: IEnrollmentRightUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/enrollment-right" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

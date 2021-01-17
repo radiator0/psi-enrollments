@@ -30,6 +30,8 @@ public class CourseDTO implements Serializable {
 
     private Set<SpecialtyDTO> specialties = new HashSet<>();
 
+    private Long enrollmentDateId;
+
     private Long courseUnitId;
     
     public Long getId() {
@@ -88,6 +90,14 @@ public class CourseDTO implements Serializable {
         this.specialties = specialties;
     }
 
+    public Long getEnrollmentDateId() {
+        return enrollmentDateId;
+    }
+
+    public void setEnrollmentDateId(Long enrollmentDateId) {
+        this.enrollmentDateId = enrollmentDateId;
+    }
+
     public Long getCourseUnitId() {
         return courseUnitId;
     }
@@ -124,6 +134,7 @@ public class CourseDTO implements Serializable {
             ", ects=" + getEcts() +
             ", form='" + getForm() + "'" +
             ", specialties='" + getSpecialties() + "'" +
+            ", enrollmentDateId=" + getEnrollmentDateId() +
             ", courseUnitId=" + getCourseUnitId() +
             "}";
     }

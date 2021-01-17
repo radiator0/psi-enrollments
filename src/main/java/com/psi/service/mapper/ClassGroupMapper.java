@@ -13,7 +13,7 @@ import org.mapstruct.*;
 public interface ClassGroupMapper extends EntityMapper<ClassGroupDTO, ClassGroup> {
 
     @Mapping(source = "course.id", target = "courseId")
-    @Mapping(source = "lecturer.id", target = "lecturerId")
+    @Mapping(source = "mainLecturer.id", target = "mainLecturerId")
     ClassGroupDTO toDto(ClassGroup classGroup);
 
     @Mapping(target = "requests", ignore = true)
@@ -25,7 +25,7 @@ public interface ClassGroupMapper extends EntityMapper<ClassGroupDTO, ClassGroup
     @Mapping(target = "classSchedules", ignore = true)
     @Mapping(target = "removeClassSchedule", ignore = true)
     @Mapping(source = "courseId", target = "course")
-    @Mapping(source = "lecturerId", target = "lecturer")
+    @Mapping(source = "mainLecturerId", target = "mainLecturer")
     ClassGroup toEntity(ClassGroupDTO classGroupDTO);
 
     default ClassGroup fromId(Long id) {

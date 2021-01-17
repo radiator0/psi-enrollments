@@ -48,27 +48,28 @@ enum SemesterPeriod {
 }
 
 relationship OneToMany {
-	StudyProgram to FieldOfStudy,
-    FieldOfStudy to Semester,
-    Semester to EnrollmentDate,
-  	EnrollmentDate to EnrollmentUnit,
-    EnrollmentDate to EnrollmentRight,
-    Specialty to EnrollmentRight,
-    Course to EnrollmentDate,
-    CourseUnit to Course,
-    SelectableModule to CourseUnit,
-    Course to ClassGroup,
-    ClassGroup to Request,
-    Student to Request,
-    Student to EnrollmentRight,
-    Student to Enrollment,
-    ClassGroup to Enrollment,
-    Lecturer to ClassGroup,
-   	ClassGroup to ClassUnit,
-    ClassGroup to ClassSchedule,
-    Room to ClassSchedule,
-    Building to Room,
-    Room to ClassUnit
+	StudyProgram{fieldOfStudy} to FieldOfStudy{studyProgram required},
+    FieldOfStudy{semester} to Semester{fieldOfStudy required},
+    Semester{enrollmentDate} to EnrollmentDate{semester required},
+  	EnrollmentDate{enrollmentUnit required} to EnrollmentUnit{enrollmentDate required},
+    EnrollmentDate{enrollmentRight} to EnrollmentRight{enrollmentDate required},
+    Specialty{enrollmentRight} to EnrollmentRight{specialty},
+    EnrollmentDate{course} to Course{enrollmentDate required},
+    CourseUnit{course required} to Course{courseUnit},
+    SelectableModule{courseUnit required} to CourseUnit{selectableModule},
+    Course{classGroup} to ClassGroup{course required},
+    ClassGroup{request} to Request{classGroup required},
+    Student{request} to Request{student required},
+    Student{enrollmentRight} to EnrollmentRight{student required},
+    Student{enrollment} to Enrollment{student required},
+    ClassGroup{enrollment} to Enrollment{classGroup required},
+    Lecturer{classGroup} to ClassGroup{mainLecturer},
+    Lecturer{classSchedule}  to ClassSchedule{lecturer required}
+   	ClassGroup{classUnit} to ClassUnit{classGroup required},
+    ClassGroup{classSchedule} to ClassSchedule{classGroup required},
+    Room{classSchedule} to ClassSchedule{room},
+    Building{room} to Room{building required},
+    Room{classUnit} to ClassUnit{room}
 }
 
 relationship OneToOne {
@@ -206,9 +207,9 @@ entity Room {
 }
 
 entity ClassUnit {
-    day LocalDate,
-    startTime Instant,
-    endTime Instant
+    day LocalDate required,
+    startTime Instant required,
+    endTime Instant required
 }
 
 service all with serviceClass except AppUser

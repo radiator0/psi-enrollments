@@ -108,8 +108,7 @@ export const EnrollmentUpdate = (props: IEnrollmentUpdateProps) => {
                 <Label for="enrollment-student">
                   <Translate contentKey="enrollmentsApp.enrollment.student">Student</Translate>
                 </Label>
-                <AvInput id="enrollment-student" type="select" className="form-control" name="studentId">
-                  <option value="" key="0" />
+                <AvInput id="enrollment-student" type="select" className="form-control" name="studentId" required>
                   {students
                     ? students.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -118,13 +117,15 @@ export const EnrollmentUpdate = (props: IEnrollmentUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="enrollment-classGroup">
                   <Translate contentKey="enrollmentsApp.enrollment.classGroup">Class Group</Translate>
                 </Label>
-                <AvInput id="enrollment-classGroup" type="select" className="form-control" name="classGroupId">
-                  <option value="" key="0" />
+                <AvInput id="enrollment-classGroup" type="select" className="form-control" name="classGroupId" required>
                   {classGroups
                     ? classGroups.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -133,6 +134,9 @@ export const EnrollmentUpdate = (props: IEnrollmentUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/enrollment" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

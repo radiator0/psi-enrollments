@@ -49,7 +49,13 @@ public class ClassSchedule implements Serializable {
     @Column(name = "end_time", nullable = false)
     private Instant endTime;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "classSchedules", allowSetters = true)
+    private Lecturer lecturer;
+
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "classSchedules", allowSetters = true)
     private ClassGroup classGroup;
 
@@ -129,6 +135,19 @@ public class ClassSchedule implements Serializable {
 
     public void setEndTime(Instant endTime) {
         this.endTime = endTime;
+    }
+
+    public Lecturer getLecturer() {
+        return lecturer;
+    }
+
+    public ClassSchedule lecturer(Lecturer lecturer) {
+        this.lecturer = lecturer;
+        return this;
+    }
+
+    public void setLecturer(Lecturer lecturer) {
+        this.lecturer = lecturer;
     }
 
     public ClassGroup getClassGroup() {

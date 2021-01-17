@@ -60,9 +60,9 @@ export const ClassGroupDetail = (props: IClassGroupDetailProps) => {
           </dt>
           <dd>{classGroupEntity.courseId ? classGroupEntity.courseId : ''}</dd>
           <dt>
-            <Translate contentKey="enrollmentsApp.classGroup.lecturer">Lecturer</Translate>
+            <Translate contentKey="enrollmentsApp.classGroup.mainLecturer">Main Lecturer</Translate>
           </dt>
-          <dd>{classGroupEntity.lecturerId ? classGroupEntity.lecturerId : ''}</dd>
+          <dd>{classGroupEntity.mainLecturerId ? classGroupEntity.mainLecturerId : ''}</dd>
         </dl>
         <Button tag={Link} to="/class-group" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}
