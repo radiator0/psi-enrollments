@@ -30,7 +30,7 @@ public class ClassGroupDTO implements Serializable {
 
     private Long courseId;
 
-    private Long lecturerId;
+    private Long mainLecturerId;
     
     public Long getId() {
         return id;
@@ -88,12 +88,12 @@ public class ClassGroupDTO implements Serializable {
         this.courseId = courseId;
     }
 
-    public Long getLecturerId() {
-        return lecturerId;
+    public Long getMainLecturerId() {
+        return mainLecturerId;
     }
 
-    public void setLecturerId(Long lecturerId) {
-        this.lecturerId = lecturerId;
+    public void setMainLecturerId(Long lecturerId) {
+        this.mainLecturerId = lecturerId;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class ClassGroupDTO implements Serializable {
             ", enrolledCount=" + getEnrolledCount() +
             ", isFull='" + isIsFull() + "'" +
             ", courseId=" + getCourseId() +
-            ", lecturerId=" + getLecturerId() +
+            ", mainLecturerId=" + getMainLecturerId() +
             "}";
     }
 }

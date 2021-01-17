@@ -9,13 +9,15 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link ClassSchedule} and its DTO {@link ClassScheduleDTO}.
  */
-@Mapper(componentModel = "spring", uses = {ClassGroupMapper.class, RoomMapper.class})
+@Mapper(componentModel = "spring", uses = {LecturerMapper.class, ClassGroupMapper.class, RoomMapper.class})
 public interface ClassScheduleMapper extends EntityMapper<ClassScheduleDTO, ClassSchedule> {
 
+    @Mapping(source = "lecturer.id", target = "lecturerId")
     @Mapping(source = "classGroup.id", target = "classGroupId")
     @Mapping(source = "room.id", target = "roomId")
     ClassScheduleDTO toDto(ClassSchedule classSchedule);
 
+    @Mapping(source = "lecturerId", target = "lecturer")
     @Mapping(source = "classGroupId", target = "classGroup")
     @Mapping(source = "roomId", target = "room")
     ClassSchedule toEntity(ClassScheduleDTO classScheduleDTO);

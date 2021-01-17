@@ -33,7 +33,8 @@ public class Room implements Serializable {
     @OneToMany(mappedBy = "room")
     private Set<ClassUnit> classUnits = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "rooms", allowSetters = true)
     private Building building;
 

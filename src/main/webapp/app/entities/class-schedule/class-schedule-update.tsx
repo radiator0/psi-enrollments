@@ -7,6 +7,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { ILecturer } from 'app/shared/model/lecturer.model';
+import { getEntities as getLecturers } from 'app/entities/lecturer/lecturer.reducer';
 import { IClassGroup } from 'app/shared/model/class-group.model';
 import { getEntities as getClassGroups } from 'app/entities/class-group/class-group.reducer';
 import { IRoom } from 'app/shared/model/room.model';
@@ -19,11 +21,12 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IClassScheduleUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ClassScheduleUpdate = (props: IClassScheduleUpdateProps) => {
+  const [lecturerId, setLecturerId] = useState('0');
   const [classGroupId, setClassGroupId] = useState('0');
   const [roomId, setRoomId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { classScheduleEntity, classGroups, rooms, loading, updating } = props;
+  const { classScheduleEntity, lecturers, classGroups, rooms, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/class-schedule');
@@ -36,6 +39,7 @@ export const ClassScheduleUpdate = (props: IClassScheduleUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
+    props.getLecturers();
     props.getClassGroups();
     props.getRooms();
   }, []);
@@ -172,11 +176,27 @@ export const ClassScheduleUpdate = (props: IClassScheduleUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
+                <Label for="class-schedule-lecturer">
+                  <Translate contentKey="enrollmentsApp.classSchedule.lecturer">Lecturer</Translate>
+                </Label>
+                <AvInput id="class-schedule-lecturer" type="select" className="form-control" name="lecturerId" required>
+                  {lecturers
+                    ? lecturers.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
+              </AvGroup>
+              <AvGroup>
                 <Label for="class-schedule-classGroup">
                   <Translate contentKey="enrollmentsApp.classSchedule.classGroup">Class Group</Translate>
                 </Label>
-                <AvInput id="class-schedule-classGroup" type="select" className="form-control" name="classGroupId">
-                  <option value="" key="0" />
+                <AvInput id="class-schedule-classGroup" type="select" className="form-control" name="classGroupId" required>
                   {classGroups
                     ? classGroups.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -185,6 +205,9 @@ export const ClassScheduleUpdate = (props: IClassScheduleUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="class-schedule-room">
@@ -223,6 +246,7 @@ export const ClassScheduleUpdate = (props: IClassScheduleUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  lecturers: storeState.lecturer.entities,
   classGroups: storeState.classGroup.entities,
   rooms: storeState.room.entities,
   classScheduleEntity: storeState.classSchedule.entity,
@@ -232,6 +256,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getLecturers,
   getClassGroups,
   getRooms,
   getEntity,

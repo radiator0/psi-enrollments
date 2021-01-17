@@ -21,7 +21,8 @@
       "lastName": "Last Name",
       "mail": "Mail",
       "title": "Title",
-      "classGroup": "Class Group"
+      "classGroup": "Class Group",
+      "classSchedule": "Class Schedule"
     }
   }
 }

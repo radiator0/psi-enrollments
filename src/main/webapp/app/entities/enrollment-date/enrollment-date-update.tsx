@@ -9,8 +9,6 @@ import { IRootState } from 'app/shared/reducers';
 
 import { ISemester } from 'app/shared/model/semester.model';
 import { getEntities as getSemesters } from 'app/entities/semester/semester.reducer';
-import { ICourse } from 'app/shared/model/course.model';
-import { getEntities as getCourses } from 'app/entities/course/course.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './enrollment-date.reducer';
 import { IEnrollmentDate } from 'app/shared/model/enrollment-date.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -20,10 +18,9 @@ export interface IEnrollmentDateUpdateProps extends StateProps, DispatchProps, R
 
 export const EnrollmentDateUpdate = (props: IEnrollmentDateUpdateProps) => {
   const [semesterId, setSemesterId] = useState('0');
-  const [courseId, setCourseId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { enrollmentDateEntity, semesters, courses, loading, updating } = props;
+  const { enrollmentDateEntity, semesters, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/enrollment-date');
@@ -37,7 +34,6 @@ export const EnrollmentDateUpdate = (props: IEnrollmentDateUpdateProps) => {
     }
 
     props.getSemesters();
-    props.getCourses();
   }, []);
 
   useEffect(() => {
@@ -135,8 +131,7 @@ export const EnrollmentDateUpdate = (props: IEnrollmentDateUpdateProps) => {
                 <Label for="enrollment-date-semester">
                   <Translate contentKey="enrollmentsApp.enrollmentDate.semester">Semester</Translate>
                 </Label>
-                <AvInput id="enrollment-date-semester" type="select" className="form-control" name="semesterId">
-                  <option value="" key="0" />
+                <AvInput id="enrollment-date-semester" type="select" className="form-control" name="semesterId" required>
                   {semesters
                     ? semesters.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -145,21 +140,9 @@ export const EnrollmentDateUpdate = (props: IEnrollmentDateUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
-              </AvGroup>
-              <AvGroup>
-                <Label for="enrollment-date-course">
-                  <Translate contentKey="enrollmentsApp.enrollmentDate.course">Course</Translate>
-                </Label>
-                <AvInput id="enrollment-date-course" type="select" className="form-control" name="courseId">
-                  <option value="" key="0" />
-                  {courses
-                    ? courses.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/enrollment-date" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
@@ -184,7 +167,6 @@ export const EnrollmentDateUpdate = (props: IEnrollmentDateUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   semesters: storeState.semester.entities,
-  courses: storeState.course.entities,
   enrollmentDateEntity: storeState.enrollmentDate.entity,
   loading: storeState.enrollmentDate.loading,
   updating: storeState.enrollmentDate.updating,
@@ -193,7 +175,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getSemesters,
-  getCourses,
   getEntity,
   updateEntity,
   createEntity,

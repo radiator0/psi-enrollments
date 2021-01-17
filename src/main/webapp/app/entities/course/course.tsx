@@ -55,6 +55,9 @@ export const Course = (props: ICourseProps) => {
                   <Translate contentKey="enrollmentsApp.course.specialty">Specialty</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="enrollmentsApp.course.enrollmentDate">Enrollment Date</Translate>
+                </th>
+                <th>
                   <Translate contentKey="enrollmentsApp.course.courseUnit">Course Unit</Translate>
                 </th>
                 <th />
@@ -84,6 +87,13 @@ export const Course = (props: ICourseProps) => {
                           </span>
                         ))
                       : null}
+                  </td>
+                  <td>
+                    {course.enrollmentDateId ? (
+                      <Link to={`enrollment-date/${course.enrollmentDateId}`}>{course.enrollmentDateId}</Link>
+                    ) : (
+                      ''
+                    )}
                   </td>
                   <td>{course.courseUnitId ? <Link to={`course-unit/${course.courseUnitId}`}>{course.courseUnitId}</Link> : ''}</td>
                   <td className="text-right">

@@ -26,7 +26,7 @@
       "classUnit": "Class Unit",
       "classSchedule": "Class Schedule",
       "course": "Course",
-      "lecturer": "Lecturer"
+      "mainLecturer": "Main Lecturer"
     }
   }
 }

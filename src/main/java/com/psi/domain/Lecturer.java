@@ -40,8 +40,11 @@ public class Lecturer implements Serializable {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "lecturer")
+    @OneToMany(mappedBy = "mainLecturer")
     private Set<ClassGroup> classGroups = new HashSet<>();
+
+    @OneToMany(mappedBy = "lecturer")
+    private Set<ClassSchedule> classSchedules = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -128,18 +131,43 @@ public class Lecturer implements Serializable {
 
     public Lecturer addClassGroup(ClassGroup classGroup) {
         this.classGroups.add(classGroup);
-        classGroup.setLecturer(this);
+        classGroup.setMainLecturer(this);
         return this;
     }
 
     public Lecturer removeClassGroup(ClassGroup classGroup) {
         this.classGroups.remove(classGroup);
-        classGroup.setLecturer(null);
+        classGroup.setMainLecturer(null);
         return this;
     }
 
     public void setClassGroups(Set<ClassGroup> classGroups) {
         this.classGroups = classGroups;
+    }
+
+    public Set<ClassSchedule> getClassSchedules() {
+        return classSchedules;
+    }
+
+    public Lecturer classSchedules(Set<ClassSchedule> classSchedules) {
+        this.classSchedules = classSchedules;
+        return this;
+    }
+
+    public Lecturer addClassSchedule(ClassSchedule classSchedule) {
+        this.classSchedules.add(classSchedule);
+        classSchedule.setLecturer(this);
+        return this;
+    }
+
+    public Lecturer removeClassSchedule(ClassSchedule classSchedule) {
+        this.classSchedules.remove(classSchedule);
+        classSchedule.setLecturer(null);
+        return this;
+    }
+
+    public void setClassSchedules(Set<ClassSchedule> classSchedules) {
+        this.classSchedules = classSchedules;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

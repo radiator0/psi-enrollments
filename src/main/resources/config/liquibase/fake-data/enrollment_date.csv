@@ -1,11 +1,11 @@
-id;name;is_pre_enrollment;start_date;end_date
-1;foreground capacitor;false;2021-01-12;2021-01-12
-2;instruction set;true;2021-01-12;2021-01-12
-3;SDD Rubber Uruguay;true;2021-01-12;2021-01-12
-4;Arkansas;true;2021-01-12;2021-01-12
-5;Gold;false;2021-01-12;2021-01-12
-6;Money Market Account Chicken Fresh;false;2021-01-12;2021-01-12
-7;Solutions Colorado;false;2021-01-12;2021-01-12
-8;copying;false;2021-01-12;2021-01-12
-9;Central firewall Fish;false;2021-01-12;2021-01-12
-10;monitor;true;2021-01-12;2021-01-12
+id;name;is_pre_enrollment;start_date;end_date;semester_id
+1;foreground capacitor;false;2021-01-17;2021-01-16;1
+2;instruction set;true;2021-01-16;2021-01-16;2
+3;SDD Rubber Uruguay;true;2021-01-16;2021-01-16;3
+4;Arkansas;true;2021-01-16;2021-01-16;4
+5;Gold;false;2021-01-16;2021-01-16;5
+6;Money Market Account Chicken Fresh;false;2021-01-16;2021-01-16;6
+7;Solutions Colorado;false;2021-01-16;2021-01-16;7
+8;copying;false;2021-01-16;2021-01-17;8
+9;Central firewall Fish;false;2021-01-16;2021-01-16;9
+10;monitor;true;2021-01-16;2021-01-16;10

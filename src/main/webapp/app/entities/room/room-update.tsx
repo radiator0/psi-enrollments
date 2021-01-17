@@ -97,8 +97,7 @@ export const RoomUpdate = (props: IRoomUpdateProps) => {
                 <Label for="room-building">
                   <Translate contentKey="enrollmentsApp.room.building">Building</Translate>
                 </Label>
-                <AvInput id="room-building" type="select" className="form-control" name="buildingId">
-                  <option value="" key="0" />
+                <AvInput id="room-building" type="select" className="form-control" name="buildingId" required>
                   {buildings
                     ? buildings.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -107,6 +106,9 @@ export const RoomUpdate = (props: IRoomUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/room" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

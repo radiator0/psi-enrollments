@@ -62,6 +62,10 @@ export const ClassScheduleDetail = (props: IClassScheduleDetailProps) => {
             {classScheduleEntity.endTime ? <TextFormat value={classScheduleEntity.endTime} type="date" format={APP_DATE_FORMAT} /> : null}
           </dd>
           <dt>
+            <Translate contentKey="enrollmentsApp.classSchedule.lecturer">Lecturer</Translate>
+          </dt>
+          <dd>{classScheduleEntity.lecturerId ? classScheduleEntity.lecturerId : ''}</dd>
+          <dt>
             <Translate contentKey="enrollmentsApp.classSchedule.classGroup">Class Group</Translate>
           </dt>
           <dd>{classScheduleEntity.classGroupId ? classScheduleEntity.classGroupId : ''}</dd>

@@ -2,6 +2,7 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.SelectableModule;
+import com.psi.domain.CourseUnit;
 import com.psi.repository.SelectableModuleRepository;
 import com.psi.service.SelectableModuleService;
 import com.psi.service.dto.SelectableModuleDTO;
@@ -61,6 +62,16 @@ public class SelectableModuleResourceIT {
     public static SelectableModule createEntity(EntityManager em) {
         SelectableModule selectableModule = new SelectableModule()
             .name(DEFAULT_NAME);
+        // Add required entity
+        CourseUnit courseUnit;
+        if (TestUtil.findAll(em, CourseUnit.class).isEmpty()) {
+            courseUnit = CourseUnitResourceIT.createEntity(em);
+            em.persist(courseUnit);
+            em.flush();
+        } else {
+            courseUnit = TestUtil.findAll(em, CourseUnit.class).get(0);
+        }
+        selectableModule.getCourseUnits().add(courseUnit);
         return selectableModule;
     }
     /**
@@ -72,6 +83,16 @@ public class SelectableModuleResourceIT {
     public static SelectableModule createUpdatedEntity(EntityManager em) {
         SelectableModule selectableModule = new SelectableModule()
             .name(UPDATED_NAME);
+        // Add required entity
+        CourseUnit courseUnit;
+        if (TestUtil.findAll(em, CourseUnit.class).isEmpty()) {
+            courseUnit = CourseUnitResourceIT.createUpdatedEntity(em);
+            em.persist(courseUnit);
+            em.flush();
+        } else {
+            courseUnit = TestUtil.findAll(em, CourseUnit.class).get(0);
+        }
+        selectableModule.getCourseUnits().add(courseUnit);
         return selectableModule;
     }
 

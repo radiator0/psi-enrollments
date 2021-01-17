@@ -22,8 +22,8 @@
       "endDate": "End Date",
       "enrollmentUnit": "Enrollment Unit",
       "enrollmentRight": "Enrollment Right",
-      "semester": "Semester",
-      "course": "Course"
+      "course": "Course",
+      "semester": "Semester"
     }
   }
 }

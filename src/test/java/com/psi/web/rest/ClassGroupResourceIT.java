@@ -2,6 +2,7 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.ClassGroup;
+import com.psi.domain.Course;
 import com.psi.repository.ClassGroupRepository;
 import com.psi.service.ClassGroupService;
 import com.psi.service.dto.ClassGroupDTO;
@@ -77,6 +78,16 @@ public class ClassGroupResourceIT {
             .peopleLimit(DEFAULT_PEOPLE_LIMIT)
             .enrolledCount(DEFAULT_ENROLLED_COUNT)
             .isFull(DEFAULT_IS_FULL);
+        // Add required entity
+        Course course;
+        if (TestUtil.findAll(em, Course.class).isEmpty()) {
+            course = CourseResourceIT.createEntity(em);
+            em.persist(course);
+            em.flush();
+        } else {
+            course = TestUtil.findAll(em, Course.class).get(0);
+        }
+        classGroup.setCourse(course);
         return classGroup;
     }
     /**
@@ -92,6 +103,16 @@ public class ClassGroupResourceIT {
             .peopleLimit(UPDATED_PEOPLE_LIMIT)
             .enrolledCount(UPDATED_ENROLLED_COUNT)
             .isFull(UPDATED_IS_FULL);
+        // Add required entity
+        Course course;
+        if (TestUtil.findAll(em, Course.class).isEmpty()) {
+            course = CourseResourceIT.createUpdatedEntity(em);
+            em.persist(course);
+            em.flush();
+        } else {
+            course = TestUtil.findAll(em, Course.class).get(0);
+        }
+        classGroup.setCourse(course);
         return classGroup;
     }
 

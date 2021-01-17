@@ -21,6 +21,7 @@
       "semesterPeriod": "Semester Period",
       "startTime": "Start Time",
       "endTime": "End Time",
+      "lecturer": "Lecturer",
       "classGroup": "Class Group",
       "room": "Room"
     }

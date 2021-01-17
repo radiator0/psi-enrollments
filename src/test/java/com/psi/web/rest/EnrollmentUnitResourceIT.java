@@ -2,6 +2,7 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.EnrollmentUnit;
+import com.psi.domain.EnrollmentDate;
 import com.psi.repository.EnrollmentUnitRepository;
 import com.psi.service.EnrollmentUnitService;
 import com.psi.service.dto.EnrollmentUnitDTO;
@@ -67,6 +68,16 @@ public class EnrollmentUnitResourceIT {
         EnrollmentUnit enrollmentUnit = new EnrollmentUnit()
             .startDate(DEFAULT_START_DATE)
             .endDate(DEFAULT_END_DATE);
+        // Add required entity
+        EnrollmentDate enrollmentDate;
+        if (TestUtil.findAll(em, EnrollmentDate.class).isEmpty()) {
+            enrollmentDate = EnrollmentDateResourceIT.createEntity(em);
+            em.persist(enrollmentDate);
+            em.flush();
+        } else {
+            enrollmentDate = TestUtil.findAll(em, EnrollmentDate.class).get(0);
+        }
+        enrollmentUnit.setEnrollmentDate(enrollmentDate);
         return enrollmentUnit;
     }
     /**
@@ -79,6 +90,16 @@ public class EnrollmentUnitResourceIT {
         EnrollmentUnit enrollmentUnit = new EnrollmentUnit()
             .startDate(UPDATED_START_DATE)
             .endDate(UPDATED_END_DATE);
+        // Add required entity
+        EnrollmentDate enrollmentDate;
+        if (TestUtil.findAll(em, EnrollmentDate.class).isEmpty()) {
+            enrollmentDate = EnrollmentDateResourceIT.createUpdatedEntity(em);
+            em.persist(enrollmentDate);
+            em.flush();
+        } else {
+            enrollmentDate = TestUtil.findAll(em, EnrollmentDate.class).get(0);
+        }
+        enrollmentUnit.setEnrollmentDate(enrollmentDate);
         return enrollmentUnit;
     }
 

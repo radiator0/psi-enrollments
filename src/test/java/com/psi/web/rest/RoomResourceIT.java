@@ -2,6 +2,7 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.Room;
+import com.psi.domain.Building;
 import com.psi.repository.RoomRepository;
 import com.psi.service.RoomService;
 import com.psi.service.dto.RoomDTO;
@@ -61,6 +62,16 @@ public class RoomResourceIT {
     public static Room createEntity(EntityManager em) {
         Room room = new Room()
             .number(DEFAULT_NUMBER);
+        // Add required entity
+        Building building;
+        if (TestUtil.findAll(em, Building.class).isEmpty()) {
+            building = BuildingResourceIT.createEntity(em);
+            em.persist(building);
+            em.flush();
+        } else {
+            building = TestUtil.findAll(em, Building.class).get(0);
+        }
+        room.setBuilding(building);
         return room;
     }
     /**
@@ -72,6 +83,16 @@ public class RoomResourceIT {
     public static Room createUpdatedEntity(EntityManager em) {
         Room room = new Room()
             .number(UPDATED_NUMBER);
+        // Add required entity
+        Building building;
+        if (TestUtil.findAll(em, Building.class).isEmpty()) {
+            building = BuildingResourceIT.createUpdatedEntity(em);
+            em.persist(building);
+            em.flush();
+        } else {
+            building = TestUtil.findAll(em, Building.class).get(0);
+        }
+        room.setBuilding(building);
         return room;
     }
 

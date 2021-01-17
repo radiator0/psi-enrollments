@@ -129,8 +129,7 @@ export const SemesterUpdate = (props: ISemesterUpdateProps) => {
                 <Label for="semester-fieldOfStudy">
                   <Translate contentKey="enrollmentsApp.semester.fieldOfStudy">Field Of Study</Translate>
                 </Label>
-                <AvInput id="semester-fieldOfStudy" type="select" className="form-control" name="fieldOfStudyId">
-                  <option value="" key="0" />
+                <AvInput id="semester-fieldOfStudy" type="select" className="form-control" name="fieldOfStudyId" required>
                   {fieldOfStudies
                     ? fieldOfStudies.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -139,6 +138,9 @@ export const SemesterUpdate = (props: ISemesterUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/semester" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

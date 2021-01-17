@@ -25,8 +25,6 @@ public class EnrollmentDateDTO implements Serializable {
 
 
     private Long semesterId;
-
-    private Long courseId;
     
     public Long getId() {
         return id;
@@ -76,14 +74,6 @@ public class EnrollmentDateDTO implements Serializable {
         this.semesterId = semesterId;
     }
 
-    public Long getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -111,7 +101,6 @@ public class EnrollmentDateDTO implements Serializable {
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
             ", semesterId=" + getSemesterId() +
-            ", courseId=" + getCourseId() +
             "}";
     }
 }

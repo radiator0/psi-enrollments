@@ -15,6 +15,8 @@ public interface LecturerMapper extends EntityMapper<LecturerDTO, Lecturer> {
 
     @Mapping(target = "classGroups", ignore = true)
     @Mapping(target = "removeClassGroup", ignore = true)
+    @Mapping(target = "classSchedules", ignore = true)
+    @Mapping(target = "removeClassSchedule", ignore = true)
     Lecturer toEntity(LecturerDTO lecturerDTO);
 
     default Lecturer fromId(Long id) {

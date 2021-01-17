@@ -1,4 +1,5 @@
 import { IClassGroup } from 'app/shared/model/class-group.model';
+import { IClassSchedule } from 'app/shared/model/class-schedule.model';
 
 export interface ILecturer {
   id?: number;
@@ -8,6 +9,7 @@ export interface ILecturer {
   mail?: string;
   title?: string;
   classGroups?: IClassGroup[];
+  classSchedules?: IClassSchedule[];
 }
 
 export const defaultValue: Readonly<ILecturer> = {};

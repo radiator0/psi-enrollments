@@ -15,7 +15,7 @@ export interface IClassGroup {
   classUnits?: IClassUnit[];
   classSchedules?: IClassSchedule[];
   courseId?: number;
-  lecturerId?: number;
+  mainLecturerId?: number;
 }
 
 export const defaultValue: Readonly<IClassGroup> = {

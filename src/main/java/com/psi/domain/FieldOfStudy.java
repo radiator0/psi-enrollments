@@ -34,7 +34,8 @@ public class FieldOfStudy implements Serializable {
     @OneToMany(mappedBy = "fieldOfStudy")
     private Set<Semester> semesters = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "fieldOfStudies", allowSetters = true)
     private StudyProgram studyProgram;
 

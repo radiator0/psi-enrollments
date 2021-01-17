@@ -2,6 +2,7 @@ package com.psi.service.dto;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**
@@ -11,10 +12,13 @@ public class ClassUnitDTO implements Serializable {
     
     private Long id;
 
+    @NotNull
     private LocalDate day;
 
+    @NotNull
     private Instant startTime;
 
+    @NotNull
     private Instant endTime;
 
 
