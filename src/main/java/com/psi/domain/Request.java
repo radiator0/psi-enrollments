@@ -39,11 +39,13 @@ public class Request implements Serializable {
     @Column(name = "is_examined", nullable = false)
     private Boolean isExamined;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "requests", allowSetters = true)
     private ClassGroup classGroup;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "requests", allowSetters = true)
     private Student student;
 

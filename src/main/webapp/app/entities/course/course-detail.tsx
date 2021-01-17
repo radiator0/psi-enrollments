@@ -69,6 +69,10 @@ export const CourseDetail = (props: ICourseDetailProps) => {
               : null}
           </dd>
           <dt>
+            <Translate contentKey="enrollmentsApp.course.enrollmentDate">Enrollment Date</Translate>
+          </dt>
+          <dd>{courseEntity.enrollmentDateId ? courseEntity.enrollmentDateId : ''}</dd>
+          <dt>
             <Translate contentKey="enrollmentsApp.course.courseUnit">Course Unit</Translate>
           </dt>
           <dd>{courseEntity.courseUnitId ? courseEntity.courseUnitId : ''}</dd>

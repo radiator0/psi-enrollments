@@ -20,7 +20,7 @@ export interface IClassGroupUpdateProps extends StateProps, DispatchProps, Route
 
 export const ClassGroupUpdate = (props: IClassGroupUpdateProps) => {
   const [courseId, setCourseId] = useState('0');
-  const [lecturerId, setLecturerId] = useState('0');
+  const [mainLecturerId, setMainLecturerId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
   const { classGroupEntity, courses, lecturers, loading, updating } = props;
@@ -152,8 +152,7 @@ export const ClassGroupUpdate = (props: IClassGroupUpdateProps) => {
                 <Label for="class-group-course">
                   <Translate contentKey="enrollmentsApp.classGroup.course">Course</Translate>
                 </Label>
-                <AvInput id="class-group-course" type="select" className="form-control" name="courseId">
-                  <option value="" key="0" />
+                <AvInput id="class-group-course" type="select" className="form-control" name="courseId" required>
                   {courses
                     ? courses.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -162,12 +161,15 @@ export const ClassGroupUpdate = (props: IClassGroupUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
-                <Label for="class-group-lecturer">
-                  <Translate contentKey="enrollmentsApp.classGroup.lecturer">Lecturer</Translate>
+                <Label for="class-group-mainLecturer">
+                  <Translate contentKey="enrollmentsApp.classGroup.mainLecturer">Main Lecturer</Translate>
                 </Label>
-                <AvInput id="class-group-lecturer" type="select" className="form-control" name="lecturerId">
+                <AvInput id="class-group-mainLecturer" type="select" className="form-control" name="mainLecturerId">
                   <option value="" key="0" />
                   {lecturers
                     ? lecturers.map(otherEntity => (

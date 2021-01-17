@@ -2,6 +2,8 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.EnrollmentRight;
+import com.psi.domain.EnrollmentDate;
+import com.psi.domain.Student;
 import com.psi.repository.EnrollmentRightRepository;
 import com.psi.service.EnrollmentRightService;
 import com.psi.service.dto.EnrollmentRightDTO;
@@ -63,6 +65,26 @@ public class EnrollmentRightResourceIT {
     public static EnrollmentRight createEntity(EntityManager em) {
         EnrollmentRight enrollmentRight = new EnrollmentRight()
             .startDate(DEFAULT_START_DATE);
+        // Add required entity
+        EnrollmentDate enrollmentDate;
+        if (TestUtil.findAll(em, EnrollmentDate.class).isEmpty()) {
+            enrollmentDate = EnrollmentDateResourceIT.createEntity(em);
+            em.persist(enrollmentDate);
+            em.flush();
+        } else {
+            enrollmentDate = TestUtil.findAll(em, EnrollmentDate.class).get(0);
+        }
+        enrollmentRight.setEnrollmentDate(enrollmentDate);
+        // Add required entity
+        Student student;
+        if (TestUtil.findAll(em, Student.class).isEmpty()) {
+            student = StudentResourceIT.createEntity(em);
+            em.persist(student);
+            em.flush();
+        } else {
+            student = TestUtil.findAll(em, Student.class).get(0);
+        }
+        enrollmentRight.setStudent(student);
         return enrollmentRight;
     }
     /**
@@ -74,6 +96,26 @@ public class EnrollmentRightResourceIT {
     public static EnrollmentRight createUpdatedEntity(EntityManager em) {
         EnrollmentRight enrollmentRight = new EnrollmentRight()
             .startDate(UPDATED_START_DATE);
+        // Add required entity
+        EnrollmentDate enrollmentDate;
+        if (TestUtil.findAll(em, EnrollmentDate.class).isEmpty()) {
+            enrollmentDate = EnrollmentDateResourceIT.createUpdatedEntity(em);
+            em.persist(enrollmentDate);
+            em.flush();
+        } else {
+            enrollmentDate = TestUtil.findAll(em, EnrollmentDate.class).get(0);
+        }
+        enrollmentRight.setEnrollmentDate(enrollmentDate);
+        // Add required entity
+        Student student;
+        if (TestUtil.findAll(em, Student.class).isEmpty()) {
+            student = StudentResourceIT.createUpdatedEntity(em);
+            em.persist(student);
+            em.flush();
+        } else {
+            student = TestUtil.findAll(em, Student.class).get(0);
+        }
+        enrollmentRight.setStudent(student);
         return enrollmentRight;
     }
 

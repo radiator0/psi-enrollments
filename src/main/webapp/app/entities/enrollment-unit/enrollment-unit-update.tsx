@@ -112,8 +112,7 @@ export const EnrollmentUnitUpdate = (props: IEnrollmentUnitUpdateProps) => {
                 <Label for="enrollment-unit-enrollmentDate">
                   <Translate contentKey="enrollmentsApp.enrollmentUnit.enrollmentDate">Enrollment Date</Translate>
                 </Label>
-                <AvInput id="enrollment-unit-enrollmentDate" type="select" className="form-control" name="enrollmentDateId">
-                  <option value="" key="0" />
+                <AvInput id="enrollment-unit-enrollmentDate" type="select" className="form-control" name="enrollmentDateId" required>
                   {enrollmentDates
                     ? enrollmentDates.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -122,6 +121,9 @@ export const EnrollmentUnitUpdate = (props: IEnrollmentUnitUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/enrollment-unit" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

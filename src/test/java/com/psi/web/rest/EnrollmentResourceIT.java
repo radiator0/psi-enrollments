@@ -2,6 +2,8 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.Enrollment;
+import com.psi.domain.Student;
+import com.psi.domain.ClassGroup;
 import com.psi.repository.EnrollmentRepository;
 import com.psi.service.EnrollmentService;
 import com.psi.service.dto.EnrollmentDTO;
@@ -67,6 +69,26 @@ public class EnrollmentResourceIT {
         Enrollment enrollment = new Enrollment()
             .date(DEFAULT_DATE)
             .isAdministrative(DEFAULT_IS_ADMINISTRATIVE);
+        // Add required entity
+        Student student;
+        if (TestUtil.findAll(em, Student.class).isEmpty()) {
+            student = StudentResourceIT.createEntity(em);
+            em.persist(student);
+            em.flush();
+        } else {
+            student = TestUtil.findAll(em, Student.class).get(0);
+        }
+        enrollment.setStudent(student);
+        // Add required entity
+        ClassGroup classGroup;
+        if (TestUtil.findAll(em, ClassGroup.class).isEmpty()) {
+            classGroup = ClassGroupResourceIT.createEntity(em);
+            em.persist(classGroup);
+            em.flush();
+        } else {
+            classGroup = TestUtil.findAll(em, ClassGroup.class).get(0);
+        }
+        enrollment.setClassGroup(classGroup);
         return enrollment;
     }
     /**
@@ -79,6 +101,26 @@ public class EnrollmentResourceIT {
         Enrollment enrollment = new Enrollment()
             .date(UPDATED_DATE)
             .isAdministrative(UPDATED_IS_ADMINISTRATIVE);
+        // Add required entity
+        Student student;
+        if (TestUtil.findAll(em, Student.class).isEmpty()) {
+            student = StudentResourceIT.createUpdatedEntity(em);
+            em.persist(student);
+            em.flush();
+        } else {
+            student = TestUtil.findAll(em, Student.class).get(0);
+        }
+        enrollment.setStudent(student);
+        // Add required entity
+        ClassGroup classGroup;
+        if (TestUtil.findAll(em, ClassGroup.class).isEmpty()) {
+            classGroup = ClassGroupResourceIT.createUpdatedEntity(em);
+            em.persist(classGroup);
+            em.flush();
+        } else {
+            classGroup = TestUtil.findAll(em, ClassGroup.class).get(0);
+        }
+        enrollment.setClassGroup(classGroup);
         return enrollment;
     }
 

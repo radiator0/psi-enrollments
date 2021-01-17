@@ -3,6 +3,7 @@ package com.psi.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -22,16 +23,20 @@ public class ClassUnit implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "day")
+    @NotNull
+    @Column(name = "day", nullable = false)
     private LocalDate day;
 
-    @Column(name = "start_time")
+    @NotNull
+    @Column(name = "start_time", nullable = false)
     private Instant startTime;
 
-    @Column(name = "end_time")
+    @NotNull
+    @Column(name = "end_time", nullable = false)
     private Instant endTime;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "classUnits", allowSetters = true)
     private ClassGroup classGroup;
 

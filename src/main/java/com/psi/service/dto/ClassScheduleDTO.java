@@ -28,6 +28,8 @@ public class ClassScheduleDTO implements Serializable {
     private Instant endTime;
 
 
+    private Long lecturerId;
+
     private Long classGroupId;
 
     private Long roomId;
@@ -80,6 +82,14 @@ public class ClassScheduleDTO implements Serializable {
         this.endTime = endTime;
     }
 
+    public Long getLecturerId() {
+        return lecturerId;
+    }
+
+    public void setLecturerId(Long lecturerId) {
+        this.lecturerId = lecturerId;
+    }
+
     public Long getClassGroupId() {
         return classGroupId;
     }
@@ -123,6 +133,7 @@ public class ClassScheduleDTO implements Serializable {
             ", semesterPeriod='" + getSemesterPeriod() + "'" +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
+            ", lecturerId=" + getLecturerId() +
             ", classGroupId=" + getClassGroupId() +
             ", roomId=" + getRoomId() +
             "}";

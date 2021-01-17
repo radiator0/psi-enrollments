@@ -2,6 +2,7 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.CourseUnit;
+import com.psi.domain.Course;
 import com.psi.repository.CourseUnitRepository;
 import com.psi.service.CourseUnitService;
 import com.psi.service.dto.CourseUnitDTO;
@@ -77,6 +78,16 @@ public class CourseUnitResourceIT {
             .isGroupOfCourses(DEFAULT_IS_GROUP_OF_COURSES)
             .isStream(DEFAULT_IS_STREAM)
             .isSelectable(DEFAULT_IS_SELECTABLE);
+        // Add required entity
+        Course course;
+        if (TestUtil.findAll(em, Course.class).isEmpty()) {
+            course = CourseResourceIT.createEntity(em);
+            em.persist(course);
+            em.flush();
+        } else {
+            course = TestUtil.findAll(em, Course.class).get(0);
+        }
+        courseUnit.getCourses().add(course);
         return courseUnit;
     }
     /**
@@ -92,6 +103,16 @@ public class CourseUnitResourceIT {
             .isGroupOfCourses(UPDATED_IS_GROUP_OF_COURSES)
             .isStream(UPDATED_IS_STREAM)
             .isSelectable(UPDATED_IS_SELECTABLE);
+        // Add required entity
+        Course course;
+        if (TestUtil.findAll(em, Course.class).isEmpty()) {
+            course = CourseResourceIT.createUpdatedEntity(em);
+            em.persist(course);
+            em.flush();
+        } else {
+            course = TestUtil.findAll(em, Course.class).get(0);
+        }
+        courseUnit.getCourses().add(course);
         return courseUnit;
     }
 

@@ -1,11 +1,11 @@
-id;uuid;date;text;is_examined
-1;312e6e10-356d-41f0-9dae-62352496ce76;2021-01-12;Crossroad system engine;false
-2;c3257d05-91f7-4f4e-aa79-bd72091f6c8f;2021-01-12;Internal Savings Account Table;true
-3;759464d5-d7d1-4522-80c1-9c2698d60e03;2021-01-12;backing up Agent;false
-4;7e9beebf-cc5a-40c7-bec4-4b7c7eb09e25;2021-01-12;RSS;true
-5;f2d0fc70-c467-42fd-87ef-30c2021cc080;2021-01-12;sky blue index tan;true
-6;1fa7e44f-9a2d-4a11-9526-eef8655caeff;2021-01-12;Unbranded;true
-7;3b6e0129-6679-4e3d-90a6-78920baf6642;2021-01-12;customer loyalty violet parsing;true
-8;d3fae399-e076-4782-b835-17f2afc692ef;2021-01-12;Tasty Metal Shoes Canadian Dollar;false
-9;7b793143-64ea-4b10-a3f7-ed39793b9e11;2021-01-12;pricing structure Mobility Concrete;true
-10;357dba8e-0cd5-4ef0-b102-7400af7a13ed;2021-01-12;calculate;false
+id;uuid;date;text;is_examined;class_group_id;student_id
+1;312e6e10-356d-41f0-9dae-62352496ce76;2021-01-16;Crossroad system engine;false;1;1
+2;c3257d05-91f7-4f4e-aa79-bd72091f6c8f;2021-01-16;Internal Savings Account Table;true;2;2
+3;759464d5-d7d1-4522-80c1-9c2698d60e03;2021-01-16;backing up Agent;false;3;3
+4;7e9beebf-cc5a-40c7-bec4-4b7c7eb09e25;2021-01-16;RSS;true;4;4
+5;f2d0fc70-c467-42fd-87ef-30c2021cc080;2021-01-16;sky blue index tan;true;5;5
+6;1fa7e44f-9a2d-4a11-9526-eef8655caeff;2021-01-16;Unbranded;true;6;6
+7;3b6e0129-6679-4e3d-90a6-78920baf6642;2021-01-16;customer loyalty violet parsing;true;7;7
+8;d3fae399-e076-4782-b835-17f2afc692ef;2021-01-16;Tasty Metal Shoes Canadian Dollar;false;8;8
+9;7b793143-64ea-4b10-a3f7-ed39793b9e11;2021-01-16;pricing structure Mobility Concrete;true;9;9
+10;357dba8e-0cd5-4ef0-b102-7400af7a13ed;2021-01-17;calculate;false;10;10

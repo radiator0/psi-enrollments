@@ -52,6 +52,9 @@ export const ClassSchedule = (props: IClassScheduleProps) => {
                   <Translate contentKey="enrollmentsApp.classSchedule.endTime">End Time</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="enrollmentsApp.classSchedule.lecturer">Lecturer</Translate>
+                </th>
+                <th>
                   <Translate contentKey="enrollmentsApp.classSchedule.classGroup">Class Group</Translate>
                 </th>
                 <th>
@@ -82,6 +85,9 @@ export const ClassSchedule = (props: IClassScheduleProps) => {
                   </td>
                   <td>
                     {classSchedule.endTime ? <TextFormat type="date" value={classSchedule.endTime} format={APP_DATE_FORMAT} /> : null}
+                  </td>
+                  <td>
+                    {classSchedule.lecturerId ? <Link to={`lecturer/${classSchedule.lecturerId}`}>{classSchedule.lecturerId}</Link> : ''}
                   </td>
                   <td>
                     {classSchedule.classGroupId ? (

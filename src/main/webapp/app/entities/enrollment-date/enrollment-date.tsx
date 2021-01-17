@@ -51,9 +51,6 @@ export const EnrollmentDate = (props: IEnrollmentDateProps) => {
                 <th>
                   <Translate contentKey="enrollmentsApp.enrollmentDate.semester">Semester</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="enrollmentsApp.enrollmentDate.course">Course</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -80,7 +77,6 @@ export const EnrollmentDate = (props: IEnrollmentDateProps) => {
                   <td>
                     {enrollmentDate.semesterId ? <Link to={`semester/${enrollmentDate.semesterId}`}>{enrollmentDate.semesterId}</Link> : ''}
                   </td>
-                  <td>{enrollmentDate.courseId ? <Link to={`course/${enrollmentDate.courseId}`}>{enrollmentDate.courseId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${enrollmentDate.id}`} color="info" size="sm">

@@ -2,6 +2,7 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.Semester;
+import com.psi.domain.FieldOfStudy;
 import com.psi.repository.SemesterRepository;
 import com.psi.service.SemesterService;
 import com.psi.service.dto.SemesterDTO;
@@ -72,6 +73,16 @@ public class SemesterResourceIT {
             .number(DEFAULT_NUMBER)
             .semesterType(DEFAULT_SEMESTER_TYPE)
             .startDate(DEFAULT_START_DATE);
+        // Add required entity
+        FieldOfStudy fieldOfStudy;
+        if (TestUtil.findAll(em, FieldOfStudy.class).isEmpty()) {
+            fieldOfStudy = FieldOfStudyResourceIT.createEntity(em);
+            em.persist(fieldOfStudy);
+            em.flush();
+        } else {
+            fieldOfStudy = TestUtil.findAll(em, FieldOfStudy.class).get(0);
+        }
+        semester.setFieldOfStudy(fieldOfStudy);
         return semester;
     }
     /**
@@ -85,6 +96,16 @@ public class SemesterResourceIT {
             .number(UPDATED_NUMBER)
             .semesterType(UPDATED_SEMESTER_TYPE)
             .startDate(UPDATED_START_DATE);
+        // Add required entity
+        FieldOfStudy fieldOfStudy;
+        if (TestUtil.findAll(em, FieldOfStudy.class).isEmpty()) {
+            fieldOfStudy = FieldOfStudyResourceIT.createUpdatedEntity(em);
+            em.persist(fieldOfStudy);
+            em.flush();
+        } else {
+            fieldOfStudy = TestUtil.findAll(em, FieldOfStudy.class).get(0);
+        }
+        semester.setFieldOfStudy(fieldOfStudy);
         return semester;
     }
 

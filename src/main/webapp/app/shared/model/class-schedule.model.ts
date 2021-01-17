@@ -10,6 +10,7 @@ export interface IClassSchedule {
   semesterPeriod?: SemesterPeriod;
   startTime?: string;
   endTime?: string;
+  lecturerId?: number;
   classGroupId?: number;
   roomId?: number;
 }
