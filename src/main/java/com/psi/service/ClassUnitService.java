@@ -59,7 +59,6 @@ public class ClassUnitService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-
     /**
      * Get one classUnit by id.
      *
