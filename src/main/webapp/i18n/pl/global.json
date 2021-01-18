@@ -4,7 +4,7 @@
     "browsehappy": "Używasz <strong>przestarzałej</strong> przeglądarki. Proszę <a href=\"http://browsehappy.com/\">uaktualnij swoją przeglądarkę</a> aby poprawić wrażenia z użytkowania tej aplikacji.",
     "menu": {
       "home": "Strona domowa",
-      "shedule": "Plan zajęć",
+      "schedule": "Plan zajęć",
       "asks-for-enrollment-over-limit": "Prośby o zapis ponad stan",
       "semesters": "Semestry",
       "enrollments": "Zapisy",
