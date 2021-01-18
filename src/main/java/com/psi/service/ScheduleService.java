@@ -37,10 +37,12 @@ public class ScheduleService {
      * @return the list of entities by student id.
      */
     @Transactional(readOnly = true)
-    public List<ScheduleElementDTO> findAllByStudentId(Long id) {
-        log.debug("Request to get all ClassUnits by student id : {}", id);
+    public List<ScheduleElementDTO> findAllForUser(String userLogin) {
+        log.debug("Request to get all schedule elements for user: {}", userLogin);
+
+        Long studentId = Long.parseLong(userLogin);
         return classUnitRepository.findAll().stream()
-            .filter(unit -> unit.getClassGroup().getEnrollments().stream().anyMatch(e -> e.getStudent().getId().equals(id)))
+            .filter(unit -> unit.getClassGroup().getEnrollments().stream().anyMatch(e -> e.getStudent().getId().equals(studentId)))
             .map(scheduleElementMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }

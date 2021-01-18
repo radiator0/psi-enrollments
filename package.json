@@ -18,6 +18,7 @@
     "@material-ui/icons": "^4.11.2",
     "availity-reactstrap-validation": "2.6.1",
     "axios": "^0.21.1",
+    "babel-loader": "^8.2.2",
     "bootstrap": "4.4.1",
     "bootswatch": "4.3.1",
     "loaders.css": "0.1.2",
@@ -44,6 +45,9 @@
     "uuid": "7.0.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
     "@openapitools/openapi-generator-cli": "1.0.13-4.3.1",
     "@types/enzyme": "3.10.7",
     "@types/jest": "25.2.1",

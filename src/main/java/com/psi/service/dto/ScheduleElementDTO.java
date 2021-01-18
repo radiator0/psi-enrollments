@@ -4,7 +4,6 @@ import com.psi.domain.enumeration.ClassType;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDate;
 
 /**
  * A DTO for the {@link com.psi.domain.ClassUnit} entity.
@@ -13,11 +12,9 @@ public class ScheduleElementDTO implements Serializable {
 
     private Long id;
 
-    private LocalDate day;
+    private Instant startDate;
 
-    private Instant startTime;
-
-    private Instant endTime;
+    private Instant endDate;
 
     private String courseName;
 
@@ -117,28 +114,20 @@ public class ScheduleElementDTO implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getDay() {
-        return day;
+    public Instant getStartDate() {
+        return startDate;
     }
 
-    public void setDay(LocalDate day) {
-        this.day = day;
+    public void setStartDate(Instant startDate) {
+        this.startDate = startDate;
     }
 
-    public Instant getStartTime() {
-        return startTime;
+    public Instant getEndDate() {
+        return endDate;
     }
 
-    public void setStartTime(Instant startTime) {
-        this.startTime = startTime;
-    }
-
-    public Instant getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Instant endTime) {
-        this.endTime = endTime;
+    public void setEndDate(Instant endDate) {
+        this.endDate = endDate;
     }
 
 
@@ -164,9 +153,8 @@ public class ScheduleElementDTO implements Serializable {
     public String toString() {
         return "ClassUnitDetailsDTO{" +
             "id=" + id +
-            ", day=" + day +
-            ", startTime=" + startTime +
-            ", endTime=" + endTime +
+            ", startTime=" + startDate +
+            ", endTime=" + endDate +
             ", courseName='" + courseName + '\'' +
             ", courseShortName='" + courseShortName + '\'' +
             ", classType=" + classType +

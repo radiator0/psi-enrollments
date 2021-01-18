@@ -5,39 +5,56 @@ import {
   Scheduler, WeekView, Appointments, CurrentTimeIndicator, Resources, Toolbar, DateNavigator, TodayButton
 } from '@devexpress/dx-react-scheduler-material-ui';
 import ScheduleData from './schedule-data';
+import axios from 'axios';
+import mapScheduleElementToScheduleData from './schedule-element-to-data-mapper';
+import ScheduleElement from './schedule-element';
+import scheduleResources from './schedule-resources';
+import log from '../../config/log';
+import Appointment from './appointment';
+import ClassType from './class-type';
+
+interface IScheduleProps {
+  semester: number;
+};
 
 interface IScheduleState {
   data: Array<ScheduleData>;
   resources: Array<any>;
-  currentDate: string;
-}
+  currentDate: Date;
+};
 
-export class Schedule extends React.PureComponent<IScheduleState> {
-  state: IScheduleState;
-  currentDateChange: (currentDate: any) => void;
 
+export class Schedule extends React.PureComponent<IScheduleProps, IScheduleState> {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: [
-        new ScheduleData(1, new Date('2018-10-31T07:30'), new Date('2018-10-31T09:00'), 'BAZY', 'labs'),
-        new ScheduleData(2, new Date('2018-10-31T09:15'), new Date('2018-10-31T11:00'), 'TEŻ BAZY ALE NA CZERWONO', 'lecture'),
-      ],
-      resources: [{
-        fieldName: 'type',
-        title: 'Type',
-        instances: [
-          { id: 'lecture', text: 'Lecture', color: '#EC407A' },
-          { id: 'labs', text: 'Labs', color: '#7E57C2' },
-        ],
-      }],
-      currentDate: '2018-10-31',
+      data: [/*
+        new ScheduleData(1, new Date('2021-01-18T07:30'), new Date('2021-01-18T09:00'), 'BAZY', ClassType.Laboratory.toString()),
+        new ScheduleData(2, new Date('2021-01-18T09:15'), new Date('2021-01-18T11:00'), 'TEŻ BAZY ALE NA CZERWONO', ClassType.Lecture.toString()),
+      */],
+      resources: scheduleResources,
+      currentDate: new Date(),
     };
-    this.currentDateChange = (currentDate) => { this.setState({ currentDate }); };
   }
+  
+  currentDateChange = (currentDate : Date) => { this.setState({ currentDate }); };
 
   componentDidMount() {
+    axios.get<Array<ScheduleElement>>("/api/my-schedule")
+    .then(r => {
+      const data = r.data.map(element => mapScheduleElementToScheduleData(element));
+      this.setState( { data })
+    })
+    .catch(e => log.error(e))
+  }
+
+  myAppointment(props) {
+    return (
+      <Appointment
+        {...props}
+      />
+    );
   }
 
   render() {
@@ -57,16 +74,16 @@ export class Schedule extends React.PureComponent<IScheduleState> {
             startDayHour={7.5}
             endDayHour={20.5}
             excludedDays={[0,6]}
+            cellDuration={30}
           />
-  
-          <Appointments />
-
+          <Appointments
+            appointmentComponent={this.myAppointment}
+          />
 					<CurrentTimeIndicator
               shadePreviousCells={true}
               shadePreviousAppointments={true}
               updateInterval={10000}
             />
-
           <Resources
             data={resources}
           />

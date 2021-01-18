@@ -12,15 +12,17 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring", uses = {ClassGroupMapper.class, RoomMapper.class})
 public interface ScheduleElementMapper extends EntityMapper<ScheduleElementDTO, ClassUnit> {
+    @Mapping(source = "startTime", target = "startDate")
+    @Mapping(source = "endTime", target = "endDate")
     @Mapping(source = "classGroup.course.name", target = "courseName")
     @Mapping(source = "classGroup.course.shortName", target = "courseShortName")
     @Mapping(source = "classGroup.course.form", target = "classType")
     @Mapping(source = "room.number", target = "room")
     @Mapping(source = "room.building.name", target = "building")
-    @Mapping(source = "classGroup.lecturer.title", target = "lecturerTitle")
-    @Mapping(source = "classGroup.lecturer.firstName", target = "lecturerFirstName")
-    @Mapping(source = "classGroup.lecturer.secondName", target = "lecturerSecondName")
-    @Mapping(source = "classGroup.lecturer.lastName", target = "lecturerLastName")
+    @Mapping(source = "classGroup.mainLecturer.title", target = "lecturerTitle")
+    @Mapping(source = "classGroup.mainLecturer.firstName", target = "lecturerFirstName")
+    @Mapping(source = "classGroup.mainLecturer.secondName", target = "lecturerSecondName")
+    @Mapping(source = "classGroup.mainLecturer.lastName", target = "lecturerLastName")
     ScheduleElementDTO toDto(ClassUnit classUnit);
 
     default ClassUnit fromId(Long id) {

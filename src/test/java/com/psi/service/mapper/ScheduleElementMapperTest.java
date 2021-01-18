@@ -52,7 +52,7 @@ public class ScheduleElementMapperTest {
 
         ClassGroup classGroup = new ClassGroup();
         classGroup.setId(200L);
-        classGroup.setLecturer(lecturer);
+        classGroup.setMainLecturer(lecturer);
         classGroup.setCourse(course);
 
         ClassUnit classUnit = new ClassUnit();
@@ -66,9 +66,8 @@ public class ScheduleElementMapperTest {
         ScheduleElementDTO scheduleElementDTO = scheduleElementMapper.toDto(classUnit);
 
         assertThat(scheduleElementDTO.getId()).isEqualTo(classUnit.getId());
-        assertThat(scheduleElementDTO.getDay()).isEqualTo(classUnit.getDay());
-        assertThat(scheduleElementDTO.getStartTime()).isEqualTo(classUnit.getStartTime());
-        assertThat(scheduleElementDTO.getEndTime()).isEqualTo(classUnit.getEndTime());
+        assertThat(scheduleElementDTO.getStartDate()).isEqualTo(classUnit.getStartTime());
+        assertThat(scheduleElementDTO.getEndDate()).isEqualTo(classUnit.getEndTime());
         assertThat(scheduleElementDTO.getCourseName()).isEqualTo(course.getName());
         assertThat(scheduleElementDTO.getCourseShortName()).isEqualTo(course.getShortName());
         assertThat(scheduleElementDTO.getClassType()).isEqualTo(course.getForm());
@@ -101,9 +100,8 @@ public class ScheduleElementMapperTest {
         ScheduleElementDTO scheduleElementDTO = scheduleElementMapper.toDto(classUnit);
 
         assertThat(scheduleElementDTO.getId()).isEqualTo(classUnit.getId());
-        assertThat(scheduleElementDTO.getDay()).isEqualTo(classUnit.getDay());
-        assertThat(scheduleElementDTO.getStartTime()).isEqualTo(classUnit.getStartTime());
-        assertThat(scheduleElementDTO.getEndTime()).isEqualTo(classUnit.getEndTime());
+        assertThat(scheduleElementDTO.getStartDate()).isEqualTo(classUnit.getStartTime());
+        assertThat(scheduleElementDTO.getEndDate()).isEqualTo(classUnit.getEndTime());
         assertThat(scheduleElementDTO.getCourseName()).isEqualTo(course.getName());
         assertThat(scheduleElementDTO.getCourseShortName()).isEqualTo(course.getShortName());
         assertThat(scheduleElementDTO.getClassType()).isEqualTo(course.getForm());
