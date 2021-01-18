@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row } from 'reactstrap';
 
-export type IEnrollmentsProps = StateProps;
+export type IScheduleProps = StateProps;
 
-class Enrollments extends Component<IEnrollmentsProps> {
+class Schedule extends Component<IScheduleProps> {
   render() {
     return (
       <Row>
-        Enrollments
+        Schedule
       </Row>
     );
   }
-};
+}
 
 const mapStateToProps = () => ({
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 
-export default connect(mapStateToProps)(Enrollments);
+export default connect(mapStateToProps)(Schedule);
