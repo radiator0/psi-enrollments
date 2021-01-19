@@ -1,6 +1,6 @@
-import RecurringScheduleElement from '../dto/recurring-schedule-element';
+import RecurringScheduleElement from '../../../../shared/model/domain/dto/recurring-schedule-element';
 import ScheduleData from '../../schedule-data';
-import DayOfWeek from '../day-of-week';
+import DayOfWeek from '../../../../shared/model/domain/enum/day-of-week';
 
 const normalizeDate = (date : Date, dayOfWeek: DayOfWeek) => {
     const d = new Date(date);

@@ -47,7 +47,7 @@ public class ScheduleResource {
     }
 
     /**
-     * {@code GET  /semester-schedule} : get all recurring schedule elements for user for last started semester.
+     * {@code GET  /semester-schedule} : get all recurring schedule elements of user for last started semester.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of recurring schedule elements for last started semester in body.
      */
@@ -56,23 +56,6 @@ public class ScheduleResource {
         Optional<String> userLogin = SecurityUtils.getCurrentUserLogin();
         if(userLogin.isPresent()) {
             log.debug("REST request to get all recurring schedule elements for last started semester for user : {}", userLogin);
-            return scheduleService.findAllRecurringScheduleElementsOfLastSemesterForUser(userLogin.get());
-        }
-        else {
-            throw new UnauthorizedException();
-        }
-    }
-
-    /**
-     * {@code GET  /semester-schedule/:id} : get all recurring schedule elements for user.
-     *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of recurring schedule elements in body.
-     */
-    @GetMapping("/semester-schedule/{id}")
-    public List<RecurringScheduleElementDTO> getAllRecurringScheduleElementsForUser(@PathVariable Long id) {
-        Optional<String> userLogin = SecurityUtils.getCurrentUserLogin();
-        if(userLogin.isPresent()) {
-            log.debug("REST request to get all recurring schedule elements for user : {}", userLogin);
             return scheduleService.findAllRecurringScheduleElementsOfLastSemesterForUser(userLogin.get());
         }
         else {

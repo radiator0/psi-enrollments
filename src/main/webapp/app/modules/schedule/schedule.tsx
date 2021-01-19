@@ -8,18 +8,18 @@ import ScheduleData from './schedule-data';
 import axios from 'axios';
 import mapScheduleElementToScheduleData from './domain/mapper/schedule-element-to-data-mapper';
 import mapRecurringScheduleElementToScheduleData from './domain/mapper/recurring-schedule-element-to-data-mapper';
-import ScheduleElement from './domain/dto/schedule-element';
-import RecurringScheduleElement from './domain/dto/recurring-schedule-element';
+import ScheduleElement from '../../shared/model/domain/dto/schedule-element';
+import RecurringScheduleElement from '../../shared/model/domain/dto/recurring-schedule-element';
 import scheduleResources from './schedule-resources';
 import log from '../../config/log';
-import Appointment from './appointment';
+import Appointment from './view/appointment';
 import { Typography } from '@material-ui/core';
 import { RouteComponentProps } from 'react-router-dom';
 import ScheduleType from './schedule-types'
 import { StaticContext } from 'react-router';
-import Header from './appointment-header';
-import Content from './appointment-content';
-import CommandButton from './appointment-command-button';
+import Header from './view/appointment-header';
+import Content from './view/appointment-content';
+import CommandButton from './view/appointment-command-button';
 
 interface IScheduleState {
   scheduleType: string,
@@ -78,10 +78,9 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
   }
   
   semesterHeading() {
-    const semester = 'x';
     return this.state.scheduleType === ScheduleType.semester && (
-      <Typography>
-        {`Semestr ${semester}`}
+      <Typography variant="h5" component="h5">
+        {'Semester'}
       </Typography>
     );
   }
