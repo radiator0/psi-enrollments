@@ -2,13 +2,12 @@ package com.psi.service.mapper;
 
 
 import com.psi.domain.ClassUnit;
-import com.psi.service.dto.ClassUnitDTO;
 import com.psi.service.dto.ScheduleElementDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 /**
- * Mapper for the entity {@link ClassUnit} and its DTO {@link ClassUnitDTO}.
+ * Mapper for the entity {@link ClassUnit} and its DTO {@link ScheduleElementDTO}.
  */
 @Mapper(componentModel = "spring", uses = {ClassGroupMapper.class, RoomMapper.class})
 public interface ScheduleElementMapper extends EntityMapper<ScheduleElementDTO, ClassUnit> {
