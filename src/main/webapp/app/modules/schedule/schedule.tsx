@@ -17,6 +17,7 @@ import { Typography } from '@material-ui/core';
 import { RouteComponentProps } from 'react-router-dom';
 import ScheduleType from './schedule-types'
 import { StaticContext } from 'react-router';
+import { connect } from 'react-redux';
 import Header from './view/appointment-header';
 import Content from './view/appointment-content';
 import CommandButton from './view/appointment-command-button';
@@ -44,27 +45,30 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
 
     };
   }
-  
-  currentDateChange = (currentDate : Date) => { this.setState({ currentDate }); };
+
+  currentDateChange = (currentDate: Date) => { this.setState({ currentDate }); };
 
   componentDidMount() {
-    if(this.state.scheduleType === ScheduleType.week)
-    {
+    if (this.state.scheduleType === ScheduleType.week) {
       axios.get<Array<ScheduleElement>>("/api/week-schedule")
-      .then(r => {
-        const data = r.data.map(element => mapScheduleElementToScheduleData(element));
-        this.setState( { data })
-      })
-      .catch(e => log.error(e))
+        .then(r => {
+          const data = r.data.map(element => mapScheduleElementToScheduleData(element));
+          this.setState({ data })
+        })
+        .catch(e => log.error(e))
     }
-    else
-    {
+    else {
       axios.get<Array<RecurringScheduleElement>>("/api/semester-schedule")
-      .then(r => {
-        const data = r.data.map(element => mapRecurringScheduleElementToScheduleData(element));
-        this.setState( { data })
-      })
-      .catch(e => log.error(e))
+        .then(r => {
+          const data = r.data.map(element => mapRecurringScheduleElementToScheduleData(element));
+          this.setState({ data })
+        })
+        .catch(e => log.error(e))
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.scheduleType !== this.props.match.params.scheduleType) {
+      this.setState({ scheduleType: this.props.match.params.scheduleType })
     }
   }
 
@@ -76,12 +80,14 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
       />
     );
   }
-  
+
   semesterHeading() {
     return this.state.scheduleType === ScheduleType.semester && (
-      <Typography variant="h5" component="h5">
-        {'Semester'}
-      </Typography>
+      <>
+        <Typography variant="h4" component="h4">
+          {'Semester'}
+        </Typography>
+      </>
     );
   }
 
@@ -92,7 +98,7 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
       <Paper>
         <Scheduler
           data={data}
-					height={800}
+          height={800}
         >
           <ViewState
             currentDate={currentDate}
@@ -101,13 +107,13 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
           <WeekView
             startDayHour={7.5}
             endDayHour={20.5}
-            excludedDays={[0,6]}
+            excludedDays={[0, 6]}
             cellDuration={30}
           />
           <Appointments
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
-            onClick={log.info('dupa')}
+            onClick={ }
             appointmentComponent={this.customAppointment}
           />
           <AppointmentTooltip
@@ -122,22 +128,27 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
             commandButtonComponent={CommandButton}
             showCloseButton
           />
-					<CurrentTimeIndicator
-              shadePreviousCells={true}
-              shadePreviousAppointments={true}
-              updateInterval={10000}
-            />
+          <CurrentTimeIndicator
+            shadePreviousCells={true}
+            shadePreviousAppointments={true}
+            updateInterval={10000}
+          />
           <Resources
             data={resources}
           />
           {this.semesterHeading()}
           {this.state.scheduleType === ScheduleType.week && <Toolbar />}
           {this.state.scheduleType === ScheduleType.week && <DateNavigator />}
-          {this.state.scheduleType === ScheduleType.week && <TodayButton />}         
+          {this.state.scheduleType === ScheduleType.week && <TodayButton />}
         </Scheduler>
       </Paper>
     );
   }
 }
 
-export default Schedule;
+const mapStateToProps = () => ({
+});
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+
+export default connect(mapStateToProps)(Schedule);

@@ -4,6 +4,10 @@
     "browsehappy": "Używasz <strong>przestarzałej</strong> przeglądarki. Proszę <a href=\"http://browsehappy.com/\">uaktualnij swoją przeglądarkę</a> aby poprawić wrażenia z użytkowania tej aplikacji.",
     "menu": {
       "home": "Strona domowa",
+      "schedule": "Plan zajęć",
+      "asks-for-enrollment-over-limit": "Prośby o zapis ponad stan",
+      "semesters": "Semestry",
+      "enrollments": "Zapisy",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Encje",

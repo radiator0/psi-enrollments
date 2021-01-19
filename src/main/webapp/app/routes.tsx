@@ -15,6 +15,9 @@ import PrivateRoute from 'app/shared/auth/private-route';
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
+import AsksForEnrollmentOverLimit from './modules/asks-for-enrollment-over-limit/asks-for-enrollment-over-limit';
+import Semesters from './modules/semesters/semesters';
+import Enrollments from './modules/enrollments/enrollments';
 
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
@@ -38,6 +41,9 @@ const Routes = () => (
       <PrivateRoute path="/schedule/:scheduleType" component={Schedule} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
       <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
+      <PrivateRoute path="/asks-for-enrollment-over-limit" component={AsksForEnrollmentOverLimit} hasAnyAuthorities={[AUTHORITIES.USER]} />
+      <PrivateRoute path="/semesters" component={Semesters} hasAnyAuthorities={[AUTHORITIES.USER]} />
+      <PrivateRoute path="/enrollments" component={Enrollments} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <ErrorBoundaryRoute path="/" exact component={Home} />
       <PrivateRoute path="/" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <ErrorBoundaryRoute component={PageNotFound} />

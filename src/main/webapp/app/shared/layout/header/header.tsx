@@ -2,14 +2,16 @@ import './header.scss';
 
 import React, { useState } from 'react';
 import { Translate, Storage } from 'react-jhipster';
-import { Navbar, Nav, NavbarToggler, NavbarBrand, Collapse } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { NavLink as Link } from 'react-router-dom';
+import { Navbar, Nav, NavbarToggler, Collapse } from 'reactstrap';
 import LoadingBar from 'react-redux-loading-bar';
 
 import { Home, Brand } from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from '../menus';
+import { ScheduleWeekMenu } from 'app/modules/schedule/schedule-week-components';
+import { ScheduleSemesterMenu } from 'app/modules/schedule/schedule-semester-components';
+import { AsksForEnrollmentOverLimitMenu } from 'app/modules/asks-for-enrollment-over-limit/asks-for-enrollment-over-limit-components';
+import { SemestersMenu } from 'app/modules/semesters/semesters-components';
+import { EnrollmentsMenu } from 'app/modules/enrollments/enrollments-components';
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
@@ -53,6 +55,11 @@ const Header = (props: IHeaderProps) => {
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ml-auto" navbar>
             <Home />
+            {props.isAuthenticated && <ScheduleWeekMenu />}
+            {props.isAuthenticated && <ScheduleSemesterMenu />}
+            {props.isAuthenticated && <AsksForEnrollmentOverLimitMenu />}
+            {props.isAuthenticated && <SemestersMenu />}
+            {props.isAuthenticated && <EnrollmentsMenu />}
             {props.isAuthenticated && <EntitiesMenu />}
             {props.isAuthenticated && props.isAdmin && (
               <AdminMenu showSwagger={props.isSwaggerEnabled} showDatabase={!props.isInProduction} />
