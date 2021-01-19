@@ -6,12 +6,12 @@ import { NavLink as Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDay } from '@fortawesome/free-solid-svg-icons'
 
-export const ScheduleMenu = props => (
+export const ScheduleWeekMenu = props => (
   <NavItem>
-    <NavLink tag={Link} to="/schedule" className="d-flex align-items-center">
+    <NavLink tag={Link} to="/schedule/week" className="d-flex align-items-center">
       <FontAwesomeIcon icon={faCalendarDay} />
       <span>
-        <Translate contentKey="global.menu.schedule">Schedule</Translate>
+        <Translate contentKey="global.menu.scheduleWeek">Week</Translate>
       </span>
     </NavLink>
   </NavItem>

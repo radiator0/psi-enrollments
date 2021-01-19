@@ -1,0 +1,1 @@
+export default { week: 'week', semester: 'semester' };

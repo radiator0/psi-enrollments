@@ -11,7 +11,7 @@ import com.psi.domain.enumeration.SemesterPeriod;
  * A DTO for the {@link com.psi.domain.ClassSchedule} entity.
  */
 public class ClassScheduleDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -27,13 +27,12 @@ public class ClassScheduleDTO implements Serializable {
     @NotNull
     private Instant endTime;
 
-
     private Long lecturerId;
 
     private Long classGroupId;
 
     private Long roomId;
-    
+
     public Long getId() {
         return id;
     }

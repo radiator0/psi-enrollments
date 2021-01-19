@@ -7,7 +7,8 @@ import LoadingBar from 'react-redux-loading-bar';
 
 import { Home, Brand } from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from '../menus';
-import { ScheduleMenu } from 'app/modules/schedule/schedule-components';
+import { ScheduleWeekMenu } from 'app/modules/schedule/schedule-week-components';
+import { ScheduleSemesterMenu } from 'app/modules/schedule/schedule-semester-components';
 import { AsksForEnrollmentOverLimitMenu } from 'app/modules/asks-for-enrollment-over-limit/asks-for-enrollment-over-limit-components';
 import { SemestersMenu } from 'app/modules/semesters/semesters-components';
 import { EnrollmentsMenu } from 'app/modules/enrollments/enrollments-components';
@@ -54,7 +55,8 @@ const Header = (props: IHeaderProps) => {
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ml-auto" navbar>
             <Home />
-            {props.isAuthenticated && <ScheduleMenu />}
+            {props.isAuthenticated && <ScheduleWeekMenu />}
+            {props.isAuthenticated && <ScheduleSemesterMenu />}
             {props.isAuthenticated && <AsksForEnrollmentOverLimitMenu />}
             {props.isAuthenticated && <SemestersMenu />}
             {props.isAuthenticated && <EnrollmentsMenu />}
