@@ -278,4 +278,16 @@ public class UserService {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
 
+    public boolean isUserStudent(User user){
+        return hasRole(user, AuthoritiesConstants.STUDENT);
+    }
+
+    public boolean isUserLecturer(User user){
+        return hasRole(user, AuthoritiesConstants.LECTURER);
+    }
+
+    private boolean hasRole(User user, String role){
+        return user.getAurthoritiesNames().contains(role);
+    }
+
 }

@@ -1,8 +1,10 @@
 package com.psi.service;
 
 import com.psi.domain.ClassSchedule;
+import com.psi.domain.User;
 import com.psi.repository.ClassScheduleRepository;
 import com.psi.repository.ClassUnitRepository;
+import com.psi.security.AuthoritiesConstants;
 import com.psi.service.dto.RecurringScheduleElementDTO;
 import com.psi.service.dto.ScheduleElementDTO;
 import com.psi.service.mapper.RecurringScheduleElementMapper;
@@ -31,13 +33,16 @@ public class ScheduleService {
     private final ClassUnitRepository classUnitRepository;
     private final ClassScheduleRepository classScheduleRepository;
 
+    private final UserService userService;
+
     private final ScheduleElementMapper scheduleElementMapper;
     private final RecurringScheduleElementMapper recurringScheduleElementMapper;
 
-    public ScheduleService(ClassUnitRepository classUnitRepository, ClassScheduleRepository classScheduleRepository,
+    public ScheduleService(ClassUnitRepository classUnitRepository, ClassScheduleRepository classScheduleRepository, UserService userService,
                            ScheduleElementMapper scheduleElementMapper, RecurringScheduleElementMapper recurringScheduleElementMapper) {
         this.classUnitRepository = classUnitRepository;
         this.classScheduleRepository = classScheduleRepository;
+        this.userService = userService;
         this.scheduleElementMapper = scheduleElementMapper;
         this.recurringScheduleElementMapper = recurringScheduleElementMapper;
     }
@@ -48,14 +53,19 @@ public class ScheduleService {
      * @return the list of entities by student id.
      */
     @Transactional(readOnly = true)
-    public List<ScheduleElementDTO> findAllForUser(String userLogin) {
-        log.debug("Request to get all schedule elements for user: {}", userLogin);
+    public List<ScheduleElementDTO> findAllForUser(User user) {
+        log.debug("Request to get all schedule elements for user: {}", user.getLogin());
 
-        Long studentId = Long.parseLong(userLogin);
-        return classUnitRepository.findAll().stream()
-            .filter(unit -> unit.getClassGroup().getEnrollments().stream().anyMatch(e -> e.getStudent().getId().equals(studentId)))
-            .map(scheduleElementMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        if(userService.isUserStudent(user)){
+            Long studentId = Long.parseLong(user.getLogin());
+            return classUnitRepository.findAll().stream()
+                .filter(unit -> unit.getClassGroup().getEnrollments().stream().anyMatch(e -> e.getStudent().getId().equals(studentId)))
+                .map(scheduleElementMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+        }
+        else {
+            throw new NotYetImplementedException();
+        }
     }
 
     /**
