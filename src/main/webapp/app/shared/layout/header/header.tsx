@@ -15,6 +15,8 @@ import { EnrollmentsMenu } from 'app/modules/enrollments/enrollments-components'
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
+  isStudent: boolean;
+  isLecturer: boolean;
   isAdmin: boolean;
   ribbonEnv: string;
   isInProduction: boolean;
@@ -55,12 +57,12 @@ const Header = (props: IHeaderProps) => {
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ml-auto" navbar>
             <Home />
-            {props.isAuthenticated && <ScheduleWeekMenu />}
-            {props.isAuthenticated && <ScheduleSemesterMenu />}
-            {props.isAuthenticated && <AsksForEnrollmentOverLimitMenu />}
-            {props.isAuthenticated && <SemestersMenu />}
-            {props.isAuthenticated && <EnrollmentsMenu />}
-            {props.isAuthenticated && <EntitiesMenu />}
+            {props.isAuthenticated && props.isStudent && <ScheduleWeekMenu />}
+            {props.isAuthenticated && props.isStudent && <ScheduleSemesterMenu />}
+            {props.isAuthenticated && (props.isStudent || props.isLecturer) && <AsksForEnrollmentOverLimitMenu />}
+            {props.isAuthenticated && props.isStudent && <SemestersMenu />}
+            {props.isAuthenticated && props.isStudent && <EnrollmentsMenu />}
+            {props.isAuthenticated && props.isAdmin && <EntitiesMenu />}
             {props.isAuthenticated && props.isAdmin && (
               <AdminMenu showSwagger={props.isSwaggerEnabled} showDatabase={!props.isInProduction} />
             )}
