@@ -1,10 +1,9 @@
 package com.psi.service;
 
-import com.psi.domain.ClassSchedule;
-import com.psi.domain.User;
+import com.psi.domain.*;
 import com.psi.repository.ClassScheduleRepository;
 import com.psi.repository.ClassUnitRepository;
-import com.psi.security.AuthoritiesConstants;
+import com.psi.repository.EnrollmentRepository;
 import com.psi.service.dto.RecurringScheduleElementDTO;
 import com.psi.service.dto.ScheduleElementDTO;
 import com.psi.service.mapper.RecurringScheduleElementMapper;
@@ -15,10 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -32,6 +28,7 @@ public class ScheduleService {
 
     private final ClassUnitRepository classUnitRepository;
     private final ClassScheduleRepository classScheduleRepository;
+    private final EnrollmentRepository enrollmentRepository;
 
     private final UserService userService;
 
@@ -39,32 +36,35 @@ public class ScheduleService {
     private final RecurringScheduleElementMapper recurringScheduleElementMapper;
 
     public ScheduleService(ClassUnitRepository classUnitRepository, ClassScheduleRepository classScheduleRepository, UserService userService,
-                           ScheduleElementMapper scheduleElementMapper, RecurringScheduleElementMapper recurringScheduleElementMapper) {
+                           ScheduleElementMapper scheduleElementMapper, EnrollmentRepository enrollmentRepository, RecurringScheduleElementMapper recurringScheduleElementMapper) {
         this.classUnitRepository = classUnitRepository;
         this.classScheduleRepository = classScheduleRepository;
         this.userService = userService;
         this.scheduleElementMapper = scheduleElementMapper;
+        this.enrollmentRepository = enrollmentRepository;
         this.recurringScheduleElementMapper = recurringScheduleElementMapper;
     }
 
     /**
-     * Get all the schedule elements of groups where student with id is enrolled.
+     * Get all the schedule elements of groups where student is enrolled.
      *
-     * @return the list of entities by student id.
+     * @return the list of entities by user.
      */
     @Transactional(readOnly = true)
     public List<ScheduleElementDTO> findAllForUser(User user) {
         log.debug("Request to get all schedule elements for user: {}", user.getLogin());
 
-        if(userService.isUserStudent(user)){
-            Long studentId = Long.parseLong(user.getLogin());
+        if (userService.isUserStudent(user)) {
+            Student student = userService.getStudentInstance(user);
             return classUnitRepository.findAll().stream()
-                .filter(unit -> unit.getClassGroup().getEnrollments().stream().anyMatch(e -> e.getStudent().getId().equals(studentId)))
+                .filter(unit -> unit.getClassGroup().getEnrollments().stream().anyMatch(e -> e.getStudent().equals(student)))
                 .map(scheduleElementMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
-        }
-        else {
-            throw new NotYetImplementedException();
+        } else {
+            Lecturer lecturer = userService.getLecturerInstance(user);
+            List<ClassUnit> classUnits = new ArrayList<>();
+            lecturer.getClassGroups().stream().map(ClassGroup::getClassUnits).forEach(classUnits::addAll);
+            return classUnits.stream().map(scheduleElementMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
         }
     }
 

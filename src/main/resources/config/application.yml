@@ -111,8 +111,6 @@ spring:
   output:
     ansi:
       console-available: true
-  liquibase:
-    drop-first: true
 
 server:
   servlet:

@@ -57,8 +57,8 @@ const Header = (props: IHeaderProps) => {
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ml-auto" navbar>
             <Home />
-            {props.isAuthenticated && props.isStudent && <ScheduleWeekMenu />}
-            {props.isAuthenticated && props.isStudent && <ScheduleSemesterMenu />}
+            {props.isAuthenticated && (props.isStudent || props.isLecturer) && <ScheduleWeekMenu />}
+            {props.isAuthenticated && (props.isStudent || props.isLecturer) && <ScheduleSemesterMenu />}
             {props.isAuthenticated && (props.isStudent || props.isLecturer) && <AsksForEnrollmentOverLimitMenu />}
             {props.isAuthenticated && props.isStudent && <SemestersMenu />}
             {props.isAuthenticated && props.isStudent && <EnrollmentsMenu />}

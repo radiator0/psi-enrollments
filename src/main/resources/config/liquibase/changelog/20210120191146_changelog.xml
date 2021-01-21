@@ -1,0 +1,28 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <changeSet author="root (generated)" id="1611169913112-2">
+        <addColumn tableName="jhi_user">
+            <column name="lecturer_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="root (generated)" id="1611169913112-3">
+        <addColumn tableName="jhi_user">
+            <column name="student_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="root (generated)" id="1611169913112-4">
+        <addUniqueConstraint columnNames="lecturer_id" constraintName="UC_JHI_USERLECTURER_ID_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1611169913112-5">
+        <addUniqueConstraint columnNames="student_id" constraintName="UC_JHI_USERSTUDENT_ID_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1611169913112-6">
+        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="jhi_user" constraintName="FK3bk2rd0nktcqdq7pxmo5f1n93" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="student" validate="true"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1611169913112-7">
+        <addForeignKeyConstraint baseColumnNames="lecturer_id" baseTableName="jhi_user" constraintName="FK4ut9kwwf140w5gu9kp7xht06b" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="lecturer" validate="true"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1611169913112-1">
+        <createSequence incrementBy="50" sequenceName="sequence_generator"/>
+    </changeSet>
+</databaseChangeLog>

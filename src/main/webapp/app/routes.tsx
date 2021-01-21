@@ -38,7 +38,7 @@ const Routes = () => (
       <ErrorBoundaryRoute path="/account/activate/:key?" component={Activate} />
       <ErrorBoundaryRoute path="/account/reset/request" component={PasswordResetInit} />
       <ErrorBoundaryRoute path="/account/reset/finish/:key?" component={PasswordResetFinish} />
-      <PrivateRoute path="/schedule/:scheduleType" component={Schedule} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
+      <PrivateRoute path="/schedule/:scheduleType" component={Schedule} hasAnyAuthorities={[AUTHORITIES.STUDENT, AUTHORITIES.LECTURER]} />
       <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
       <PrivateRoute
         path="/account"

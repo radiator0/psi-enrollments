@@ -49,6 +49,10 @@ public class Student implements Serializable {
     @OneToMany(mappedBy = "student")
     private Set<Enrollment> enrollments = new HashSet<>();
 
+    @OneToOne
+    @JoinColumn(referencedColumnName = "login", name="login")
+    private User internalUser;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
