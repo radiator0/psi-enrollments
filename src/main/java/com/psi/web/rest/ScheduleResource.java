@@ -58,6 +58,6 @@ public class ScheduleResource {
     public List<RecurringScheduleElementDTO> getAllRecurringScheduleElementsForUser() {
         User user = userService.getUserWithAuthorities().orElseThrow(() ->  new ScheduleResourceException("User cannot be found"));
         log.debug("REST request to get all recurring schedule elements for last started semester for user : {}", user.getLogin());
-        return scheduleService.findAllRecurringScheduleElementsOfLastSemesterForUser(user.getLogin());
+        return scheduleService.findAllRecurringScheduleElementsOfLastSemesterForUser(user);
     }
 }

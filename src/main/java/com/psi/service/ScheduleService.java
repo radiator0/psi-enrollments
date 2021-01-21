@@ -8,7 +8,6 @@ import com.psi.service.dto.RecurringScheduleElementDTO;
 import com.psi.service.dto.ScheduleElementDTO;
 import com.psi.service.mapper.RecurringScheduleElementMapper;
 import com.psi.service.mapper.ScheduleElementMapper;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Service Implementation for managing schedules.
@@ -46,7 +46,7 @@ public class ScheduleService {
     }
 
     /**
-     * Get all the schedule elements of groups where student is enrolled.
+     * Get all the schedule elements for lecturer and student
      *
      * @return the list of entities by user.
      */
@@ -74,10 +74,15 @@ public class ScheduleService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public List<RecurringScheduleElementDTO> findAllRecurringScheduleElementsOfLastSemesterForUser(String userLogin) {
-        log.debug("Request to get all recurring schedule elements of last started semester for user: {}", userLogin);
+    public List<RecurringScheduleElementDTO> findAllRecurringScheduleElementsOfLastSemesterForUser(User user) {
+        log.debug("Request to get all recurring schedule elements of last started semester for user: {}", user.getLogin());
 
-        Map<Integer, List<ClassSchedule>> groupedSchedules = findAllRecurringForStudent(userLogin);
+        Map<Integer, List<ClassSchedule>> groupedSchedules;
+        if (userService.isUserStudent(user)) {
+            groupedSchedules = findAllRecurringForStudent(userService.getStudentInstance(user));
+        } else {
+            groupedSchedules = findAllRecurringForLecturer(userService.getLecturerInstance(user));
+        }
 
         Integer lastSemesterNumber = Collections.max(groupedSchedules.keySet());
 
@@ -86,14 +91,18 @@ public class ScheduleService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    private Map<Integer, List<ClassSchedule>> findAllRecurringForStudent(String studentLogin) {
-        Long studentId = Long.parseLong(studentLogin);
-        return classScheduleRepository.findAll().stream()
-            .filter(s -> s.getClassGroup().getEnrollments().stream().anyMatch(e -> e.getStudent().getId().equals(studentId)))
-            .collect(Collectors.groupingBy(s -> s.getClassGroup().getCourse().getEnrollmentDate().getSemester().getNumber()));
+    private Map<Integer, List<ClassSchedule>> findAllRecurringForStudent(Student student) {
+        return groupAndCollectClassSchedules(classScheduleRepository.findAll().stream().
+            filter(s -> s.getClassGroup().getEnrollments().stream().anyMatch(e -> e.getStudent().equals(student))));
     }
 
-    private Map<Integer, List<ClassSchedule>> findAllRecurringForLecturer(String lecturerLogin) {
-        throw new NotYetImplementedException();
+    private Map<Integer, List<ClassSchedule>> findAllRecurringForLecturer(Lecturer lecturer) {
+        List<ClassSchedule> classSchedules = new ArrayList<>();
+        lecturer.getClassGroups().stream().map(ClassGroup::getClassSchedules).forEach(classSchedules::addAll);
+        return groupAndCollectClassSchedules(classSchedules.stream());
+    }
+
+    private Map<Integer, List<ClassSchedule>> groupAndCollectClassSchedules(Stream<ClassSchedule> classSchedulesStream) {
+        return classSchedulesStream.collect(Collectors.groupingBy(s -> s.getClassGroup().getCourse().getEnrollmentDate().getSemester().getNumber()));
     }
 }
