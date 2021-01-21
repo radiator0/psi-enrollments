@@ -27,7 +27,6 @@
     <include file="config/liquibase/changelog/20210117020909_added_entity_ClassGroup.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210117021009_added_entity_Enrollment.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210117021109_added_entity_Lecturer.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210117021209_added_entity_AppUser.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210117021309_added_entity_CourseUnit.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210117021409_added_entity_SelectableModule.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210117021509_added_entity_ClassSchedule.xml" relativeToChangelogFile="false"/>
@@ -44,12 +43,10 @@
     <include file="config/liquibase/changelog/20210117020809_added_entity_constraints_Course.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210117020909_added_entity_constraints_ClassGroup.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210117021009_added_entity_constraints_Enrollment.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210117021209_added_entity_constraints_AppUser.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210117021309_added_entity_constraints_CourseUnit.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210117021509_added_entity_constraints_ClassSchedule.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210117021709_added_entity_constraints_Room.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210117021809_added_entity_constraints_ClassUnit.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20210120191146_changelog.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
