@@ -2,7 +2,6 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.EnrollmentDate;
-import com.psi.domain.EnrollmentUnit;
 import com.psi.domain.Semester;
 import com.psi.repository.EnrollmentDateRepository;
 import com.psi.service.EnrollmentDateService;
@@ -80,16 +79,6 @@ public class EnrollmentDateResourceIT {
             .startDate(DEFAULT_START_DATE)
             .endDate(DEFAULT_END_DATE);
         // Add required entity
-        EnrollmentUnit enrollmentUnit;
-        if (TestUtil.findAll(em, EnrollmentUnit.class).isEmpty()) {
-            enrollmentUnit = EnrollmentUnitResourceIT.createEntity(em);
-            em.persist(enrollmentUnit);
-            em.flush();
-        } else {
-            enrollmentUnit = TestUtil.findAll(em, EnrollmentUnit.class).get(0);
-        }
-        enrollmentDate.getEnrollmentUnits().add(enrollmentUnit);
-        // Add required entity
         Semester semester;
         if (TestUtil.findAll(em, Semester.class).isEmpty()) {
             semester = SemesterResourceIT.createEntity(em);
@@ -113,16 +102,6 @@ public class EnrollmentDateResourceIT {
             .isPreEnrollment(UPDATED_IS_PRE_ENROLLMENT)
             .startDate(UPDATED_START_DATE)
             .endDate(UPDATED_END_DATE);
-        // Add required entity
-        EnrollmentUnit enrollmentUnit;
-        if (TestUtil.findAll(em, EnrollmentUnit.class).isEmpty()) {
-            enrollmentUnit = EnrollmentUnitResourceIT.createUpdatedEntity(em);
-            em.persist(enrollmentUnit);
-            em.flush();
-        } else {
-            enrollmentUnit = TestUtil.findAll(em, EnrollmentUnit.class).get(0);
-        }
-        enrollmentDate.getEnrollmentUnits().add(enrollmentUnit);
         // Add required entity
         Semester semester;
         if (TestUtil.findAll(em, Semester.class).isEmpty()) {
