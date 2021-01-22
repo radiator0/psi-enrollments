@@ -88,7 +88,7 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
     return this.props.match.params.scheduleType === ScheduleType.semester && (
       <>
         <Typography variant="h4" component="h4">
-          {'Semester'}
+          Semester
         </Typography>
       </>
     );

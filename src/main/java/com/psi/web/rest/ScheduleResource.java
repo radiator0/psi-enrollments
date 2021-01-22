@@ -19,17 +19,16 @@ import java.util.List;
 @RequestMapping("/api")
 public class ScheduleResource {
 
-    private final Logger log = LoggerFactory.getLogger(ScheduleResource.class);
-
-    private final ScheduleService scheduleService;
-    private final UserService userService;
-
     private static class ScheduleResourceException extends RuntimeException {
         private ScheduleResourceException(String message) {
             super(message);
         }
     }
 
+    private final Logger log = LoggerFactory.getLogger(ScheduleResource.class);
+
+    private final ScheduleService scheduleService;
+    private final UserService userService;
 
     public ScheduleResource(ScheduleService classUnitService, UserService userService) {
         this.scheduleService = classUnitService;
