@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,11 +34,11 @@ public class EnrollmentDate implements Serializable {
 
     @NotNull
     @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
+    private Instant startDate;
 
     @NotNull
     @Column(name = "end_date", nullable = false)
-    private LocalDate endDate;
+    private Instant endDate;
 
     @OneToMany(mappedBy = "enrollmentDate")
     private Set<EnrollmentUnit> enrollmentUnits = new HashSet<>();
@@ -89,29 +89,29 @@ public class EnrollmentDate implements Serializable {
         this.isPreEnrollment = isPreEnrollment;
     }
 
-    public LocalDate getStartDate() {
+    public Instant getStartDate() {
         return startDate;
     }
 
-    public EnrollmentDate startDate(LocalDate startDate) {
+    public EnrollmentDate startDate(Instant startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Instant startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public Instant getEndDate() {
         return endDate;
     }
 
-    public EnrollmentDate endDate(LocalDate endDate) {
+    public EnrollmentDate endDate(Instant endDate) {
         this.endDate = endDate;
         return this;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Instant endDate) {
         this.endDate = endDate;
     }
 

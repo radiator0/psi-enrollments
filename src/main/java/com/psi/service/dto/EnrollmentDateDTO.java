@@ -1,14 +1,14 @@
 package com.psi.service.dto;
 
-import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.Instant;
 
 /**
  * A DTO for the {@link com.psi.domain.EnrollmentDate} entity.
  */
 public class EnrollmentDateDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -18,14 +18,14 @@ public class EnrollmentDateDTO implements Serializable {
     private Boolean isPreEnrollment;
 
     @NotNull
-    private LocalDate startDate;
+    private Instant startDate;
 
     @NotNull
-    private LocalDate endDate;
+    private Instant endDate;
 
 
     private Long semesterId;
-    
+
     public Long getId() {
         return id;
     }
@@ -50,19 +50,19 @@ public class EnrollmentDateDTO implements Serializable {
         this.isPreEnrollment = isPreEnrollment;
     }
 
-    public LocalDate getStartDate() {
+    public Instant getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Instant startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public Instant getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Instant endDate) {
         this.endDate = endDate;
     }
 
