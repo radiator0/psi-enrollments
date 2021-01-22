@@ -15,7 +15,7 @@ spec:
         app: psi-enrollments
     spec:
       containers:
-      - image: pbr20s1/psi-enrollments:latest
+      - image: pbr20s1/psi-enrollments:$BUILD_NUMBER
         name: psi-enrollments
         ports:
         - containerPort: 8080

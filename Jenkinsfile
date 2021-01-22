@@ -12,14 +12,21 @@ node {
         sh 'npm install'
     }
      
-    stage('Test') {
-         sh 'npm run test-ci'
+    stage('Frontend tests') {
+        sh 'npm run test-ci'
     }  
+	
+    stage('Backend tests') {
+        sh './mvnw clean test'
+    }  
+	
+    stage('Integration tests') {
+        sh './mvnw clean verify'
+    }
     
     stage('Packaging and publishing') {
 		withCredentials([usernamePassword( credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 			sh './mvnw -Pprod package -DskipTests jib:build'
-			sleep(10)
 		}
     }
 }

@@ -576,7 +576,7 @@
 							</auth>
                             <image>pbr20s1/psi-enrollments</image>
 						    <tags>
-								<tag>latest</tag>
+								<tag>${BUILD_NUMBER}</tag>
 						    </tags>
                         </to>
                         <container>
