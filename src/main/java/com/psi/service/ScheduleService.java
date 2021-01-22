@@ -75,7 +75,7 @@ public class ScheduleService {
      */
     @Transactional(readOnly = true)
     public List<RecurringScheduleElementDTO> findAllRecurringScheduleElementsOfLastSemesterForUser(User user) {
-        log.debug("Request to get all recurring schedule elements of last started semester for user: {}", user.getLogin());
+        log.debug("Request to get all recurring schedule elements of last started semester for user: {} ", user.getLogin());
 
         Map<Integer, List<ClassSchedule>> groupedSchedules;
         if (userService.isUserStudent(user)) {
@@ -97,8 +97,7 @@ public class ScheduleService {
     }
 
     private Map<Integer, List<ClassSchedule>> findAllRecurringForLecturer(Lecturer lecturer) {
-        List<ClassSchedule> classSchedules = new ArrayList<>();
-        lecturer.getClassGroups().stream().map(ClassGroup::getClassSchedules).forEach(classSchedules::addAll);
+        List<ClassSchedule> classSchedules = classScheduleRepository.findAllByLecturer(lecturer);
         return groupAndCollectClassSchedules(classSchedules.stream());
     }
 
