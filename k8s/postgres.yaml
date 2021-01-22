@@ -31,6 +31,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: postgres-config
+          env:
+          - name: build-number
+            value: $BUILD_NUMBER
           ports:
             - containerPort: 5432
               name: postgres
