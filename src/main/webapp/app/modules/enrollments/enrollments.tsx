@@ -9,7 +9,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Row from './view/row';
-import fakeEnrollments from './fake-enrollments';
 import EnrollmentRightDetails from 'app/shared/model/domain/dto/enrollment-right-details';
 import mapEnrollmentRightDetailsToEnrollmentData from './domain/mapper/enrollment-right-details-to-enrollment-data-mapper';
 import axios from 'axios';
@@ -48,8 +47,11 @@ class Enrollments extends Component<IEnrollmentsProps, IEnrollmentsState> {
   }
 
   goToEnrollment(enrollmentData : EnrollmentData) {
-    log.info('going to enrollment:');
+    log.info(`going to enrollment: ${enrollmentData.id}`);
     log.info(enrollmentData);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    this.props.history.push( { pathname: `/enrollment/${enrollmentData.id}`});
   }
 
   renderHeader() {
@@ -77,7 +79,9 @@ class Enrollments extends Component<IEnrollmentsProps, IEnrollmentsState> {
           </TableHead>
           <TableBody>
             {this.state.enrollments.map((row) => (
-              <Row key={row.id} row={row} onSelected={this.goToEnrollment} />
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              <Row key={row.id} row={row} onSelected={this.goToEnrollment.bind(this)} />
             ))}
           </TableBody>
         </Table>
