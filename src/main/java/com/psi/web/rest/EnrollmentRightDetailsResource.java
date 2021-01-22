@@ -27,11 +27,6 @@ public class EnrollmentRightDetailsResource {
 
     private final Logger log = LoggerFactory.getLogger(EnrollmentRightDetailsResource.class);
 
-    private static final String ENTITY_NAME = "enrollmentDate";
-
-    @Value("${jhipster.clientApp.name}")
-    private String applicationName;
-
     private final EnrollmentRightDetailsService enrollmentRightDetailsService;
 
     public EnrollmentRightDetailsResource(EnrollmentRightDetailsService enrollmentRightDetailsService) {

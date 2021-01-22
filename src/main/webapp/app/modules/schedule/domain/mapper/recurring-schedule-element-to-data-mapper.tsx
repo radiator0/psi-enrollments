@@ -12,7 +12,7 @@ const normalizeDate = (date : Date, dayOfWeek: DayOfWeek) => {
 };
 
 export default function mapScheduleElementToScheduleData(rse : RecurringScheduleElement) {
-    return new ScheduleData(rse.id, normalizeDate(rse.startDate, rse.dayOfWeek), normalizeDate(rse.endDate, rse.dayOfWeek), rse.courseShortName,
+    return new ScheduleData(rse.id, normalizeDate(rse.startDate, rse.dayOfWeek), normalizeDate(rse.endDate, rse.dayOfWeek), rse.courseShortName || rse.courseName,
         rse.classType.toString(), rse.weekType, rse.semesterPeriod,
         rse.lecturerTitle, rse.lecturerFirstName, rse.lecturerSecondName, rse.lecturerLastName,
         rse.room, rse.building);
