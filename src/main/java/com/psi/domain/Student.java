@@ -22,24 +22,6 @@ public class Student implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-
-    @Column(name = "second_name")
-    private String secondName;
-
-    @NotNull
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
-
-    @NotNull
-    @Column(name = "mail", nullable = false)
-    private String mail;
-
-    @Column(name = "title")
-    private String title;
-
     @OneToMany(mappedBy = "student")
     private Set<Request> requests = new HashSet<>();
 
@@ -48,6 +30,10 @@ public class Student implements Serializable {
 
     @OneToMany(mappedBy = "student")
     private Set<Enrollment> enrollments = new HashSet<>();
+
+    @OneToOne
+    @JoinColumn(referencedColumnName = "login", name="login")
+    private User internalUser;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -58,69 +44,17 @@ public class Student implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public User getInternalUser() {
+        return internalUser;
     }
 
-    public Student firstName(String firstName) {
-        this.firstName = firstName;
+    public Student internalUser(User internalUser) {
+        this.internalUser = internalUser;
         return this;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public Student secondName(String secondName) {
-        this.secondName = secondName;
-        return this;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public Student lastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public Student mail(String mail) {
-        this.mail = mail;
-        return this;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Student title(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setInternalUser(User internalUser) {
+        this.internalUser = internalUser;
     }
 
     public Set<Request> getRequests() {
@@ -220,11 +154,7 @@ public class Student implements Serializable {
     public String toString() {
         return "Student{" +
             "id=" + getId() +
-            ", firstName='" + getFirstName() + "'" +
-            ", secondName='" + getSecondName() + "'" +
-            ", lastName='" + getLastName() + "'" +
-            ", mail='" + getMail() + "'" +
-            ", title='" + getTitle() + "'" +
+            ", internalUser='" + getInternalUser() + "'" +
             "}";
     }
 }

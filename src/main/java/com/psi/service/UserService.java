@@ -2,8 +2,12 @@ package com.psi.service;
 
 import com.psi.config.Constants;
 import com.psi.domain.Authority;
+import com.psi.domain.Lecturer;
+import com.psi.domain.Student;
 import com.psi.domain.User;
 import com.psi.repository.AuthorityRepository;
+import com.psi.repository.LecturerRepository;
+import com.psi.repository.StudentRepository;
 import com.psi.repository.UserRepository;
 import com.psi.security.AuthoritiesConstants;
 import com.psi.security.SecurityUtils;
@@ -20,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -40,10 +45,16 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+    private final StudentRepository studentRepository;
+
+    private final LecturerRepository lecturerRepository;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, StudentRepository studentRepository, LecturerRepository lecturerRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+        this.studentRepository = studentRepository;
+        this.lecturerRepository = lecturerRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -110,7 +121,7 @@ public class UserService {
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
-        authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
+        authorityRepository.findById(AuthoritiesConstants.STUDENT).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
@@ -276,6 +287,34 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+    }
+
+    public boolean isUserStudent(User user){
+        return hasRole(user, AuthoritiesConstants.STUDENT);
+    }
+
+    public boolean isUserLecturer(User user){
+        return hasRole(user, AuthoritiesConstants.LECTURER);
+    }
+
+    public Lecturer getLecturerInstance(User user){
+        Optional<Lecturer> lecturer = lecturerRepository.findOneByInternalUser(user);
+        if(lecturer.isPresent() && isUserLecturer(user)){
+            return lecturer.get();
+        }
+        throw new InsufficientUserPermissionsException(AuthoritiesConstants.LECTURER);
+    }
+
+    public Student getStudentInstance(User user){
+        Optional<Student> student = studentRepository.findOneByInternalUser(user);
+        if(student.isPresent() && isUserStudent(user)){
+            return student.get();
+        }
+        throw new InsufficientUserPermissionsException(AuthoritiesConstants.STUDENT);
+    }
+
+    private boolean hasRole(User user, String role){
+        return user.getAurthoritiesNames().contains(role);
     }
 
 }

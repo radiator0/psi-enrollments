@@ -2,7 +2,6 @@ package com.psi.web.rest;
 
 import com.psi.EnrollmentsApp;
 import com.psi.domain.EnrollmentDate;
-import com.psi.domain.EnrollmentUnit;
 import com.psi.domain.Semester;
 import com.psi.repository.EnrollmentDateRepository;
 import com.psi.service.EnrollmentDateService;
@@ -19,8 +18,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,11 +43,11 @@ public class EnrollmentDateResourceIT {
     private static final Boolean DEFAULT_IS_PRE_ENROLLMENT = false;
     private static final Boolean UPDATED_IS_PRE_ENROLLMENT = true;
 
-    private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_START_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_START_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_END_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_END_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private EnrollmentDateRepository enrollmentDateRepository;
@@ -78,16 +79,6 @@ public class EnrollmentDateResourceIT {
             .startDate(DEFAULT_START_DATE)
             .endDate(DEFAULT_END_DATE);
         // Add required entity
-        EnrollmentUnit enrollmentUnit;
-        if (TestUtil.findAll(em, EnrollmentUnit.class).isEmpty()) {
-            enrollmentUnit = EnrollmentUnitResourceIT.createEntity(em);
-            em.persist(enrollmentUnit);
-            em.flush();
-        } else {
-            enrollmentUnit = TestUtil.findAll(em, EnrollmentUnit.class).get(0);
-        }
-        enrollmentDate.getEnrollmentUnits().add(enrollmentUnit);
-        // Add required entity
         Semester semester;
         if (TestUtil.findAll(em, Semester.class).isEmpty()) {
             semester = SemesterResourceIT.createEntity(em);
@@ -111,16 +102,6 @@ public class EnrollmentDateResourceIT {
             .isPreEnrollment(UPDATED_IS_PRE_ENROLLMENT)
             .startDate(UPDATED_START_DATE)
             .endDate(UPDATED_END_DATE);
-        // Add required entity
-        EnrollmentUnit enrollmentUnit;
-        if (TestUtil.findAll(em, EnrollmentUnit.class).isEmpty()) {
-            enrollmentUnit = EnrollmentUnitResourceIT.createUpdatedEntity(em);
-            em.persist(enrollmentUnit);
-            em.flush();
-        } else {
-            enrollmentUnit = TestUtil.findAll(em, EnrollmentUnit.class).get(0);
-        }
-        enrollmentDate.getEnrollmentUnits().add(enrollmentUnit);
         // Add required entity
         Semester semester;
         if (TestUtil.findAll(em, Semester.class).isEmpty()) {
@@ -277,7 +258,7 @@ public class EnrollmentDateResourceIT {
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getEnrollmentDate() throws Exception {

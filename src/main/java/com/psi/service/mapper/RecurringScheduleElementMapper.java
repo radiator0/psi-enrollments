@@ -19,9 +19,9 @@ public interface RecurringScheduleElementMapper extends EntityMapper<RecurringSc
     @Mapping(source = "room.number", target = "room")
     @Mapping(source = "room.building.name", target = "building")
     @Mapping(source = "lecturer.title", target = "lecturerTitle")
-    @Mapping(source = "lecturer.firstName", target = "lecturerFirstName")
-    @Mapping(source = "lecturer.secondName", target = "lecturerSecondName")
-    @Mapping(source = "lecturer.lastName", target = "lecturerLastName")
+    @Mapping(source = "lecturer.internalUser.firstName", target = "lecturerFirstName")
+    @Mapping(source = "lecturer.internalUser.secondName", target = "lecturerSecondName")
+    @Mapping(source = "lecturer.internalUser.lastName", target = "lecturerLastName")
     RecurringScheduleElementDTO toDto(ClassSchedule classSchedule);
 
     default ClassSchedule fromId(Long id) {

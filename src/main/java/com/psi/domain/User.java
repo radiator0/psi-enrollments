@@ -14,8 +14,10 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A user.
@@ -46,6 +48,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Size(max = 50)
     @Column(name = "first_name", length = 50)
     private String firstName;
+
+    @Size(max = 50)
+    @Column(name = "second_name", length = 50)
+    private String secondName;
 
     @Size(max = 50)
     @Column(name = "last_name", length = 50)
@@ -124,6 +130,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.firstName = firstName;
     }
 
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
     public String getLastName() {
         return lastName;
     }
@@ -190,6 +204,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public Set<Authority> getAuthorities() {
         return authorities;
+    }
+
+    public List<String> getAurthoritiesNames(){
+        return getAuthorities().stream().map(Authority::getName).collect(Collectors.toList());
     }
 
     public void setAuthorities(Set<Authority> authorities) {

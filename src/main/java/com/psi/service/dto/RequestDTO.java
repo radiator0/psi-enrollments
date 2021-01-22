@@ -1,6 +1,6 @@
 package com.psi.service.dto;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.UUID;
@@ -9,14 +9,14 @@ import java.util.UUID;
  * A DTO for the {@link com.psi.domain.Request} entity.
  */
 public class RequestDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
     private UUID uuid;
 
     @NotNull
-    private LocalDate date;
+    private Instant date;
 
     @NotNull
     private String text;
@@ -28,7 +28,7 @@ public class RequestDTO implements Serializable {
     private Long classGroupId;
 
     private Long studentId;
-    
+
     public Long getId() {
         return id;
     }
@@ -45,11 +45,11 @@ public class RequestDTO implements Serializable {
         this.uuid = uuid;
     }
 
-    public LocalDate getDate() {
+    public Instant getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Instant date) {
         this.date = date;
     }
 
