@@ -19,6 +19,7 @@ node {
     stage('Packaging and publishing') {
 		withCredentials([usernamePassword( credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 			sh './mvnw -Pprod package -DskipTests jib:build'
+			sleep(10)
 		}
     }
 }
