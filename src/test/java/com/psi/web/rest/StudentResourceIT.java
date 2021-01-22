@@ -33,9 +33,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser
 public class StudentResourceIT {
 
-    private static final User DEFAULT_USER = new User();
-    private static final User UPDATED_USER = new User();
-
     @Autowired
     private StudentRepository studentRepository;
 
@@ -60,7 +57,7 @@ public class StudentResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Student createEntity(EntityManager em) {
-        return new Student().internalUser(DEFAULT_USER);
+        return new Student();
     }
     /**
      * Create an updated entity for this test.
@@ -69,7 +66,7 @@ public class StudentResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Student createUpdatedEntity(EntityManager em) {
-        return new Student().internalUser(UPDATED_USER);
+        return new Student();
     }
 
     @BeforeEach
@@ -91,8 +88,6 @@ public class StudentResourceIT {
         // Validate the Student in the database
         List<Student> studentList = studentRepository.findAll();
         assertThat(studentList).hasSize(databaseSizeBeforeCreate + 1);
-        Student testStudent = studentList.get(studentList.size() - 1);
-        assertThat(testStudent.getInternalUser()).isEqualTo(DEFAULT_USER);
     }
 
     @Test
@@ -125,8 +120,7 @@ public class StudentResourceIT {
         restStudentMockMvc.perform(get("/api/students?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(student.getId().intValue())))
-            .andExpect(jsonPath("$.[*].internalUser").value(hasItem(DEFAULT_USER)));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(student.getId().intValue())));
     }
 
     @Test
@@ -139,8 +133,7 @@ public class StudentResourceIT {
         restStudentMockMvc.perform(get("/api/students/{id}", student.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(student.getId().intValue()))
-            .andExpect(jsonPath("$.internalUser").value(DEFAULT_USER));
+            .andExpect(jsonPath("$.id").value(student.getId().intValue()));
     }
     @Test
     @Transactional
@@ -162,7 +155,6 @@ public class StudentResourceIT {
         Student updatedStudent = studentRepository.findById(student.getId()).get();
         // Disconnect from session so that the updates on updatedStudent are not directly saved in db
         em.detach(updatedStudent);
-        updatedStudent.internalUser(UPDATED_USER);
         StudentDTO studentDTO = studentMapper.toDto(updatedStudent);
 
         restStudentMockMvc.perform(put("/api/students")
@@ -173,8 +165,6 @@ public class StudentResourceIT {
         // Validate the Student in the database
         List<Student> studentList = studentRepository.findAll();
         assertThat(studentList).hasSize(databaseSizeBeforeUpdate);
-        Student testStudent = studentList.get(studentList.size() - 1);
-        assertThat(testStudent.getInternalUser()).isEqualTo(UPDATED_USER);
     }
 
     @Test
