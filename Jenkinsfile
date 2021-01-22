@@ -18,13 +18,20 @@ node {
     
     stage('Packaging and publishing') {
 		withCredentials([usernamePassword( credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-			sh './mvnw package -DskipTests jib:build'
+			sh './mvnw -Pprod package -DskipTests jib:build'
 		}
     }
 }
 podTemplate {
     node(POD_LABEL) {
-		stage('Deploying') {
+	
+		stage('Deploying DB') {
+			echo 'deploying'
+			unstash 'sources'
+			kubernetesDeploy(kubeconfigId: 'kubeconfig-credentials-id', configs: 'k8s/postgres.yaml')
+		}
+		
+		stage('Deploying app') {
 			echo 'deploying'
 			unstash 'sources'
 			kubernetesDeploy(kubeconfigId: 'kubeconfig-credentials-id', configs: 'k8s/deploy-service.yaml')
