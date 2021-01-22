@@ -3,6 +3,7 @@ package com.psi.service;
 import com.psi.domain.Course;
 import com.psi.domain.EnrollmentRight;
 import com.psi.domain.SelectableModule;
+import com.psi.domain.Student;
 import com.psi.repository.EnrollmentRightRepository;
 import com.psi.repository.SelectableModuleRepository;
 import com.psi.repository.StudentRepository;
@@ -44,9 +45,9 @@ public class SelectableModuleDetailsService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public List<SelectableModuleDetailsDTO> getAllSelectableModulesForStudent(Long enrollmentsId, Long studentId) {
+    public List<SelectableModuleDetailsDTO> getAllSelectableModulesForStudent(Long enrollmentsId, Student student) {
         log.debug("Request to get all SelectableModules of enrollments");
-        EnrollmentRight right = studentRepository.findById(studentId).get().getEnrollmentRights().stream()
+        EnrollmentRight right = student.getEnrollmentRights().stream()
             .filter(r -> r.getEnrollmentDate().getId().equals(enrollmentsId)).findFirst().get();
 
         return selectableModuleDetailsMapper.toDtos(

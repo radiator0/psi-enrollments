@@ -39,15 +39,23 @@ const Routes = () => (
       <ErrorBoundaryRoute path="/account/activate/:key?" component={Activate} />
       <ErrorBoundaryRoute path="/account/reset/request" component={PasswordResetInit} />
       <ErrorBoundaryRoute path="/account/reset/finish/:key?" component={PasswordResetFinish} />
-      <PrivateRoute path="/schedule/:scheduleType" component={Schedule} hasAnyAuthorities={[AUTHORITIES.USER]} />
+      <PrivateRoute path="/schedule/:scheduleType" component={Schedule} hasAnyAuthorities={[AUTHORITIES.STUDENT, AUTHORITIES.LECTURER]} />
       <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
-      <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
-      <PrivateRoute path="/asks-for-enrollment-over-limit" component={AsksForEnrollmentOverLimit} hasAnyAuthorities={[AUTHORITIES.USER]} />
-      <PrivateRoute path="/semesters" component={Semesters} hasAnyAuthorities={[AUTHORITIES.USER]} />
-      <PrivateRoute path="/enrollments" component={Enrollments} hasAnyAuthorities={[AUTHORITIES.USER]} />
-      <PrivateRoute path="/enrollment/:enrollmentsId?" component={Enrolling} hasAnyAuthorities={[AUTHORITIES.USER]} />
+      <PrivateRoute
+        path="/account"
+        component={Account}
+        hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT, AUTHORITIES.LECTURER]}
+      />
+      <PrivateRoute
+        path="/asks-for-enrollment-over-limit"
+        component={AsksForEnrollmentOverLimit}
+        hasAnyAuthorities={[AUTHORITIES.STUDENT, AUTHORITIES.LECTURER]}
+      />
+      <PrivateRoute path="/semesters" component={Semesters} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
+      <PrivateRoute path="/enrollments" component={Enrollments} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
+      <PrivateRoute path="/enrollment/:enrollmentsId?" component={Enrolling} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
       <ErrorBoundaryRoute path="/" exact component={Home} />
-      <PrivateRoute path="/" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
+      <PrivateRoute path="/" component={Entities} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
       <ErrorBoundaryRoute component={PageNotFound} />
     </Switch>
   </div>

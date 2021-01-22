@@ -1,8 +1,10 @@
 package com.psi.web.rest;
 
+import com.psi.domain.User;
 import com.psi.security.SecurityUtils;
 import com.psi.service.SelectableModuleDetailsService;
 import com.psi.service.SelectableModuleService;
+import com.psi.service.UserService;
 import com.psi.service.dto.SelectableModuleDTO;
 import com.psi.service.dto.SelectableModuleDetailsDTO;
 import com.psi.web.rest.errors.BadRequestAlertException;
@@ -27,11 +29,19 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class SelectableModuleDetailsResource {
 
+    private static class SelectableModuleDetailsResourceException extends RuntimeException {
+        private SelectableModuleDetailsResourceException(String message) {
+            super(message);
+        }
+    }
+
     private final Logger log = LoggerFactory.getLogger(SelectableModuleDetailsResource.class);
 
+    private final UserService userService;
     private final SelectableModuleDetailsService selectableModuleDetailsService;
 
-    public SelectableModuleDetailsResource(SelectableModuleDetailsService selectableModuleDetailsService) {
+    public SelectableModuleDetailsResource(UserService userService, SelectableModuleDetailsService selectableModuleDetailsService) {
+        this.userService = userService;
         this.selectableModuleDetailsService = selectableModuleDetailsService;
     }
 
@@ -42,9 +52,8 @@ public class SelectableModuleDetailsResource {
      */
     @GetMapping("/enrollment/{id}/selectable-modules")
     public List<SelectableModuleDetailsDTO> getAllSelectableModulesForStudent(@PathVariable Long id) {
+        User user = userService.getUserWithAuthorities().orElseThrow(() -> new SelectableModuleDetailsResource.SelectableModuleDetailsResourceException("User cannot be found"));
         log.debug("REST request to get all SelectableModules for enrollments {}", id);
-        String userLogin = SecurityUtils.getCurrentUserLogin().get();
-        Long studentId = Long.parseLong(userLogin);
-        return selectableModuleDetailsService.getAllSelectableModulesForStudent(id, studentId);
+        return selectableModuleDetailsService.getAllSelectableModulesForStudent(id, userService.getStudentInstance(user));
     }
 }

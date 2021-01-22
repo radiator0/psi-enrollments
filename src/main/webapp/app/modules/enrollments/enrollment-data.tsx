@@ -4,7 +4,6 @@ export default class EnrollmentData {
     public readonly id: number;
     public readonly fieldOfStudy: string;
     public readonly semester: number;
-    public readonly year: number;
     public readonly name: string;
     public readonly speciality: string;
     public readonly startDate: Date;
@@ -16,19 +15,15 @@ export default class EnrollmentData {
 
     constructor(id: number, fieldOfStudy: string, semester: number, name: string, speciality: string,
         startDate: Date, endDate: Date, isPreEnrollment: boolean, rightStartDate: Date, enrollmentUnits: Array<EnrollmentUnit>) {
-        startDate = new Date(Date.parse(startDate.toString()));
-        endDate = new Date(Date.parse(endDate.toString()));
-        rightStartDate = new Date(Date.parse(rightStartDate.toString()));
         this.id = id;
         this.fieldOfStudy = fieldOfStudy;
         this.semester = semester;
-        this.year = startDate.getFullYear();
         this.name = name;
         this.speciality = speciality;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = new Date(Date.parse(startDate.toString()))
+        this.endDate = new Date(Date.parse(endDate.toString()))
         this.isPreEnrollment = isPreEnrollment;
-        this.rightStartDate = rightStartDate;
+        this.rightStartDate = new Date(Date.parse(rightStartDate.toString()))
         this.enrollmentUnits = enrollmentUnits;
         this.isActive = this.checkIfActive;
     }

@@ -19,9 +19,9 @@ public interface ScheduleElementMapper extends EntityMapper<ScheduleElementDTO, 
     @Mapping(source = "room.number", target = "room")
     @Mapping(source = "room.building.name", target = "building")
     @Mapping(source = "classGroup.mainLecturer.title", target = "lecturerTitle")
-    @Mapping(source = "classGroup.mainLecturer.firstName", target = "lecturerFirstName")
-    @Mapping(source = "classGroup.mainLecturer.secondName", target = "lecturerSecondName")
-    @Mapping(source = "classGroup.mainLecturer.lastName", target = "lecturerLastName")
+    @Mapping(source = "classGroup.mainLecturer.internalUser.firstName", target = "lecturerFirstName")
+    @Mapping(source = "classGroup.mainLecturer.internalUser.secondName", target = "lecturerSecondName")
+    @Mapping(source = "classGroup.mainLecturer.internalUser.lastName", target = "lecturerLastName")
     ScheduleElementDTO toDto(ClassUnit classUnit);
 
     default ClassUnit fromId(Long id) {

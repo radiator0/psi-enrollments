@@ -1,17 +1,16 @@
 package com.psi.web.rest;
 
-import com.psi.security.SecurityUtils;
+import com.psi.domain.User;
 import com.psi.service.ScheduleService;
+import com.psi.service.UserService;
 import com.psi.service.dto.RecurringScheduleElementDTO;
 import com.psi.service.dto.ScheduleElementDTO;
-import com.psi.web.rest.errors.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing schedules.
@@ -20,12 +19,20 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class ScheduleResource {
 
+    private static class ScheduleResourceException extends RuntimeException {
+        private ScheduleResourceException(String message) {
+            super(message);
+        }
+    }
+
     private final Logger log = LoggerFactory.getLogger(ScheduleResource.class);
 
     private final ScheduleService scheduleService;
+    private final UserService userService;
 
-    public ScheduleResource(ScheduleService classUnitService) {
+    public ScheduleResource(ScheduleService classUnitService, UserService userService) {
         this.scheduleService = classUnitService;
+        this.userService = userService;
     }
 
 
@@ -36,14 +43,9 @@ public class ScheduleResource {
      */
     @GetMapping("/week-schedule")
     public List<ScheduleElementDTO> getAllScheduleElementsForUser() {
-        Optional<String> userLogin = SecurityUtils.getCurrentUserLogin();
-        if(userLogin.isPresent()) {
-            log.debug("REST request to get all schedule elements for user : {}", userLogin);
-            return scheduleService.findAllForUser(userLogin.get());
-        }
-        else {
-            throw new UnauthorizedException();
-        }
+        User user = userService.getUserWithAuthorities().orElseThrow(() ->  new ScheduleResourceException("User cannot be found"));
+        log.debug("REST request to get all schedule elements for user : {}", user.getLogin());
+        return scheduleService.findAllForUser(user);
     }
 
     /**
@@ -53,13 +55,8 @@ public class ScheduleResource {
      */
     @GetMapping("/semester-schedule")
     public List<RecurringScheduleElementDTO> getAllRecurringScheduleElementsForUser() {
-        Optional<String> userLogin = SecurityUtils.getCurrentUserLogin();
-        if(userLogin.isPresent()) {
-            log.debug("REST request to get all recurring schedule elements for last started semester for user : {}", userLogin);
-            return scheduleService.findAllRecurringScheduleElementsOfLastSemesterForUser(userLogin.get());
-        }
-        else {
-            throw new UnauthorizedException();
-        }
+        User user = userService.getUserWithAuthorities().orElseThrow(() ->  new ScheduleResourceException("User cannot be found"));
+        log.debug("REST request to get all recurring schedule elements for last started semester for user : {}", user.getLogin());
+        return scheduleService.findAllRecurringScheduleElementsOfLastSemesterForUser(user);
     }
 }

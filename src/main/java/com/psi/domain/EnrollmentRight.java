@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 
 /**
  * A EnrollmentRight.
@@ -24,7 +24,7 @@ public class EnrollmentRight implements Serializable {
 
     @NotNull
     @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
+    private Instant startDate;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -49,16 +49,16 @@ public class EnrollmentRight implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getStartDate() {
+    public Instant getStartDate() {
         return startDate;
     }
 
-    public EnrollmentRight startDate(LocalDate startDate) {
+    public EnrollmentRight startDate(Instant startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Instant startDate) {
         this.startDate = startDate;
     }
 

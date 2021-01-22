@@ -1,7 +1,7 @@
 package com.psi.service;
 
 import com.psi.domain.EnrollmentDate;
-import com.psi.repository.StudentRepository;
+import com.psi.domain.User;
 import com.psi.service.dto.EnrollmentRightDetailsDTO;
 import com.psi.service.mapper.EnrollmentRightDetailsMapper;
 import org.slf4j.Logger;
@@ -22,13 +22,12 @@ public class EnrollmentRightDetailsService {
 
     private final Logger log = LoggerFactory.getLogger(EnrollmentRightDetailsService.class);
 
-    private final StudentRepository studentRepository;
-
     private final EnrollmentRightDetailsMapper enrollmentRightDetailsMapper;
+    private final UserService userService;
 
-    public EnrollmentRightDetailsService(StudentRepository studentRepository, EnrollmentRightDetailsMapper enrollmentRightDetailsMapper) {
-        this.studentRepository = studentRepository;
+    public EnrollmentRightDetailsService(EnrollmentRightDetailsMapper enrollmentRightDetailsMapper, UserService userService) {
         this.enrollmentRightDetailsMapper = enrollmentRightDetailsMapper;
+        this.userService = userService;
     }
 
     /**
@@ -37,9 +36,9 @@ public class EnrollmentRightDetailsService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public List<EnrollmentRightDetailsDTO> findAll(Long studentId) {
+    public List<EnrollmentRightDetailsDTO> findAllForStudent(User user) {
         log.debug("Request to get all EnrollmentRights of student");
-        return studentRepository.findById(studentId).get()
+        return userService.getStudentInstance(user)
             .getEnrollmentRights().stream()
             .map(enrollmentRightDetailsMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));

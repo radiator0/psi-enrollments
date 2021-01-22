@@ -1,22 +1,15 @@
 package com.psi.web.rest;
 
-import com.psi.security.SecurityUtils;
+import com.psi.domain.User;
 import com.psi.service.EnrollmentRightDetailsService;
-import com.psi.service.dto.EnrollmentDateDTO;
+import com.psi.service.UserService;
 import com.psi.service.dto.EnrollmentRightDetailsDTO;
-import com.psi.web.rest.errors.BadRequestAlertException;
-import com.psi.web.rest.errors.UnauthorizedException;
-import io.github.jhipster.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing {@link com.psi.domain.EnrollmentRight}.
@@ -25,12 +18,20 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class EnrollmentRightDetailsResource {
 
+    private static class EnrollmentRightDetailsResourceException extends RuntimeException {
+        private EnrollmentRightDetailsResourceException(String message) {
+            super(message);
+        }
+    }
+
     private final Logger log = LoggerFactory.getLogger(EnrollmentRightDetailsResource.class);
 
     private final EnrollmentRightDetailsService enrollmentRightDetailsService;
+    private final UserService userService;
 
-    public EnrollmentRightDetailsResource(EnrollmentRightDetailsService enrollmentRightDetailsService) {
+    public EnrollmentRightDetailsResource(EnrollmentRightDetailsService enrollmentRightDetailsService, UserService userService) {
         this.enrollmentRightDetailsService = enrollmentRightDetailsService;
+        this.userService = userService;
     }
 
     /**
@@ -40,13 +41,8 @@ public class EnrollmentRightDetailsResource {
      */
     @GetMapping("/enrollment-right")
     public List<EnrollmentRightDetailsDTO> getAllEnrollmentRights() {
-        Optional<String> userLogin = SecurityUtils.getCurrentUserLogin();
-        if(userLogin.isPresent()) {
-            log.debug("REST request to get EnrollmentDates: {}", userLogin);
-            return enrollmentRightDetailsService.findAll(1L);
-        }
-        else {
-            throw new UnauthorizedException();
-        }
+        User user = userService.getUserWithAuthorities().orElseThrow(() -> new EnrollmentRightDetailsResource.EnrollmentRightDetailsResourceException("User cannot be found"));
+        log.debug("REST request to get EnrollmentDates: {}", user);
+        return enrollmentRightDetailsService.findAllForStudent(user);
     }
 }

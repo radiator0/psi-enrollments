@@ -37,6 +37,8 @@ export const App = (props: IAppProps) => {
         <ErrorBoundary>
           <Header
             isAuthenticated={props.isAuthenticated}
+            isStudent={props.isStudent}
+            isLecturer={props.isLecturer}
             isAdmin={props.isAdmin}
             currentLocale={props.currentLocale}
             onLocaleChange={props.setLocale}
@@ -62,6 +64,8 @@ const mapStateToProps = ({ authentication, applicationProfile, locale }: IRootSt
   currentLocale: locale.currentLocale,
   isAuthenticated: authentication.isAuthenticated,
   isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
+  isStudent: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.STUDENT]),
+  isLecturer: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.LECTURER]),
   ribbonEnv: applicationProfile.ribbonEnv,
   isInProduction: applicationProfile.inProduction,
   isSwaggerEnabled: applicationProfile.isSwaggerEnabled,

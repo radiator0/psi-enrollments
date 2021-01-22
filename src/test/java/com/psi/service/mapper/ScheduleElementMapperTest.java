@@ -40,9 +40,12 @@ public class ScheduleElementMapperTest {
         Lecturer lecturer = new Lecturer();
         lecturer.setId(555L);
         lecturer.title("lecturer title");
-        lecturer.setFirstName("lecturer first name");
-        lecturer.secondName("lecturer second name");
-        lecturer.setLastName("lecturer last name");
+
+        User internalUser = new User();
+        internalUser.setFirstName("lecturer first name");
+        internalUser.setSecondName("lecturer second name");
+        internalUser.setLastName("lecturer last name");
+        lecturer.setInternalUser(internalUser);
 
         Course course = new Course();
         course.setId(222L);
@@ -74,9 +77,9 @@ public class ScheduleElementMapperTest {
         assertThat(scheduleElementDTO.getRoom()).isEqualTo(room.getNumber());
         assertThat(scheduleElementDTO.getBuilding()).isEqualTo(building.getName());
         assertThat(scheduleElementDTO.getLecturerTitle()).isEqualTo(lecturer.getTitle());
-        assertThat(scheduleElementDTO.getLecturerFirstName()).isEqualTo(lecturer.getFirstName());
-        assertThat(scheduleElementDTO.getLecturerSecondName()).isEqualTo(lecturer.getSecondName());
-        assertThat(scheduleElementDTO.getLecturerLastName()).isEqualTo(lecturer.getLastName());
+        assertThat(scheduleElementDTO.getLecturerFirstName()).isEqualTo(internalUser.getFirstName());
+        assertThat(scheduleElementDTO.getLecturerSecondName()).isEqualTo(internalUser.getSecondName());
+        assertThat(scheduleElementDTO.getLecturerLastName()).isEqualTo(internalUser.getLastName());
     }
 
     @Test

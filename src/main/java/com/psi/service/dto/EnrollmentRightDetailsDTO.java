@@ -2,6 +2,7 @@ package com.psi.service.dto;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -19,10 +20,10 @@ public class EnrollmentRightDetailsDTO implements Serializable {
     private Boolean isPreEnrollment;
 
     @NotNull
-    private LocalDate enrollmentsStartDate;
+    private Instant enrollmentsStartDate;
 
     @NotNull
-    private LocalDate enrollmentsEndDate;
+    private Instant enrollmentsEndDate;
 
     @NotNull
     private Set<EnrollmentUnitDetailsDTO> enrollmentUnits;
@@ -34,7 +35,7 @@ public class EnrollmentRightDetailsDTO implements Serializable {
     private Integer semester;
 
     @NotNull
-    private LocalDate rightStartDate;
+    private Instant rightStartDate;
 
     private String rightSpecialty;
 
@@ -63,11 +64,11 @@ public class EnrollmentRightDetailsDTO implements Serializable {
         this.semester = semester;
     }
 
-    public LocalDate getRightStartDate() {
+    public Instant getRightStartDate() {
         return rightStartDate;
     }
 
-    public void setRightStartDate(LocalDate rightStartDate) {
+    public void setRightStartDate(Instant rightStartDate) {
         this.rightStartDate = rightStartDate;
     }
 
@@ -95,19 +96,19 @@ public class EnrollmentRightDetailsDTO implements Serializable {
         this.name = name;
     }
 
-    public LocalDate getEnrollmentsStartDate() {
+    public Instant getEnrollmentsStartDate() {
         return enrollmentsStartDate;
     }
 
-    public void setEnrollmentsStartDate(LocalDate enrollmentsStartDate) {
+    public void setEnrollmentsStartDate(Instant enrollmentsStartDate) {
         this.enrollmentsStartDate = enrollmentsStartDate;
     }
 
-    public LocalDate getEnrollmentsEndDate() {
+    public Instant getEnrollmentsEndDate() {
         return enrollmentsEndDate;
     }
 
-    public void setEnrollmentsEndDate(LocalDate enrollmentsEndDate) {
+    public void setEnrollmentsEndDate(Instant enrollmentsEndDate) {
         this.enrollmentsEndDate = enrollmentsEndDate;
     }
 

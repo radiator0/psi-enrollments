@@ -39,9 +39,9 @@ function Row(props) {
                 <TableCell align="right">{row.fieldOfStudy}</TableCell>
                 <TableCell align="right">{row.semester}</TableCell>
                 <TableCell align="right">{row.speciality}</TableCell>
-                <TableCell align="right">{row.startDate.toString()}</TableCell>
-                <TableCell align="right">{row.endDate.toString()}</TableCell>
-                <TableCell align="right">{row.rightStartDate.toString()}</TableCell>
+                <TableCell align="right">{`${row.startDate.toLocaleDateString()} ${row.startDate.toLocaleTimeString()}`}</TableCell>
+                <TableCell align="right">{`${row.endDate.toLocaleDateString()} ${row.endDate.toLocaleTimeString()}`}</TableCell>
+                <TableCell align="right">{`${row.rightStartDate.toLocaleDateString()} ${row.rightStartDate.toLocaleTimeString()}`}</TableCell>
                 <TableCell>
                     <IconButton size="medium" onClick={() => onSelected(row)}>
                         <KeyboardArrowRightIcon />
@@ -65,8 +65,8 @@ function Row(props) {
                                 <TableBody>
                                     {row.enrollmentUnits.map((unit: EnrollmentUnit) => (
                                         <TableRow key={unit.id}>
-                                            <TableCell component="th" scope="row" align='right'>{unit.startDate.toString()}</TableCell>
-                                            <TableCell component="th" scope="row" align='right'>{unit.endDate.toString()}</TableCell>
+                                            <TableCell component="th" scope="row" align='right'>{`${new Date().toLocaleDateString()} ${new Date(unit.startDate).toLocaleTimeString()}`}</TableCell>
+                                            <TableCell component="th" scope="row" align='right'>{`${new Date(unit.endDate).toLocaleDateString()} ${new Date(unit.endDate).toLocaleTimeString()}`}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -83,17 +83,16 @@ Row.propTypes = {
     row: PropTypes.shape({
         fieldOfStudy: PropTypes.string.isRequired,
         semester: PropTypes.number.isRequired,
-        year: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         speciality: PropTypes.string,
-        startDate: PropTypes.string.isRequired,
-        endDate: PropTypes.string.isRequired,
+        startDate: PropTypes.any.isRequired,
+        endDate: PropTypes.any.isRequired,
         isPreEnrollment: PropTypes.bool.isRequired,
-        rightStartDate: PropTypes.string.isRequired,
+        rightStartDate: PropTypes.any.isRequired,
         enrollmentUnits: PropTypes.arrayOf(
             PropTypes.shape({
-                startDate: PropTypes.string.isRequired,
-                endDate: PropTypes.string.isRequired,
+                startDate: PropTypes.any.isRequired,
+                endDate: PropTypes.any.isRequired,
             }),
         ).isRequired,
     }).isRequired,
