@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: psi-enrollments
+  name: psi-enrollments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: psi-enrollments
+  template:
+    metadata:
+      labels:
+        app: psi-enrollments
+    spec:
+      containers:
+      - image: pbr20s1/psi-enrollments:latest
+        name: psi-enrollments
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
