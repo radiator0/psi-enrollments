@@ -1,15 +1,19 @@
 // Override Boostrap variables
-@import '~bootswatch/dist/united/variables';
+//@import '~bootswatch/dist/united/variables';
 // Import Bootstrap source files from node_modules
 @import 'node_modules/bootstrap/scss/bootstrap';
-@import '~bootswatch/dist/united/bootswatch';
+//@import '~bootswatch/dist/united/bootswatch';
 body {
   margin: 0;
 }
 
-a {
-  color: #533f03;
-  font-weight: bold;
+// a {
+//   color: #533f03;
+//   font-weight: bold;
+// }
+
+a:hover {
+  color: inherit;
 }
 
 * {
