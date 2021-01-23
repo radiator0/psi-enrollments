@@ -16,7 +16,6 @@ import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
 import AsksForEnrollmentOverLimit from './modules/asks-for-enrollment-over-limit/asks-for-enrollment-over-limit';
-import Semesters from './modules/semesters/semesters';
 import Enrollments from './modules/enrollments/enrollments';
 import Enrolling from './modules/enrolling/enrolling';
 
@@ -51,7 +50,6 @@ const Routes = () => (
         component={AsksForEnrollmentOverLimit}
         hasAnyAuthorities={[AUTHORITIES.STUDENT, AUTHORITIES.LECTURER]}
       />
-      <PrivateRoute path="/semesters" component={Semesters} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
       <PrivateRoute path="/enrollments" component={Enrollments} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
       <PrivateRoute path="/enrollment/:enrollmentsId?" component={Enrolling} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
       <ErrorBoundaryRoute path="/" exact component={Home} />
