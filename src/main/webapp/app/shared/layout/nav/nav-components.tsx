@@ -2,7 +2,7 @@ import { Badge, Button, IconButton, ListItem, ListItemIcon, ListItemText, Toolti
 import React from 'react';
 import TodayIcon from '@material-ui/icons/Today';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-import { Link as RouterLink } from 'react-router-dom';
+import { NavLink as RouterLink } from 'react-router-dom';
 import { Translate, translate } from 'react-jhipster';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import RateReviewIcon from '@material-ui/icons/RateReview';
@@ -10,7 +10,7 @@ import HelpOutlinedIcon from '@material-ui/icons/HelpOutlined';
 import HomeIcon from '@material-ui/icons/Home';
 
 export const HomeMenu = () => (
-  <ListItem button component={RouterLink} to="/">
+  <ListItem button exact={true} component={RouterLink} activeClassName="nav-active" to="/">
     <Tooltip title={translate('global.menu.home')}>
       <ListItemIcon>
         <HomeIcon />
@@ -21,7 +21,7 @@ export const HomeMenu = () => (
 );
 
 export const ScheduleWeekMenu = () => (
-  <ListItem button component={RouterLink} to="/schedule/week">
+  <ListItem button component={RouterLink} activeClassName="nav-active" to="/schedule/week">
     <Tooltip title={translate('global.menu.scheduleWeek')}>
       <ListItemIcon>
         <TodayIcon />
@@ -32,7 +32,7 @@ export const ScheduleWeekMenu = () => (
 );
 
 export const ScheduleSemesterMenu = () => (
-  <ListItem button component={RouterLink} to="/schedule/semester">
+  <ListItem button component={RouterLink} activeClassName="nav-active" to="/schedule/semester">
     <Tooltip title={translate('global.menu.scheduleSemester')}>
       <ListItemIcon>
         <ScheduleIcon />
@@ -43,10 +43,10 @@ export const ScheduleSemesterMenu = () => (
 );
 
 export const EnrollmentsMenu = () => (
-  <ListItem button component={RouterLink} to="/enrollments">
+  <ListItem button component={RouterLink} activeClassName="nav-active" to="/enrollments">
     <Tooltip title={translate('global.menu.enrollments')}>
       <ListItemIcon>
-        <Badge badgeContent={12} color="secondary">
+        <Badge badgeContent={12} color="primary">
           <AssignmentIcon />
         </Badge>
       </ListItemIcon>
@@ -56,10 +56,10 @@ export const EnrollmentsMenu = () => (
 );
 
 export const LecturerAsks = () => (
-  <ListItem button component={RouterLink} to="/asks-for-enrollment-over-limit">
+  <ListItem button component={RouterLink} activeClassName="nav-active" to="/asks-for-enrollment-over-limit">
     <Tooltip title={translate('global.menu.asks-for-enrollment-over-limit')}>
       <ListItemIcon>
-        <Badge variant="dot" color="secondary">
+        <Badge variant="dot" color="primary">
           <RateReviewIcon />
         </Badge>
       </ListItemIcon>
@@ -69,7 +69,7 @@ export const LecturerAsks = () => (
 );
 
 export const StudentAsks = () => (
-  <ListItem button component={RouterLink} to="/asks-for-enrollment-over-limit">
+  <ListItem button component={RouterLink} activeClassName="nav-active" to="/asks-for-enrollment-over-limit">
     <Tooltip title={translate('global.menu.asks-for-enrollment-over-limit')}>
       <ListItemIcon>
         <Badge variant="dot" color="primary">

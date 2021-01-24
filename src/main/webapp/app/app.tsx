@@ -18,10 +18,10 @@ import ErrorBoundary from 'app/shared/error/error-boundary';
 import { AUTHORITIES } from 'app/config/constants';
 import AppRoutes from 'app/routes';
 import Nav from './shared/layout/nav/nav';
-import { makeStyles, Theme, createStyles } from '@material-ui/core';
-import useTheme from '@material-ui/core/styles/useTheme';
+import { makeStyles, Theme, createStyles, ThemeProvider } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline/CssBaseline';
 import LoadingBar from 'react-redux-loading-bar';
+import customTheme from './custom-theme-material';
 
 const baseHref = document.querySelector('base').getAttribute('href').replace(/\/$/, '');
 const useStyles = makeStyles((theme: Theme) =>
@@ -47,25 +47,24 @@ export const App = (props: IAppProps) => {
   const paddingTop = '60px';
   const classes = useStyles();
 
-  const theme = useTheme();
-
   return (
     <Router basename={baseHref}>
       <div className="app-container" style={{ paddingTop }}>
         <ToastContainer position={toast.POSITION.TOP_LEFT} className="toastify-container" toastClassName="toastify-toast" />
-        <div className={classes.root}>
-          <CssBaseline />
-          <ErrorBoundary>
-            <Nav
-              isAuthenticated={props.isAuthenticated}
-              onLocaleChange={props.setLocale}
-              currentLocale={props.currentLocale}
-              isStudent={props.isStudent}
-              isLecturer={props.isLecturer}
-            />
-          </ErrorBoundary>
+        <ThemeProvider theme={customTheme}>
+          <div className={classes.root}>
+            <CssBaseline />
+            <ErrorBoundary>
+              <Nav
+                isAuthenticated={props.isAuthenticated}
+                onLocaleChange={props.setLocale}
+                currentLocale={props.currentLocale}
+                isStudent={props.isStudent}
+                isLecturer={props.isLecturer}
+              />
+            </ErrorBoundary>
 
-          {/* <ErrorBoundary>
+            {/* <ErrorBoundary>
           <Header
             isAuthenticated={props.isAuthenticated}
             isStudent={props.isStudent}
@@ -78,16 +77,17 @@ export const App = (props: IAppProps) => {
             isSwaggerEnabled={props.isSwaggerEnabled}
           />
         </ErrorBoundary> */}
-          <LoadingBar className="loading-bar" />
-          <div className="container-fluid view-container" id="app-view-container">
-            <Card className="jh-card">
-              <ErrorBoundary>
-                <AppRoutes />
-              </ErrorBoundary>
-            </Card>
-            <Footer />
+            <LoadingBar className="loading-bar" />
+            <div className="container-fluid view-container" id="app-view-container">
+              <Card className="jh-card">
+                <ErrorBoundary>
+                  <AppRoutes />
+                </ErrorBoundary>
+              </Card>
+              <Footer />
+            </div>
           </div>
-        </div>
+        </ThemeProvider>
       </div>
     </Router>
   );

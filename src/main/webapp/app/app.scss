@@ -1,16 +1,8 @@
-// Override Boostrap variables
-//@import '~bootswatch/dist/united/variables';
-// Import Bootstrap source files from node_modules
 @import 'node_modules/bootstrap/scss/bootstrap';
-//@import '~bootswatch/dist/united/bootswatch';
+
 body {
   margin: 0;
 }
-
-// a {
-//   color: #533f03;
-//   font-weight: bold;
-// }
 
 a:hover {
   color: inherit;
@@ -315,3 +307,10 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.nav-active {
+  background-color: #fcd09f !important;
+}
+.nav-active svg {
+  color: #b11902 !important;
+}

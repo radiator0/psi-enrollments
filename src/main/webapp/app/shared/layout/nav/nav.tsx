@@ -156,7 +156,6 @@ const Nav = (props: INavProps) => {
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawerClose}>{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}</IconButton>
         </div>
-        <Divider />
         <List>
           <HomeMenu />
         </List>
