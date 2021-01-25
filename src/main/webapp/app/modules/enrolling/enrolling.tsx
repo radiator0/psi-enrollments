@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import CourseList from './view/course-list';
+import CourseList from './view/courses/course-list';
 import axios from 'axios';
 import log from 'app/config/log';
+import { RouteComponentProps } from 'react-router-dom';
+import CoursesData from './courses-data';
+import mapSelectableCourseBlockToCoursesData from './domain/mapper/selectable-course-block-to-courses-data-mapper';
+import mapEnrollingGroupDetailsToGroupsData from './domain/mapper/enrolling-group-details-to-groups-data-mapper';
+import CourseDetails from '../../shared/model/domain/dto/course-details';
+import SelectableCourseBlockDetails from 'app/shared/model/domain/dto/selectable-course-block-details';
+import GroupsData from './groups-data';
+import GroupList from './view/groups/group-list';
+import EnrollingGroupDetails from '../../shared/model/domain/dto/enrolling-group-details';
+import { StaticContext } from 'react-router';
+import EnrollmentData from '../enrollments/enrollment-data';
 
-export type IEnrollingProps = StateProps;
+export type IEnrollingProps = RouteComponentProps<{ }, StaticContext, { enrollment: EnrollmentData }>;
 
 
 interface IEnrollingState {
-  enrollments: Array<any>
+  coursesData: Array<CoursesData>
+  groupsData: Array<GroupsData>
 };
 
 const gridStyle = {
@@ -37,22 +42,43 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     super(props);
 
     this.state = {
-      enrollments: []
+      coursesData: [],
+      groupsData: []
     };
   }
 
   componentDidMount() {
-    this.getData();
+    log.info(this.props);
+    if(this.props.history.location.state.enrollment) {
+      this.getCoursesData();
+    }
   };
 
-  getData() {
-    /* axios.get<Array<EnrollmentRightDetails>>("/api/enrollment-right")
+  onCourseSelected(course: CourseDetails) {
+    this.getGroupsData(course.id)
+  }
+
+  onGroupSelected(group: GroupsData) {
+  }
+
+  getCoursesData() {
+    const { enrollment } = this.props.history.location.state;
+    axios.get<Array<SelectableCourseBlockDetails>>(`/api/enrollment/${enrollment.id}/selectable-modules`)
     .then(r => {
-      log.info(r.data);
-      const data = r.data.map(element => mapEnrollmentRightDetailsToEnrollmentData(element));
-      this.setState({ enrollments: data })
+      const data = r.data.map(element => mapSelectableCourseBlockToCoursesData(element));
+      this.setState({ coursesData: data })
     })
-    .catch(e => log.error(e))*/
+    .catch(e => log.error(e))
+    // this.setState({ coursesData: fakeData });
+  }
+
+  getGroupsData(id: number) {
+    axios.get<Array<EnrollingGroupDetails>>(`/api/course/${id}/groups`)
+    .then(r => {
+      const data = r.data.map(element => mapEnrollingGroupDetailsToGroupsData(element));
+      this.setState({ groupsData: data })
+    })
+    .catch(e => log.error(e))
   }
 
   renderHeader() {
@@ -65,28 +91,13 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
 
   renderCoursesList() {
     return (
-        <CourseList></CourseList>
+      <CourseList coursesData={this.state.coursesData} onSelected={this.onCourseSelected.bind(this)}></CourseList>
     );
   }
 
   renderGroupsTable() {
     return (
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell align="right">Kod grupy</TableCell>
-              <TableCell align="right">Zapisani</TableCell>
-              <TableCell align="right">Ponad stan</TableCell>
-              <TableCell align="right">Forma</TableCell>
-              <TableCell align="right">Termin</TableCell>
-              <TableCell align="right">Prowadzący</TableCell>
-              <TableCell align="right">Akcja</TableCell>
-            </TableRow>
-          </TableHead>
-        </Table>
-      </TableContainer>
+      <GroupList groupsData={this.state.groupsData} enrollment={this.props.history.location.state.enrollment} onSelected={this.onGroupSelected.bind(this)}></GroupList>
     );
   }
 

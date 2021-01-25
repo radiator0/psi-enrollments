@@ -5,10 +5,10 @@ import DayOfWeek from '../../../../shared/model/domain/enum/day-of-week';
 const normalizeDate = (date : Date, dayOfWeek: DayOfWeek) => {
     const d = new Date(date);
     const day = d.getDay();
-    const diff = d.getDate() - day + (day === 0 ? -6:1) + 7 + DayOfWeek[dayOfWeek];
+    const diff = d.getDate() - day + (day === 0 ? -6:1) + 7 + (day >=6 ? 7 : 0) + DayOfWeek[dayOfWeek];
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    return new Date(d.setDate(diff));
+    return new Date(d.setDate(diff))
 };
 
 export default function mapScheduleElementToScheduleData(rse : RecurringScheduleElement) {

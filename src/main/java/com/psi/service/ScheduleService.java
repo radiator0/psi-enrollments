@@ -28,7 +28,6 @@ public class ScheduleService {
 
     private final ClassUnitRepository classUnitRepository;
     private final ClassScheduleRepository classScheduleRepository;
-    private final EnrollmentRepository enrollmentRepository;
 
     private final UserService userService;
 
@@ -36,12 +35,11 @@ public class ScheduleService {
     private final RecurringScheduleElementMapper recurringScheduleElementMapper;
 
     public ScheduleService(ClassUnitRepository classUnitRepository, ClassScheduleRepository classScheduleRepository, UserService userService,
-                           ScheduleElementMapper scheduleElementMapper, EnrollmentRepository enrollmentRepository, RecurringScheduleElementMapper recurringScheduleElementMapper) {
+                           ScheduleElementMapper scheduleElementMapper, RecurringScheduleElementMapper recurringScheduleElementMapper) {
         this.classUnitRepository = classUnitRepository;
         this.classScheduleRepository = classScheduleRepository;
         this.userService = userService;
         this.scheduleElementMapper = scheduleElementMapper;
-        this.enrollmentRepository = enrollmentRepository;
         this.recurringScheduleElementMapper = recurringScheduleElementMapper;
     }
 
@@ -84,11 +82,16 @@ public class ScheduleService {
             groupedSchedules = findAllRecurringForLecturer(userService.getLecturerInstance(user));
         }
 
-        Integer lastSemesterNumber = Collections.max(groupedSchedules.keySet());
+        if(!groupedSchedules.isEmpty()) {
+            Integer lastSemesterNumber = Collections.max(groupedSchedules.keySet());
 
-        return groupedSchedules.get(lastSemesterNumber).stream()
-            .map(recurringScheduleElementMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+            return groupedSchedules.get(lastSemesterNumber).stream()
+                .map(recurringScheduleElementMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+        }
+        else {
+            return new LinkedList<RecurringScheduleElementDTO>();
+        }
     }
 
     private Map<Integer, List<ClassSchedule>> findAllRecurringForStudent(Student student) {

@@ -11,7 +11,6 @@ export default class EnrollmentData {
     public readonly isPreEnrollment: boolean;
     public readonly rightStartDate: Date;
     public readonly enrollmentUnits: Array<EnrollmentUnit>;
-    public readonly isActive: () => boolean;
 
     constructor(id: number, fieldOfStudy: string, semester: number, name: string, speciality: string,
         startDate: Date, endDate: Date, isPreEnrollment: boolean, rightStartDate: Date, enrollmentUnits: Array<EnrollmentUnit>) {
@@ -25,12 +24,5 @@ export default class EnrollmentData {
         this.isPreEnrollment = isPreEnrollment;
         this.rightStartDate = new Date(Date.parse(rightStartDate.toString()))
         this.enrollmentUnits = enrollmentUnits;
-        this.isActive = this.checkIfActive;
-    }
-
-    checkIfActive(): boolean {
-        const currentDate = new Date();
-        return this.enrollmentUnits.some(unit => currentDate >= this.rightStartDate
-            && currentDate >= unit.startDate && currentDate <= unit.endDate)
     }
 }

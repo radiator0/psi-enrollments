@@ -1,14 +1,14 @@
 import CourseDetails from './course-details';
-import TogetherCourseBlockDetails from './together-course-block-details';
+import CourseUnitDetails from './course-unit-details';
 
 export default class SelectableCourseBlockDetails {
   public readonly id: number;
   public readonly name: string;
-  public readonly togetherBlocks: Array<TogetherCourseBlockDetails>;
+  public readonly courseUnits: Array<CourseUnitDetails>;
 
-  constructor(id: number, name: string, togetherBlocks: Array<TogetherCourseBlockDetails>) {
+  constructor(id: number, name: string, courseUnits: Array<CourseUnitDetails>) {
     this.id = id;
     this.name = name;
-    this.togetherBlocks = togetherBlocks;
+    this.courseUnits = courseUnits;
   }
 };

@@ -54,6 +54,6 @@ public class SelectableModuleDetailsResource {
     public List<SelectableModuleDetailsDTO> getAllSelectableModulesForStudent(@PathVariable Long id) {
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new SelectableModuleDetailsResource.SelectableModuleDetailsResourceException("User cannot be found"));
         log.debug("REST request to get all SelectableModules for enrollments {}", id);
-        return selectableModuleDetailsService.getAllSelectableModulesForStudent(id, userService.getStudentInstance(user));
+        return selectableModuleDetailsService.getAllSelectableModulesForStudent(id, user);
     }
 }

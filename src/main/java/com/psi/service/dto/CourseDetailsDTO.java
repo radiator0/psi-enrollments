@@ -32,6 +32,8 @@ public class CourseDetailsDTO implements Serializable {
 
     private Set<String> specialities = new HashSet<>();
 
+    private Boolean isStudentEnrolled;
+
     public Long getId() {
         return id;
     }
@@ -116,6 +118,15 @@ public class CourseDetailsDTO implements Serializable {
             ", ects=" + getEcts() +
             ", form='" + getForm() + "'" +
             ", specialties='" + getSpecialities() + "'" +
+            ", isStudentEnrolled='" + getStudentEnrolled() + "'" +
             "}";
+    }
+
+    public Boolean getStudentEnrolled() {
+        return isStudentEnrolled;
+    }
+
+    public void setStudentEnrolled(Boolean studentEnrolled) {
+        isStudentEnrolled = studentEnrolled;
     }
 }

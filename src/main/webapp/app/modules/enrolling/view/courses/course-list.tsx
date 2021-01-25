@@ -4,18 +4,20 @@ import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import SelectableCourseBlockRow from './selectable-course-block-row';
-import SelectableCourseBlockDetails from '../../../shared/model/domain/dto/selectable-course-block-details';
-import axios from 'axios';
+import SelectableCourseBlockDetails from '../../../../shared/model/domain/dto/selectable-course-block-details';
+import nextId from "react-id-generator";
 import log from 'app/config/log';
-import fakeData from '../fake-courses-data';
-import CourseDetails from '../../../shared/model/domain/dto/course-details';
+import CourseDetails from '../../../../shared/model/domain/dto/course-details';
+import CoursesData from '../../courses-data';
+
+export type ICourseListProps = {
+    coursesData: Array<CoursesData>,
+    onSelected: (course: CourseDetails) => void
+};;
 
 
-export type ICourseListProps = StateProps;
-
-
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ICourseListState {
-    courseBlocks: Array<SelectableCourseBlockDetails>
 };
 
 class CourseList extends Component<ICourseListProps, ICourseListState> {
@@ -23,24 +25,12 @@ class CourseList extends Component<ICourseListProps, ICourseListState> {
         super(props);
 
         this.state = {
-            courseBlocks: []
+            coursesData: []
         };
     }
 
     componentDidMount() {
-        this.getData();
     };
-
-    getData() {
-        /* axios.get<Array<EnrollmentRightDetails>>("/api/enrollment-right")
-        .then(r => {
-          log.info(r.data);
-          const data = r.data.map(element => mapEnrollmentRightDetailsToEnrollmentData(element));
-          this.setState({ enrollments: data })
-        })
-        .catch(e => log.error(e))*/
-        this.setState({ courseBlocks: fakeData })
-    }
 
     renderHeader() {
         return (
@@ -50,16 +40,12 @@ class CourseList extends Component<ICourseListProps, ICourseListState> {
         );
     }
 
-    onCourseSelected(course: CourseDetails) {
-        log.info('selected course');
-        log.info(course);
-    }
-
     renderCourseRows() {
+        const { coursesData, onSelected } = this.props;
         return (
             <>
-                {this.state.courseBlocks.map(x => 
-                    <SelectableCourseBlockRow key={x.id} selectableCourseBlock={x} onSelected={this.onCourseSelected} />
+                {coursesData?.map(x => 
+                    <SelectableCourseBlockRow key={nextId()} selectableCourseBlock={x.selectableCourseBlocks} onSelected={onSelected} />
                 )}
             </>
         );

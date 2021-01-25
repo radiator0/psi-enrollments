@@ -47,11 +47,9 @@ class Enrollments extends Component<IEnrollmentsProps, IEnrollmentsState> {
   }
 
   goToEnrollment(enrollmentData : EnrollmentData) {
-    log.info(`going to enrollment: ${enrollmentData.id}`);
-    log.info(enrollmentData);
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    this.props.history.push( { pathname: `/enrollment/${enrollmentData.id}`});
+    this.props.history.push( { pathname: `/enrolling`, state: { enrollment: enrollmentData }});
   }
 
   renderHeader() {
