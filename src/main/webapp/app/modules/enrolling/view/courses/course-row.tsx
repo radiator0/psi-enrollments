@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import CourseDetails from '../../../shared/model/domain/dto/course-details';
+import CourseDetails from '../../../../shared/model/domain/dto/course-details';
 import log from 'app/config/log';
 
 interface ICourseRowProps {
@@ -37,12 +37,12 @@ class CourseRow extends Component<ICourseRowProps, ICourseRowState> {
 
     render() {
         const { course } = this.props;
-
+        log.info(course);
         return (
             <ListItem>
                 <ListItemAvatar>
                     <Avatar>
-                        {course.enrolled ? <CheckIcon /> : <ClearIcon />}
+                        {course.studentEnrolled ? <CheckIcon /> : <ClearIcon />}
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText

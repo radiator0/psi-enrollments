@@ -32,7 +32,7 @@ public class RecurringScheduleElementDTO implements Serializable {
 
     private String courseShortName;
 
-    public String classType;
+    private String classType;
 
     private String room;
 

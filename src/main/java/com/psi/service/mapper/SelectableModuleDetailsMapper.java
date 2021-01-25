@@ -1,10 +1,7 @@
 package com.psi.service.mapper;
 
 
-import com.psi.domain.Course;
-import com.psi.domain.CourseUnit;
-import com.psi.domain.SelectableModule;
-import com.psi.domain.Specialty;
+import com.psi.domain.*;
 import com.psi.service.dto.CourseDetailsDTO;
 import com.psi.service.dto.CourseUnitDetailsDTO;
 import com.psi.service.dto.SelectableModuleDetailsDTO;
@@ -22,7 +19,7 @@ import java.util.stream.Collectors;
 public interface SelectableModuleDetailsMapper extends EntityMapper<SelectableModuleDetailsDTO, Course> {
 
 
-    default List<SelectableModuleDetailsDTO> toDtos(List<Course> courses) {
+    default List<SelectableModuleDetailsDTO> toDtos(List<Course> courses, Student student) {
         Function<Course, CourseDetailsDTO> courseToDto = (course) -> {
             CourseDetailsDTO courseDetailsDTO = new CourseDetailsDTO();
             courseDetailsDTO.setId(course.getId());
@@ -33,6 +30,9 @@ public interface SelectableModuleDetailsMapper extends EntityMapper<SelectableMo
             courseDetailsDTO.setForm(course.getForm());
             courseDetailsDTO.setSpecialities(course.getSpecialties() == null ? null :
                 course.getSpecialties().stream().map(Specialty::getName).collect(Collectors.toSet()));
+            courseDetailsDTO.setStudentEnrolled(course.getClassGroups().stream()
+                .anyMatch(cg -> cg.getEnrollments().stream().anyMatch(e -> e.getStudent().equals(student)))
+            );
             return courseDetailsDTO;
         };
 

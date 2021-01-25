@@ -71,6 +71,7 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.scheduleType !== this.props.match.params.scheduleType) {
+      this.setState( { currentDate: new Date() } )
       this.getData();
     }
   }

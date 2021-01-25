@@ -9,52 +9,48 @@ import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import nextId from "react-id-generator";
 import Collapse from '@material-ui/core/Collapse';
-import CourseRow from './course-row';
-import TogetherCourseBlockDetails from '../../../shared/model/domain/dto/together-course-block-details';
-import CourseDetails from '../../../shared/model/domain/dto/course-details';
+import CourseUnitRow from './course-unit-row';
+import SelectableCourseBlockDetails from '../../../../shared/model/domain/dto/selectable-course-block-details';
+import CourseDetails from '../../../../shared/model/domain/dto/course-details';
 
-interface ITogetherCourseBlockRowProps {
-    togetherCourseBlock: TogetherCourseBlockDetails,
-    onSelected: (course: CourseDetails) => void
-};
+interface ISelectableCourseBlockRowProps {
+    selectableCourseBlock: SelectableCourseBlockDetails;
+    onSelected: (course: CourseDetails) => void;
+}
 
-interface ITogetherCourseBlockRowState {
-    isOpen: boolean
-};
+interface ISelectableCourseBlockRowState {
+    isOpen: boolean;
+}
 
-class TogetherCourseBlockRow extends Component<ITogetherCourseBlockRowProps, ITogetherCourseBlockRowState> {
-    constructor(props: ITogetherCourseBlockRowProps) {
+class SelectableCourseBlockRow extends Component<ISelectableCourseBlockRowProps, ISelectableCourseBlockRowState> {
+    constructor(props: ISelectableCourseBlockRowProps) {
         super(props);
 
         this.state = {
-            isOpen: false
+            isOpen: false,
         };
     }
 
     setOpen(isOpen: boolean) {
-        this.setState({ isOpen })
+        this.setState({ isOpen });
     }
 
     isEnrolledInAll() {
-        return this.props.togetherCourseBlock.courses.every(c => c.enrolled);
+        return this.props.selectableCourseBlock.courseUnits.some(tb => tb.courses.every(c => c.studentEnrolled));
     }
 
-    renderExpandableItem() {
-        const { togetherCourseBlock } = this.props;
+    rendedExpandableItem() {
+        const { selectableCourseBlock } = this.props;
         const { isOpen } = this.state;
 
         return (
             <ListItem>
                 <ListItemAvatar>
-                    <Avatar>
-                        {this.isEnrolledInAll() ? <CheckIcon /> : <ClearIcon />}
-                    </Avatar>
+                    <Avatar>{this.isEnrolledInAll() ? <CheckIcon /> : <ClearIcon />}</Avatar>
                 </ListItemAvatar>
-                <ListItemText
-                    primary={togetherCourseBlock.name}
-                    secondary={'Blok scalony'}
-                />
+                <ListItemText primary={selectableCourseBlock.name} secondary={'Blok wybieralny'} />
                 <ListItemSecondaryAction>
                     <IconButton aria-label="expand row" size="small" onClick={() => this.setOpen(!isOpen)}>
                         {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -64,40 +60,39 @@ class TogetherCourseBlockRow extends Component<ITogetherCourseBlockRowProps, ITo
         );
     }
 
-    renderCourseRows() {
-        const { togetherCourseBlock, onSelected } = this.props;
+    renderEmbeddedRows() {
+        const { selectableCourseBlock, onSelected } = this.props;
         return (
             <>
-                {togetherCourseBlock.courses.map(x => 
-                    <CourseRow key={x.id} course={x} onSelected={onSelected} />
+                {selectableCourseBlock.courseUnits.map(x =>
+                    <CourseUnitRow key={nextId()} courseUnit={x} onSelected={onSelected} />
                 )}
             </>
         );
     }
 
     shouldExpand() {
-        return this.props.togetherCourseBlock.courses.length > 1;
+        return this.props.selectableCourseBlock.courseUnits.length > 1;
     }
 
     render() {
-        const { togetherCourseBlock } = this.props;
         const { isOpen } = this.state;
 
         return (
             <React.Fragment>
                 {this.shouldExpand() ? (
                     <>
-                        {this.renderExpandableItem()}
+                        {this.rendedExpandableItem()}
                         <Collapse in={isOpen} timeout="auto" unmountOnExit style={{ paddingLeft: 20 }}>
-                            {this.renderCourseRows()}
+                            {this.renderEmbeddedRows()}
                         </Collapse>
                     </>
                 ) : (
-                        this.renderCourseRows()
+                        this.renderEmbeddedRows()
                     )}
             </React.Fragment>
         );
     }
 }
 
-export default TogetherCourseBlockRow;
+export default SelectableCourseBlockRow;
