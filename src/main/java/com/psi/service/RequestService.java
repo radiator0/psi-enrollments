@@ -5,10 +5,9 @@ import com.psi.domain.Lecturer;
 import com.psi.domain.Request;
 import com.psi.domain.Student;
 import com.psi.repository.RequestRepository;
-import com.psi.service.dto.ClassGroupDTO;
+import com.psi.repository.StudentRepository;
 import com.psi.service.dto.RequestDTO;
 import com.psi.service.mapper.RequestMapper;
-import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,10 +35,13 @@ public class RequestService {
 
     private final ClassGroupService classGroupService;
 
-    public RequestService(RequestRepository requestRepository, RequestMapper requestMapper, ClassGroupService classGroupService) {
+    private final StudentRepository studentRepository;
+
+    public RequestService(RequestRepository requestRepository, RequestMapper requestMapper, ClassGroupService classGroupService, StudentRepository studentRepository) {
         this.requestRepository = requestRepository;
         this.requestMapper = requestMapper;
         this.classGroupService = classGroupService;
+        this.studentRepository = studentRepository;
     }
 
     /**
@@ -64,8 +66,10 @@ public class RequestService {
     @Transactional(readOnly = true)
     public Page<RequestDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Requests");
-        return requestRepository.findAll(pageable)
+        Page<RequestDTO> requestDTOS = requestRepository.findAll(pageable)
             .map(requestMapper::toDto);
+        requestDTOS.stream().forEach(requestDTO -> addStudentNameAndGroupCode(Optional.of(requestDTO)));
+        return requestDTOS;
     }
 
     /**
@@ -77,8 +81,10 @@ public class RequestService {
     @Transactional(readOnly = true)
     public List<RequestDTO> findAllByStudent(Student student) {
         log.debug("Request to get all Requests");
-        return requestRepository.findAllByStudent(student).stream()
+        List<RequestDTO> requestDTOS = requestRepository.findAllByStudent(student).stream()
             .map(requestMapper::toDto).collect(Collectors.toList());
+        requestDTOS.forEach(requestDTO -> addStudentNameAndGroupCode(Optional.of(requestDTO)));
+        return requestDTOS;
     }
 
     /**
@@ -91,8 +97,10 @@ public class RequestService {
     public List<RequestDTO> findAllByLecturer(Lecturer lecturer) {
         log.debug("Request to get all Requests");
         List<ClassGroup> classGroups = classGroupService.findAllByLecturer(lecturer);
-        return requestRepository.findAllByClassGroupIn(classGroups).stream()
+        List<RequestDTO> requestDTOS = requestRepository.findAllByClassGroupIn(classGroups).stream()
             .map(requestMapper::toDto).collect(Collectors.toList());
+        requestDTOS.forEach(requestDTO -> addStudentNameAndGroupCode(Optional.of(requestDTO)));
+        return requestDTOS;
     }
 
     /**
@@ -104,8 +112,10 @@ public class RequestService {
     @Transactional(readOnly = true)
     public Optional<RequestDTO> findOne(Long id) {
         log.debug("Request to get Request : {}", id);
-        return requestRepository.findById(id)
+        Optional<RequestDTO> request = requestRepository.findById(id)
             .map(requestMapper::toDto);
+        addStudentNameAndGroupCode(request);
+        return request;
     }
 
     /**
@@ -130,7 +140,7 @@ public class RequestService {
                 throw new RequestAlreadyExaminedException();
             }
             request.setIsExamined(true);
-            request.setAccepted(true);
+            request.setIsAccepted(true);
             requestRepository.save(request);
         });
     }
@@ -147,8 +157,18 @@ public class RequestService {
                 throw new RequestAlreadyExaminedException();
             }
             request.setIsExamined(true);
-            request.setAccepted(false);
+            request.setIsAccepted(false);
             requestRepository.save(request);
         });
+    }
+
+    private Optional<RequestDTO> addStudentNameAndGroupCode(Optional<RequestDTO> request) {
+        request.ifPresent((r) -> {
+            classGroupService.findOne(r.getClassGroupId()).ifPresent((classGroup) ->
+                r.setClassGroupCode(classGroup.getCode()));
+            studentRepository.findById(r.getStudentId()).ifPresent((student) ->
+                r.setStudentName(student.getInternalUser().getName()));
+        });
+        return request;
     }
 }

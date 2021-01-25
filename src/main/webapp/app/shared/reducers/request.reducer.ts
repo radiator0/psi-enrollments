@@ -12,6 +12,8 @@ export const ACTION_TYPES = {
   CREATE_REQUEST: 'request/CREATE_REQUEST',
   UPDATE_REQUEST: 'request/UPDATE_REQUEST',
   DELETE_REQUEST: 'request/DELETE_REQUEST',
+  ACCEPT_REQUEST: 'request/ACCEPT_REQUEST',
+  DECLINE_REQUEST: 'request/DECLINE_REQUEST',
   RESET: 'request/RESET',
 };
 
@@ -42,6 +44,8 @@ export default (state: RequestState = initialState, action): RequestState => {
     case REQUEST(ACTION_TYPES.CREATE_REQUEST):
     case REQUEST(ACTION_TYPES.UPDATE_REQUEST):
     case REQUEST(ACTION_TYPES.DELETE_REQUEST):
+    case REQUEST(ACTION_TYPES.ACCEPT_REQUEST):
+    case REQUEST(ACTION_TYPES.DECLINE_REQUEST):
       return {
         ...state,
         errorMessage: null,
@@ -53,6 +57,8 @@ export default (state: RequestState = initialState, action): RequestState => {
     case FAILURE(ACTION_TYPES.CREATE_REQUEST):
     case FAILURE(ACTION_TYPES.UPDATE_REQUEST):
     case FAILURE(ACTION_TYPES.DELETE_REQUEST):
+    case FAILURE(ACTION_TYPES.ACCEPT_REQUEST):
+    case FAILURE(ACTION_TYPES.DECLINE_REQUEST):
       return {
         ...state,
         loading: false,
@@ -75,6 +81,8 @@ export default (state: RequestState = initialState, action): RequestState => {
       };
     case SUCCESS(ACTION_TYPES.CREATE_REQUEST):
     case SUCCESS(ACTION_TYPES.UPDATE_REQUEST):
+    case SUCCESS(ACTION_TYPES.ACCEPT_REQUEST):
+    case SUCCESS(ACTION_TYPES.DECLINE_REQUEST):
       return {
         ...state,
         updating: false,
@@ -139,6 +147,26 @@ export const deleteEntity: ICrudDeleteAction<IRequest> = id => async dispatch =>
   const result = await dispatch({
     type: ACTION_TYPES.DELETE_REQUEST,
     payload: axios.delete(requestUrl),
+  });
+  dispatch(getEntities());
+  return result;
+};
+
+export const acceptEntity: ICrudDeleteAction<IRequest> = id => async dispatch => {
+  const requestUrl = `${apiUrl}/${id}/accept`;
+  const result = await dispatch({
+    type: ACTION_TYPES.ACCEPT_REQUEST,
+    payload: axios.post(requestUrl),
+  });
+  dispatch(getEntities());
+  return result;
+};
+
+export const declineEntity: ICrudDeleteAction<IRequest> = id => async dispatch => {
+  const requestUrl = `${apiUrl}/${id}/decline`;
+  const result = await dispatch({
+    type: ACTION_TYPES.DECLINE_REQUEST,
+    payload: axios.post(requestUrl),
   });
   dispatch(getEntities());
   return result;

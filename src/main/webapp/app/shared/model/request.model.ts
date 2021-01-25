@@ -1,5 +1,3 @@
-import { Moment } from 'moment';
-
 export interface IRequest {
   id?: number;
   uuid?: string;
@@ -9,8 +7,11 @@ export interface IRequest {
   isAccepted?: boolean;
   classGroupId?: number;
   studentId?: number;
+  classGroupCode?: string;
+  studentName?: string;
 }
 
 export const defaultValue: Readonly<IRequest> = {
   isExamined: false,
+  isAccepted: false,
 };

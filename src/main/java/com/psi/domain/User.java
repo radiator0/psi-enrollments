@@ -244,4 +244,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", activationKey='" + activationKey + '\'' +
             "}";
     }
+
+    public String getName() {
+        return firstName + " " + secondName + " " + lastName;
+    }
 }

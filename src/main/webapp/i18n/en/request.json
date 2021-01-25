@@ -18,10 +18,15 @@
       },
       "uuid": "Uuid",
       "date": "Date",
-      "text": "Text",
+      "text": "Request",
       "isExamined": "Is Examined",
+      "isAccepted": "Is Accepted",
       "classGroup": "Class Group",
       "student": "Student"
+    },
+    "action": {
+      "accept": "Accept",
+      "deny": "Deny"
     }
   }
 }

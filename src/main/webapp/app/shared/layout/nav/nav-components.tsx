@@ -57,28 +57,28 @@ export const EnrollmentsMenu = () => (
 );
 
 export const LecturerAsks = () => (
-  <ListItem button component={RouterLink} activeClassName="nav-active" to="/asks-for-enrollment-over-limit">
-    <Tooltip title={translate('global.menu.asks-for-enrollment-over-limit')}>
+  <ListItem button component={RouterLink} activeClassName="nav-active" to="/requests">
+    <Tooltip title={translate('global.menu.requests')}>
       <ListItemIcon>
         <Badge variant="dot" color="primary">
           <RateReviewIcon />
         </Badge>
       </ListItemIcon>
     </Tooltip>
-    <ListItemText primary={translate('global.menu.asks-for-enrollment-over-limit')} />
+    <ListItemText primary={translate('global.menu.requests')} />
   </ListItem>
 );
 
 export const StudentAsks = () => (
-  <ListItem button component={RouterLink} activeClassName="nav-active" to="/asks-for-enrollment-over-limit">
-    <Tooltip title={translate('global.menu.asks-for-enrollment-over-limit')}>
+  <ListItem button component={RouterLink} activeClassName="nav-active" to="/requests">
+    <Tooltip title={translate('global.menu.requests')}>
       <ListItemIcon>
         <Badge variant="dot" color="primary">
           <HelpOutlinedIcon />
         </Badge>
       </ListItemIcon>
     </Tooltip>
-    <ListItemText primary={translate('global.menu.asks-for-enrollment-over-limit')} />
+    <ListItemText primary={translate('global.menu.requests')} />
   </ListItem>
 );
 

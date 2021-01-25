@@ -2,26 +2,31 @@
   "enrollmentsApp": {
     "request": {
       "home": {
-        "title": "Request",
-        "createLabel": "Dodaj Request",
-        "createOrEditLabel": "Dodaj lub edytuj: Request",
+        "title": "Prośba",
+        "createLabel": "Dodaj prośbę",
+        "createOrEditLabel": "Dodaj lub edytuj: prośbę",
         "notFound": "No Requests found"
       },
       "created": "Utworzono nowy obiekt typu Request z identyfikatorem {{ param }}",
       "updated": "Uaktualniono obiekt typu Request z identyfikatorem {{ param }}",
       "deleted": "Usunięto obiekt typu Request z identyfikatorem {{ param }}",
       "delete": {
-        "question": "Czy na pewno chcesz usunąć Request {{ id }}?"
+        "question": "Czy na pewno chcesz usunąć prośbę {{ id }}?"
       },
       "detail": {
-        "title": "Request"
+        "title": "Prośba"
       },
       "uuid": "Uuid",
       "date": "Date",
-      "text": "Text",
-      "isExamined": "Is Examined",
-      "classGroup": "Class Group",
+      "text": "Prośba",
+      "isExamined": "Czy zweryfikowana",
+      "isAccepted": "Czy zaakceptowana",
+      "classGroup": "Kod grupy",
       "student": "Student"
+    },
+    "action": {
+      "accept": "Zaakceptuj",
+      "deny": "Odrzuć"
     }
   }
 }

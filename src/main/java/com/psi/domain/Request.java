@@ -114,12 +114,12 @@ public class Request implements Serializable {
         this.isExamined = isExamined;
     }
 
-    public Boolean isAccepted() {
+    public Boolean isIsAccepted() {
         return isAccepted;
     }
 
-    public Request setAccepted(Boolean accepted) {
-        isAccepted = accepted;
+    public Request setIsAccepted(Boolean isAccepted) {
+        this.isAccepted = isAccepted;
         return this;
     }
 
@@ -175,7 +175,7 @@ public class Request implements Serializable {
             ", date='" + getDate() + "'" +
             ", text='" + getText() + "'" +
             ", isExamined='" + isIsExamined() + "'" +
-            ", isAccepted='" + isAccepted() + "'" +
+            ", isAccepted='" + isIsAccepted() + "'" +
             "}";
     }
 }

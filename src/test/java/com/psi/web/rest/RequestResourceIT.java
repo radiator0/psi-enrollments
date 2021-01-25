@@ -20,8 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
@@ -82,7 +80,7 @@ public class RequestResourceIT {
             .date(DEFAULT_DATE)
             .text(DEFAULT_TEXT)
             .isExamined(DEFAULT_IS_EXAMINED)
-            .setAccepted(DEFAULT_IS_ACCEPTED);
+            .setIsAccepted(DEFAULT_IS_ACCEPTED);
         // Add required entity
         ClassGroup classGroup;
         if (TestUtil.findAll(em, ClassGroup.class).isEmpty()) {
