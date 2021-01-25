@@ -14,6 +14,9 @@ import log from 'app/config/log';
 import GroupsData from '../../groups-data';
 import { EnrollingAction } from '../../enrolling-action';
 import { IconButton } from '@material-ui/core';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
+import blue from '@material-ui/core/colors/blue';
 
 const useRowStyles = makeStyles({
     root: {
@@ -24,7 +27,7 @@ const useRowStyles = makeStyles({
 });
 
 const renderCanEnrollOverLimit = (row: GroupsData) => {
-    return row.canEnrollOverLimit ? <CheckCircleIcon></CheckCircleIcon> : <BlockIcon></BlockIcon>
+    return row.canEnrollOverLimit ? <CheckCircleIcon style={{ color: green[500] }} ></CheckCircleIcon> : <BlockIcon style={{ color: red[900] }}></BlockIcon>
 }
 
 const renderSchedule = (row: GroupsData) => {
@@ -44,13 +47,13 @@ const renderLecturer = (row: GroupsData) => {
 const getActionButton = (row: GroupsData, action: EnrollingAction) => {
     switch (action) {
         case EnrollingAction.AskOverLimit:
-            return (<LiveHelpIcon></LiveHelpIcon>);
+            return (<LiveHelpIcon style={{ color: blue[500] }}></LiveHelpIcon>);
         case EnrollingAction.RecallAsk:
-            return (<SettingsBackupRestoreIcon></SettingsBackupRestoreIcon>);
+            return (<SettingsBackupRestoreIcon style={{ color: blue[500] }}></SettingsBackupRestoreIcon>);
         case EnrollingAction.Enroll:
-            return (<PersonAddIcon></PersonAddIcon>);
+            return (<PersonAddIcon ></PersonAddIcon>);
         case EnrollingAction.Disenroll:
-            return (<RemoveCircleIcon></RemoveCircleIcon>);
+            return (<RemoveCircleIcon style={{ color: red[900] }}></RemoveCircleIcon>);
         default:
             return (<></>);
     }
