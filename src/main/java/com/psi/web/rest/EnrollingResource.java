@@ -4,6 +4,7 @@ import com.psi.domain.User;
 import com.psi.service.EnrollingService;
 import com.psi.service.UserService;
 import com.psi.service.dto.EnrollmentDTO;
+import com.psi.service.dto.IdDTO;
 import com.psi.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -55,14 +56,11 @@ public class EnrollingResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/enrolling")
-    public ResponseEntity<EnrollmentDTO> createEnrollment(@RequestBody Long groupId) throws URISyntaxException {
+    public ResponseEntity<EnrollmentDTO> createEnrollment(@Valid @RequestBody IdDTO groupId) throws URISyntaxException {
         log.debug("REST request to enroll student to group : {}", groupId);
-        if (groupId == null) {
-            // TODO xD throw 400
-        }
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new EnrollingResource.EnrollingResourceException("User cannot be found"));
 
-        EnrollmentDTO result = enrollingService.enrollStudent(groupId, user);
+        EnrollmentDTO result = enrollingService.enrollStudent(groupId.getId(), user);
         return ResponseEntity.created(new URI("/api/enrollments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -75,14 +73,11 @@ public class EnrollingResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/enrolling")
-    public ResponseEntity<Void> deleteEnrollment(@RequestBody Long groupId) {
+    public ResponseEntity<Void> deleteEnrollment(@Valid @RequestBody IdDTO groupId) {
         log.debug("REST request to disenroll student from group : {}", groupId);
-        if (groupId == null) {
-            // TODO xD throw 400
-        }
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new EnrollingResource.EnrollingResourceException("User cannot be found"));
 
-        Long enrollmentId = enrollingService.disenroll(groupId, user);
+        Long enrollmentId = enrollingService.disenroll(groupId.getId(), user);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(
             applicationName, true, ENTITY_NAME, enrollmentId.toString()
         )).build();

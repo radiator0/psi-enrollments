@@ -16,12 +16,14 @@ import GroupList from './view/groups/group-list';
 import EnrollingGroupDetails from '../../shared/model/domain/dto/enrolling-group-details';
 import { StaticContext } from 'react-router';
 import EnrollmentData from '../enrollments/enrollment-data';
+import { EnrollingAction } from './enrolling-action';
 
 export type IEnrollingProps = RouteComponentProps<{ }, StaticContext, { enrollment: EnrollmentData }>;
 
 
 interface IEnrollingState {
   coursesData: Array<CoursesData>
+  selectedCourse: CourseDetails,
   groupsData: Array<GroupsData>
 };
 
@@ -43,6 +45,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
 
     this.state = {
       coursesData: [],
+      selectedCourse: null,
       groupsData: []
     };
   }
@@ -54,11 +57,59 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     }
   };
 
-  onCourseSelected(course: CourseDetails) {
-    this.getGroupsData(course.id)
+  refresh() {
+    this.getCoursesData();
+    this.getGroupsData(this.state.selectedCourse.id);
   }
 
-  onGroupSelected(group: GroupsData) {
+  onCourseSelected(course: CourseDetails) {
+    this.getGroupsData(course.id)
+    this.setState( { selectedCourse: course } )
+  }
+
+  enroll(group: GroupsData) {
+    axios.post(`/api/enrolling`, { id: group.id })
+    .then(r => {
+      log.info(r.data);
+    })
+    .catch(e => log.error(e))
+    .finally(this.refresh.bind(this));
+  }
+
+  disenroll(group: GroupsData) {
+    axios.delete(`/api/enrolling`, { data: {id: group.id } })
+    .then(r => {
+      log.info(r.data);
+    })
+    .catch(e => log.error(e))
+    .finally(this.refresh.bind(this));
+  }
+
+  askOverLimit(group: GroupsData) {
+
+  }
+
+  recallAskOverLimit(group: GroupsData) {
+
+  }
+
+  onGroupSelected(group: GroupsData, action: EnrollingAction) {
+    switch(action) {
+      case EnrollingAction.Enroll:
+        this.enroll(group);
+        break;
+      case EnrollingAction.Disenroll:
+        this.disenroll(group);
+        break;
+      case EnrollingAction.AskOverLimit:
+        this.askOverLimit(group);
+        break;
+      case EnrollingAction.RecallAsk:
+        this.recallAskOverLimit(group);
+        break;
+      default:
+        log.error('no action');
+    }
   }
 
   getCoursesData() {
@@ -77,6 +128,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     .then(r => {
       const data = r.data.map(element => mapEnrollingGroupDetailsToGroupsData(element));
       this.setState({ groupsData: data })
+      log.info('updating group list')
     })
     .catch(e => log.error(e))
   }

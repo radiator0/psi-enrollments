@@ -20,7 +20,7 @@ import log from 'app/config/log';
 export type IGroupListProps = {
     enrollment: EnrollmentData,
     groupsData: Array<GroupsData>,
-    onSelected: (group: GroupsData) => void
+    onSelected: (group: GroupsData, action: EnrollingAction) => void
 };;
 
 
@@ -50,10 +50,11 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
 
     determinePossibleActionForGroup(groupsData: GroupsData, enrollment: EnrollmentData, currentDate: Date) {
         if(!isEnrollmentAtive(enrollment, currentDate)) {
+            log.info(1);
             return EnrollingAction.NoAction;
         }
         if(groupsData.isStudentEnrolled) {
-            return EnrollingAction.Leave;
+            return EnrollingAction.Disenroll;
         }
         if(!groupsData.isLimitReached) {
             return EnrollingAction.Enroll;

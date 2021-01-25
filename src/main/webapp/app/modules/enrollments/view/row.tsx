@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import EnrollmentUnit from 'app/shared/model/domain/dto/enrollment-unit';
+import EnrollmentData from '../enrollment-data';
 
 const useRowStyles = makeStyles({
     root: {
@@ -23,7 +24,12 @@ const useRowStyles = makeStyles({
     },
 });
 
-function Row(props) {
+interface IRowProps {
+    row: EnrollmentData,
+    onSelected: (ed: EnrollmentData) => void
+}
+
+function Row(props: IRowProps) {
     const { row, onSelected } = props;
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
@@ -65,7 +71,7 @@ function Row(props) {
                                 <TableBody>
                                     {row.enrollmentUnits.map((unit: EnrollmentUnit) => (
                                         <TableRow key={unit.id}>
-                                            <TableCell component="th" scope="row" align='right'>{`${new Date().toLocaleDateString()} ${new Date(unit.startDate).toLocaleTimeString()}`}</TableCell>
+                                            <TableCell component="th" scope="row" align='right'>{`${new Date(unit.startDate).toLocaleDateString()} ${new Date(unit.startDate).toLocaleTimeString()}`}</TableCell>
                                             <TableCell component="th" scope="row" align='right'>{`${new Date(unit.endDate).toLocaleDateString()} ${new Date(unit.endDate).toLocaleTimeString()}`}</TableCell>
                                         </TableRow>
                                     ))}

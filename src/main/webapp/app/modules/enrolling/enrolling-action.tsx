@@ -1,7 +1,7 @@
 export const enum EnrollingAction {
     NoAction,
     Enroll,
-    Leave,
+    Disenroll,
     AskOverLimit,
     RecallAsk
 }

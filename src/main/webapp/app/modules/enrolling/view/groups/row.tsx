@@ -39,24 +39,23 @@ const renderLecturer = (row: GroupsData) => {
 }
 
 const getActionButton = (row: GroupsData, action: EnrollingAction) => {
-    if(action === EnrollingAction.AskOverLimit) {
-        return (<LiveHelpIcon></LiveHelpIcon>);
+    switch (action) {
+        case EnrollingAction.AskOverLimit:
+            return (<LiveHelpIcon></LiveHelpIcon>);
+        case EnrollingAction.RecallAsk:
+            return (<SettingsBackupRestoreIcon></SettingsBackupRestoreIcon>);
+        case EnrollingAction.Enroll:
+            return (<PersonAddIcon></PersonAddIcon>);
+        case EnrollingAction.Disenroll:
+            return (<RemoveCircleIcon></RemoveCircleIcon>);
+        default:
+            return (<></>);
     }
-    if(action === EnrollingAction.RecallAsk) {
-        return (<SettingsBackupRestoreIcon></SettingsBackupRestoreIcon>);
-    }
-    if(action === EnrollingAction.Enroll) {
-        <PersonAddIcon></PersonAddIcon>
-    }
-    if(action === EnrollingAction.Leave) {
-        <RemoveCircleIcon></RemoveCircleIcon>
-    }
-    return (<></>);
 }
 
-const renderActionButton = (row: GroupsData, action: EnrollingAction, onSelected: (group: GroupsData) => void) => {
+const renderActionButton = (row: GroupsData, action: EnrollingAction, onSelected: (group: GroupsData, action: EnrollingAction) => void) => {
     return (
-        <IconButton aria-label="expand row" size="small" onClick={() => onSelected(row)}>
+        <IconButton aria-label="expand row" size="small" onClick={() => onSelected(row, action)}>
             {getActionButton(row, action)}
         </IconButton>
     );
@@ -65,13 +64,13 @@ const renderActionButton = (row: GroupsData, action: EnrollingAction, onSelected
 export type IRowProps = {
     row: GroupsData,
     action: EnrollingAction,
-    onSelected: (group: GroupsData) => void
+    onSelected: (group: GroupsData, action: EnrollingAction) => void
 };;
 
 function Row(props: IRowProps) {
     const { row, action, onSelected } = props;
     const classes = useRowStyles();
-    log.info(row);
+    log.info(props);
     return (
         <React.Fragment>
             <TableRow className={classes.root}>

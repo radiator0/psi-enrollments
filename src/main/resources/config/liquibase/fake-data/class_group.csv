@@ -1,5 +1,5 @@
 id;code;is_enrollment_above_limit_allowed;people_limit;enrolled_count;is_full;course_id;main_lecturer_id
-1;instruction set;true;32832;61594;false;1;1
+1;instruction set;true;30;20;false;1;1
 2;viral exploit;false;20379;53877;true;2;1
 3;Designer Marketing;false;11347;46396;false;3;2
 4;integrated Gorgeous Metal Chair;true;54630;52767;false;4;2

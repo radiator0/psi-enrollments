@@ -37,12 +37,12 @@ class CourseRow extends Component<ICourseRowProps, ICourseRowState> {
 
     render() {
         const { course } = this.props;
-
+        log.info(course);
         return (
             <ListItem>
                 <ListItemAvatar>
                     <Avatar>
-                        {course.enrolled ? <CheckIcon /> : <ClearIcon />}
+                        {course.studentEnrolled ? <CheckIcon /> : <ClearIcon />}
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText
