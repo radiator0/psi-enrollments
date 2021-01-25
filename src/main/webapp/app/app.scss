@@ -314,3 +314,8 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 .nav-active svg {
   color: #b11902 !important;
 }
+
+.list-item:hover {
+  background-color: rgba(165, 165, 165, 0.507);
+  cursor: pointer !important;
+}

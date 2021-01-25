@@ -39,7 +39,7 @@ class CourseRow extends Component<ICourseRowProps, ICourseRowState> {
         const { course } = this.props;
         log.info(course);
         return (
-            <ListItem component="button" onClick={() => this.onSelected()}>
+            <ListItem className="list-item" onClick={() => this.onSelected()}>
                 <ListItemAvatar>
                     <Avatar>
                         {course.studentEnrolled ? <CheckIcon /> : <ClearIcon />}
