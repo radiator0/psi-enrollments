@@ -14,6 +14,7 @@ import CourseRow from './course-row';
 import CourseUnitDetails from '../../../../shared/model/domain/dto/course-unit-details';
 import CourseDetails from '../../../../shared/model/domain/dto/course-details';
 import { translate } from 'react-jhipster';
+import { CheckedAvatar, UnCheckedAvatar } from '../../custom-avatars';
 
 interface ICourseUnitRowRowProps {
     courseUnit: CourseUnitDetails,
@@ -48,9 +49,7 @@ class CourseUnitRow extends Component<ICourseUnitRowRowProps, ICourseUnitRowRowS
         return (
             <ListItem>
                 <ListItemAvatar>
-                    <Avatar>
-                        {this.isEnrolledInAll() ? <CheckIcon /> : <ClearIcon />}
-                    </Avatar>
+                        {this.isEnrolledInAll() ? <CheckedAvatar /> : <UnCheckedAvatar />}
                 </ListItemAvatar>
                 <ListItemText
                     primary={courseUnit.code}

@@ -10,6 +10,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import CourseDetails from '../../../../shared/model/domain/dto/course-details';
 import log from 'app/config/log';
+import { CheckedAvatar, UnCheckedAvatar } from '../../custom-avatars';
 
 interface ICourseRowProps {
     course: CourseDetails,
@@ -41,9 +42,7 @@ class CourseRow extends Component<ICourseRowProps, ICourseRowState> {
         return (
             <ListItem className="list-item" onClick={() => this.onSelected()}>
                 <ListItemAvatar>
-                    <Avatar>
-                        {course.studentEnrolled ? <CheckIcon /> : <ClearIcon />}
-                    </Avatar>
+                        {course.studentEnrolled ? <CheckedAvatar /> : <UnCheckedAvatar />}
                 </ListItemAvatar>
                 <ListItemText
                     primary={course.shortName || course.name}

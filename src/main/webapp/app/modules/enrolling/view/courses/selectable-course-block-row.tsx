@@ -14,6 +14,7 @@ import CourseUnitRow from './course-unit-row';
 import SelectableCourseBlockDetails from '../../../../shared/model/domain/dto/selectable-course-block-details';
 import CourseDetails from '../../../../shared/model/domain/dto/course-details';
 import { translate } from 'react-jhipster';
+import { CheckedAvatar, UnCheckedAvatar } from '../../custom-avatars';
 
 interface ISelectableCourseBlockRowProps {
     selectableCourseBlock: SelectableCourseBlockDetails;
@@ -48,7 +49,7 @@ class SelectableCourseBlockRow extends Component<ISelectableCourseBlockRowProps,
         return (
             <ListItem>
                 <ListItemAvatar>
-                    <Avatar>{this.isEnrolledInAll() ? <CheckIcon /> : <ClearIcon />}</Avatar>
+                {this.isEnrolledInAll() ? <CheckedAvatar /> : <UnCheckedAvatar />}
                 </ListItemAvatar>
                 <ListItemText primary={selectableCourseBlock.name} secondary={translate('enrolling.course.selectableModule')} />
                 <ListItemSecondaryAction>
