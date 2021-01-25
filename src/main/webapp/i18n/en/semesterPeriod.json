@@ -2,9 +2,15 @@
   "enrollmentsApp": {
     "SemesterPeriod": {
       "null": "",
-      "Whole": "Whole",
-      "FirstHalf": "FirstHalf",
-      "SecondHalf": "SecondHalf"
+      "Whole": "Whole semester",
+      "FirstHalf": "First half",
+      "SecondHalf": "Second half"
+    },
+    "ShortSemesterPeriod": {
+      "null": "",
+      "Whole": "W",
+      "FirstHalf": "FH",
+      "SecondHalf": "SH"
     }
   }
 }

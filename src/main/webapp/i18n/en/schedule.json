@@ -1,0 +1,13 @@
+{
+  "schedule": {
+    "locale": "en-GB",
+    "todayButtonText": "Today",
+    "header": {
+      "semester": "Semester schedule"
+    },
+    "appointment": {
+      "weekType": "Week type",
+      "semesterPeriod": "Semester period"
+    }
+  }
+}

@@ -2,9 +2,15 @@
   "enrollmentsApp": {
     "WeekType": {
       "null": "",
-      "All": "All",
-      "Even": "Even",
-      "Odd": "Odd"
+      "All": "Każdy",
+      "Even": "Parzysty",
+      "Odd": "Nieparzysty"
+    },
+    "ShortWeekType": {
+      "null": "",
+      "All": "K",
+      "Even": "TP",
+      "Odd": "TN"
     }
   }
 }

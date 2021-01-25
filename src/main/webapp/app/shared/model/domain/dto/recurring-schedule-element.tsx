@@ -1,4 +1,4 @@
-import DayOfWeek from '../enum/day-of-week';
+import { DayOfWeek } from '../../enumerations/day-of-week.model';
 import SemesterPeriod from '../enum/semester-period';
 import WeekType from '../enum/week-type';
 import ClassType from '../enum/class-type';

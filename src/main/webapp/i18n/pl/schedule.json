@@ -1,0 +1,13 @@
+{
+  "schedule": {
+    "locale": "pl-PL",
+    "todayButtonText": "Dzisiaj",
+    "header": {
+      "semester": "Plan semestru"
+    },
+    "appointment": {
+      "weekType": "Typ tygodnia",
+      "semesterPeriod": "Część semestru"
+    }
+  }
+}

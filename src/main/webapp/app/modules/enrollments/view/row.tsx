@@ -15,6 +15,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import EnrollmentUnit from 'app/shared/model/domain/dto/enrollment-unit';
 import EnrollmentData from '../enrollment-data';
+import { Translate } from 'react-jhipster';
 
 const useRowStyles = makeStyles({
     root: {
@@ -59,13 +60,13 @@ function Row(props: IRowProps) {
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
                             <Typography variant="h6" gutterBottom component="div">
-                                Bloki
-                  </Typography>
+                                <Translate contentKey={'enrollments.right.block.header'}>Blocks</Translate>
+                            </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell align="right">Początek</TableCell>
-                                        <TableCell align="right">Koniec</TableCell>
+                                        <TableCell align="right"><Translate contentKey={'enrollments.right.block.start'}>Start</Translate></TableCell>
+                                        <TableCell align="right"><Translate contentKey={'enrollments.right.block.end'}>End</Translate></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>

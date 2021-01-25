@@ -5,6 +5,12 @@
       "All": "All",
       "Even": "Even",
       "Odd": "Odd"
+    },
+    "ShortWeekType": {
+      "null": "",
+      "All": "A",
+      "Even": "E",
+      "Odd": "O"
     }
   }
 }

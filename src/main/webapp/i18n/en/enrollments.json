@@ -1,0 +1,20 @@
+{
+  "enrollments": {
+    "header": {
+      "semesterWithRights": "Semesters with enrollment right"
+    },
+    "right": {
+      "fieldOfStudy": "Field of study",
+      "semester": "Semester",
+      "speciality": "Speciality",
+      "enrollmentsStart": "Start",
+      "enrollmentsEnd": "End",
+      "rightStart": "Right",
+      "block": {
+        "header": "Blocks",
+        "start": "Start",
+        "end": "End"
+      }
+    }
+  }
+}

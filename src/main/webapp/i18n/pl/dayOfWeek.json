@@ -2,13 +2,23 @@
   "enrollmentsApp": {
     "DayOfWeek": {
       "null": "",
-      "Monday": "Monday",
-      "Tuesday": "Tuesday",
-      "Wednesday": "Wednesday",
-      "Thursday": "Thursday",
-      "Friday": "Friday",
-      "Saturday": "Saturday",
-      "Sunday": "Sunday"
+      "Monday": "Poniedziałek",
+      "Tuesday": "Wtorek",
+      "Wednesday": "Środa",
+      "Thursday": "Czwartek",
+      "Friday": "Piątek",
+      "Saturday": "Sobota",
+      "Sunday": "Niedziela"
+    },
+    "ShortDayOfWeek": {
+      "null": "",
+      "Monday": "Pon",
+      "Tuesday": "Wto",
+      "Wednesday": "Śro",
+      "Thursday": "Czw",
+      "Friday": "Pią",
+      "Saturday": "Sob",
+      "Sunday": "Nie"
     }
   }
 }

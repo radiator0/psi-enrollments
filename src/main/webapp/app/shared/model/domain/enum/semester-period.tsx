@@ -1,5 +1,7 @@
 enum SemesterPeriod {
-  Whole, FirstHalf, SecondHalf
+  Whole = 'Whole',
+  FirstHalf = 'FirstHalf',
+  SecondHalf = 'SecondHalf'
 };
 
 export default SemesterPeriod;

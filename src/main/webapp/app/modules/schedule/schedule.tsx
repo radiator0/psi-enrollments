@@ -10,7 +10,7 @@ import mapScheduleElementToScheduleData from './domain/mapper/schedule-element-t
 import mapRecurringScheduleElementToScheduleData from './domain/mapper/recurring-schedule-element-to-data-mapper';
 import ScheduleElement from '../../shared/model/domain/dto/schedule-element';
 import RecurringScheduleElement from '../../shared/model/domain/dto/recurring-schedule-element';
-import scheduleResources from './schedule-resources';
+import csr from './schedule-resources';
 import log from '../../config/log';
 import Appointment from './view/appointment';
 import { Typography } from '@material-ui/core';
@@ -21,10 +21,11 @@ import { connect } from 'react-redux';
 import Header from './view/appointment-header';
 import Content from './view/appointment-content';
 import CommandButton from './view/appointment-command-button';
+import { Translate, translate} from 'react-jhipster';
 
 interface IScheduleState {
   data: Array<ScheduleData>;
-  resources: Array<any>;
+  createScheduleResources: () => Array<any>;
   currentDate: Date;
 };
 
@@ -38,7 +39,7 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
         new ScheduleData(1, new Date('2021-01-18T07:30'), new Date('2021-01-18T09:00'), 'BAZY', ClassType.Laboratory.toString()),
         new ScheduleData(2, new Date('2021-01-18T09:15'), new Date('2021-01-18T11:00'), 'TEŻ BAZY ALE NA CZERWONO', ClassType.Lecture.toString()),
       */],
-      resources: scheduleResources,
+      createScheduleResources: csr,
       currentDate: new Date(),
 
     };
@@ -88,15 +89,15 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
   semesterHeading() {
     return this.props.match.params.scheduleType === ScheduleType.semester && (
       <>
-        <Typography variant="h4" component="h4">
-          Semester
+        <Typography variant="h4" component="h4" align='center'>
+          <Translate contentKey={'schedule.header.semester'}>Semester</Translate>
         </Typography>
       </>
     );
   }
 
   render() {
-    const { data, resources, currentDate } = this.state;
+    const { data, createScheduleResources, currentDate } = this.state;
     const { scheduleType } = this.props.match.params;
 
     return (
@@ -104,6 +105,7 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
         <Scheduler
           data={data}
           height={800}
+          locale={translate('schedule.locale')}
         >
           <ViewState
             currentDate={currentDate}
@@ -139,12 +141,12 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
             updateInterval={10000}
           />
           <Resources
-            data={resources}
+            data={createScheduleResources()}
           />
           {this.semesterHeading()}
           {scheduleType === ScheduleType.week && <Toolbar />}
           {scheduleType === ScheduleType.week && <DateNavigator />}
-          {scheduleType === ScheduleType.week && <TodayButton />}
+          {scheduleType === ScheduleType.week && <TodayButton messages={{ today: translate('schedule.todayButtonText') }} />}
         </Scheduler>
       </Paper>
     );

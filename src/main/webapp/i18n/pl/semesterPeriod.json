@@ -2,9 +2,15 @@
   "enrollmentsApp": {
     "SemesterPeriod": {
       "null": "",
-      "Whole": "Whole",
-      "FirstHalf": "FirstHalf",
-      "SecondHalf": "SecondHalf"
+      "Whole": "Cały Semster",
+      "FirstHalf": "Pierwsza połowa",
+      "SecondHalf": "Druga połowa"
+    },
+    "ShortSemesterPeriod": {
+      "null": "",
+      "Whole": "C",
+      "FirstHalf": "PP",
+      "SecondHalf": "DP"
     }
   }
 }

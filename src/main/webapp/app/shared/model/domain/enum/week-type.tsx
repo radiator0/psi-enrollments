@@ -1,5 +1,7 @@
 enum WeekType {
-  All, Even, Odd
+  All = 'All',
+  Even = 'Even',
+  Odd = 'Odd'
 };
 
 export default WeekType;

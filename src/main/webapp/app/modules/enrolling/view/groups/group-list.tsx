@@ -17,7 +17,6 @@ import log from 'app/config/log';
 import { Translate } from 'react-jhipster';
 
 
-
 export type IGroupListProps = {
     enrollment: EnrollmentData,
     groupsData: Array<GroupsData>,
@@ -44,7 +43,7 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
     renderHeader(currentDate: Date) {
         return (
             <Typography variant='h4' style={{textAlign: 'center'}}>
-                <Translate contentKey={'enrolling.header.groups'}>Groups</Translate>
+                <Translate contentKey={'enrolling.header.groups'}>Grupy</Translate>
             </Typography>
         );
     }
@@ -76,12 +75,12 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
             <Table aria-label="table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="right">Kod grupy</TableCell>
-                  <TableCell align="right">Zapisani</TableCell>
-                  <TableCell align="center">Ponad stan</TableCell>
-                  <TableCell align="right">Termin</TableCell>
-                  <TableCell align="right">Prowadzący</TableCell>
-                  <TableCell align="right">Akcja</TableCell>
+                  <TableCell align="right"><Translate contentKey={'enrolling.group.code'}>Group code</Translate></TableCell>
+                  <TableCell align="right"><Translate contentKey={'enrolling.group.enrolled'}>Enrolled</Translate></TableCell>
+                  <TableCell align="center"><Translate contentKey={'enrolling.group.overLimit'}>Over limit</Translate></TableCell>
+                  <TableCell align="right"><Translate contentKey={'enrolling.group.schedule'}>Schedule</Translate></TableCell>
+                  <TableCell align="right"><Translate contentKey={'enrolling.group.lecturer'}>Lecturer</Translate></TableCell>
+                  <TableCell align="right"><Translate contentKey={'enrolling.group.action'}>Action</Translate></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

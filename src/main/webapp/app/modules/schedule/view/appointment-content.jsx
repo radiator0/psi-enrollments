@@ -3,9 +3,15 @@ import * as React from 'react';
 import { AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import Grid from '@material-ui/core/Grid';
 import Room from '@material-ui/icons/Room';
-import DateRange from '@material-ui/icons/DateRange';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import Person from '@material-ui/icons/Person';
 import { withStyles } from '@material-ui/core/styles';
+import { translate } from 'react-jhipster';
+import { weekTypeToLongString } from '../../../shared/model/domain/mapper/week-type-to-string-mapper';
+import { semesterPeriodToLongString } from '../../../shared/model/domain/mapper/semester-period-to-string-mapper';
+import WeekType from '../../../shared/model/domain/enum/week-type';
+import SemesterPeriod from '../../../shared/model/domain/enum/semester-period';
 
 const style = ({ palette }) => ({
   textCenter: {
@@ -13,9 +19,37 @@ const style = ({ palette }) => ({
   },
 });
 
-const schedule = (data = {}) => {
-  return `WT: ${data.weekType || ''} | SH: ${data.semesterPeriod || ''}`;
+const weekType = (data = {}, classes = {}) => {
+  if(data.weekType === WeekType.All) {
+    return (<></>);
+  }
+  return (
+    <>
+      <Grid item xs={2} className={classes.textCenter}>
+        <DateRangeIcon className={classes.icon} />
+      </Grid>
+      <Grid item xs={10}>
+        <span>{`${translate('schedule.appointment.weekType')}: ${weekTypeToLongString(data.weekType)}`}</span>
+      </Grid>
+    </>
+  );
 };
+
+const semesterPeriod = (data = {}, classes = {}) => {
+  if(data.semesterPeriod === SemesterPeriod.Whole) {
+    return (<></>);
+  }
+  return (
+    <>
+      <Grid item xs={2} className={classes.textCenter}>
+        <CalendarTodayIcon className={classes.icon} />
+      </Grid>
+      <Grid item xs={10}>
+        <span>{`${translate('schedule.appointment.semesterPeriod')}: ${semesterPeriodToLongString(data.semesterPeriod)}`}</span>
+      </Grid>
+    </>
+  );
+}
 
 const lecturer = (data = {}) => {
   return `${data.lecturerTitle || ''} ${data.lecturerFirstName || ''} ${data.lecturerLastName || ''}`;
@@ -30,12 +64,8 @@ const scheduleDescription = (classes, appointmentData) => {
     return (<></>);
   return (
     <>
-      <Grid item xs={2} className={classes.textCenter}>
-        <DateRange className={classes.icon} />
-      </Grid>
-      <Grid item xs={10}>
-        <span>{schedule(appointmentData)}</span>
-      </Grid>
+      {weekType(appointmentData, classes)}
+      {semesterPeriod(appointmentData, classes)}
     </>
   );
 }

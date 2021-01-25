@@ -2,11 +2,11 @@
   "enrollmentsApp": {
     "ClassType": {
       "null": "",
-      "Project": "Project",
-      "Laboratory": "Laboratory",
-      "Exercises": "Exercises",
-      "Seminar": "Seminar",
-      "Lecture": "Lecture"
+      "Project": "Projekt",
+      "Laboratory": "Laboratorium",
+      "Exercises": "Ćwiczenia",
+      "Seminar": "Seminarium",
+      "Lecture": "Wykład"
     }
   }
 }

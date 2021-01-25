@@ -1,30 +1,12 @@
-// @ts-nocheck
 import SemesterPeriod from "../enum/semester-period"
+import { translate } from 'react-jhipster';
 
 const semesterPeriodToLongString = (sp: SemesterPeriod) => {
-    switch (sp) {
-        case 'Whole':
-            return '';
-        case 'FirstHalf':
-            return 'First Half';
-        case 'SecondHalf':
-            return 'Second Half';
-        default:
-            return '';
-    }
+    return translate(`enrollmentsApp.SemesterPeriod.${sp}`);
 }
 
 const semesterPeriodToShortString = (sp: SemesterPeriod) => {
-    switch (sp) {
-        case 'Whole':
-            return '';
-        case 'FirstHalf':
-            return 'FH';
-        case 'SecondHalf':
-            return 'SH';
-        default:
-            return '';
-    }
+    return translate(`enrollmentsApp.ShortSemesterPeriod.${sp}`);
 }
 
 export { semesterPeriodToLongString, semesterPeriodToShortString }

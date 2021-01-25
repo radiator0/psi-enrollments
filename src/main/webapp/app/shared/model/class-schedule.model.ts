@@ -1,4 +1,3 @@
-import { Moment } from 'moment';
 import { DayOfWeek } from 'app/shared/model/enumerations/day-of-week.model';
 import { WeekType } from 'app/shared/model/enumerations/week-type.model';
 import { SemesterPeriod } from 'app/shared/model/enumerations/semester-period.model';

@@ -1,0 +1,20 @@
+{
+  "enrollments": {
+    "header": {
+      "semesterWithRights": "Semestry z prawem zapisu"
+    },
+    "right": {
+      "fieldOfStudy": "Kierunek",
+      "semester": "Semestr",
+      "speciality": "Specjalizacja",
+      "enrollmentsStart": "Początek",
+      "enrollmentsEnd": "Koniec",
+      "rightStart": "Prawo",
+      "block": {
+        "header": "Bloki",
+        "start": "Początek",
+        "end": "Koniec"
+      }
+    }
+  }
+}

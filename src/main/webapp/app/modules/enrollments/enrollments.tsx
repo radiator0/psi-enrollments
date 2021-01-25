@@ -14,6 +14,7 @@ import mapEnrollmentRightDetailsToEnrollmentData from './domain/mapper/enrollmen
 import axios from 'axios';
 import log from 'app/config/log';
 import EnrollmentData from './enrollment-data';
+import { Translate } from 'react-jhipster';
 
 export type IEnrollmentsProps = StateProps;
 
@@ -55,7 +56,7 @@ class Enrollments extends Component<IEnrollmentsProps, IEnrollmentsState> {
   renderHeader() {
     return (
       <Typography variant='h4' component='h4' align='center'>
-        Semestry z prawem do zapisu
+        <Translate contentKey={'enrollments.header.semesterWithRights'}>Semesters with enrollment right</Translate>
       </Typography>
     );
   }
@@ -67,12 +68,12 @@ class Enrollments extends Component<IEnrollmentsProps, IEnrollmentsState> {
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell align="right">Kierunek</TableCell>
-              <TableCell align="right">Semestr</TableCell>
-              <TableCell align="right">Specjalizacja</TableCell>
-              <TableCell align="right">Początek</TableCell>
-              <TableCell align="right">Koniec</TableCell>
-              <TableCell align="right">Prawo</TableCell>
+              <TableCell align="right"><Translate contentKey={'enrollments.right.fieldOfStudy'}>Field of study</Translate></TableCell>
+              <TableCell align="right"><Translate contentKey={'enrollments.right.semester'}>Semester</Translate></TableCell>
+              <TableCell align="right"><Translate contentKey={'enrollments.right.speciality'}>Speciality</Translate></TableCell>
+              <TableCell align="right"><Translate contentKey={'enrollments.right.enrollmentsStart'}>Start</Translate></TableCell>
+              <TableCell align="right"><Translate contentKey={'enrollments.right.enrollmentsEnd'}>End</Translate></TableCell>
+              <TableCell align="right"><Translate contentKey={'enrollments.right.rightStart'}>Right</Translate></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
