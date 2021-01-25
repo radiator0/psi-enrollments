@@ -39,6 +39,10 @@ public class Request implements Serializable {
     @Column(name = "is_examined", nullable = false)
     private Boolean isExamined;
 
+    @NotNull
+    @Column(name = "is_accepted", nullable = false)
+    private Boolean isAccepted;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "requests", allowSetters = true)
@@ -110,6 +114,15 @@ public class Request implements Serializable {
         this.isExamined = isExamined;
     }
 
+    public Boolean isAccepted() {
+        return isAccepted;
+    }
+
+    public Request setAccepted(Boolean accepted) {
+        isAccepted = accepted;
+        return this;
+    }
+
     public ClassGroup getClassGroup() {
         return classGroup;
     }
@@ -162,6 +175,7 @@ public class Request implements Serializable {
             ", date='" + getDate() + "'" +
             ", text='" + getText() + "'" +
             ", isExamined='" + isIsExamined() + "'" +
+            ", isAccepted='" + isAccepted() + "'" +
             "}";
     }
 }

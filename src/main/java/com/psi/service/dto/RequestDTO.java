@@ -21,9 +21,9 @@ public class RequestDTO implements Serializable {
     @NotNull
     private String text;
 
-    @NotNull
     private Boolean isExamined;
 
+    private Boolean isAccepted;
 
     private Long classGroupId;
 
@@ -69,6 +69,14 @@ public class RequestDTO implements Serializable {
         this.isExamined = isExamined;
     }
 
+    public Boolean isAccepted() {
+        return isAccepted;
+    }
+
+    public void setAccepted(Boolean accepted) {
+        isAccepted = accepted;
+    }
+
     public Long getClassGroupId() {
         return classGroupId;
     }
@@ -111,6 +119,7 @@ public class RequestDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", text='" + getText() + "'" +
             ", isExamined='" + isIsExamined() + "'" +
+            ", isAccepted='" + isAccepted() + "'" +
             ", classGroupId=" + getClassGroupId() +
             ", studentId=" + getStudentId() +
             "}";

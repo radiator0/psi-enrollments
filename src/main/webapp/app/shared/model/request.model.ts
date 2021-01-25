@@ -6,6 +6,7 @@ export interface IRequest {
   date?: string;
   text?: string;
   isExamined?: boolean;
+  isAccepted?: boolean;
   classGroupId?: number;
   studentId?: number;
 }
