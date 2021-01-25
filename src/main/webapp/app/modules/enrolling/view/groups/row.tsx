@@ -28,6 +28,9 @@ const renderCanEnrollOverLimit = (row: GroupsData) => {
 }
 
 const renderSchedule = (row: GroupsData) => {
+    if(row.schedules.length === 0) {
+        return '';
+    }
     const shortDates = row.schedules.map(s => recurringScheduleElementToShortDateString(s));
     return shortDates.reduce((previousValue, currentValue, index) => {
         return `${previousValue} ${index > 1 ? ', ' : ''} ${currentValue}`;

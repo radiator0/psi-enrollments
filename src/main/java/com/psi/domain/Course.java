@@ -36,9 +36,8 @@ public class Course implements Serializable {
     @Column(name = "code", nullable = false)
     private String code;
 
-    @NotNull
     @Min(value = 0)
-    @Column(name = "ects", nullable = false)
+    @Column(name = "ects")
     private Integer ects;
 
     @NotNull

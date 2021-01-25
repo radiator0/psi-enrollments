@@ -1,0 +1,27 @@
+{
+  "enrolling": {
+    "header": {
+      "enrollments": "Enrollments",
+      "courses": "Courses",
+      "groups": "Groups"
+    },
+    "course": {
+      "selectableModule": "Selectable module",
+      "courseGroup": "Course group",
+      "stream": "Stream",
+      "course": "Course"
+    },
+    "group": {
+      "code": "Group code",
+      "enrolled": "Enrolled",
+      "overLimit": "Over limit",
+      "schedule": "Schedule",
+      "lecturer": "Lecturer",
+      "action": "Action"
+    },
+    "notification": {
+      "enrolled": "Enrolled",
+      "disenrolled": "Disenrolled"
+    }
+  }
+}

@@ -39,21 +39,16 @@ class CourseRow extends Component<ICourseRowProps, ICourseRowState> {
         const { course } = this.props;
         log.info(course);
         return (
-            <ListItem>
+            <ListItem component="button" onClick={() => this.onSelected()}>
                 <ListItemAvatar>
                     <Avatar>
                         {course.studentEnrolled ? <CheckIcon /> : <ClearIcon />}
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                    primary={course.name}
-                    secondary={'Kurs'}
+                    primary={course.shortName || course.name}
+                    secondary={course.form}
                 />
-                <ListItemSecondaryAction>
-                    <IconButton aria-label="expand row" size="small" onClick={() => this.onSelected()}>
-                        <KeyboardArrowRightIcon />
-                    </IconButton>
-                </ListItemSecondaryAction>
             </ListItem>
         );
     }

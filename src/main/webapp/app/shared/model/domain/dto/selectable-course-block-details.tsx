@@ -1,4 +1,3 @@
-import CourseDetails from './course-details';
 import CourseUnitDetails from './course-unit-details';
 
 export default class SelectableCourseBlockDetails {

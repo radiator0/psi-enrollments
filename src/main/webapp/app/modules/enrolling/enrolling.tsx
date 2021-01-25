@@ -17,6 +17,8 @@ import EnrollingGroupDetails from '../../shared/model/domain/dto/enrolling-group
 import { StaticContext } from 'react-router';
 import EnrollmentData from '../enrollments/enrollment-data';
 import { EnrollingAction } from './enrolling-action';
+import { toast } from 'react-toastify';
+import { Translate, translate } from 'react-jhipster';
 
 export type IEnrollingProps = RouteComponentProps<{ }, StaticContext, { enrollment: EnrollmentData }>;
 
@@ -32,11 +34,11 @@ const gridStyle = {
 };
 
 const courseListStyle = {
-  width: '25%',
+  width: '30%',
 };
 
 const groupsListStyle = {
-  width: '75%', 
+  width: '70%', 
 };
 
 class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
@@ -55,7 +57,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     if(this.props.history.location.state.enrollment) {
       this.getCoursesData();
     }
-  };
+  }
 
   refresh() {
     this.getCoursesData();
@@ -73,7 +75,10 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
       log.info(r.data);
     })
     .catch(e => log.error(e))
-    .finally(this.refresh.bind(this));
+    .finally(() => {
+      toast.success(translate("enrolling.notification.enrolled"))
+      this.refresh();
+    });
   }
 
   disenroll(group: GroupsData) {
@@ -82,7 +87,10 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
       log.info(r.data);
     })
     .catch(e => log.error(e))
-    .finally(this.refresh.bind(this));
+    .finally(() => {
+      toast.success(translate("enrolling.notification.disenrolled"))
+      this.refresh();
+    });
   }
 
   askOverLimit(group: GroupsData) {
@@ -117,6 +125,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     axios.get<Array<SelectableCourseBlockDetails>>(`/api/enrollment/${enrollment.id}/selectable-modules`)
     .then(r => {
       const data = r.data.map(element => mapSelectableCourseBlockToCoursesData(element));
+      log.info(data);
       this.setState({ coursesData: data })
     })
     .catch(e => log.error(e))
@@ -136,7 +145,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   renderHeader() {
     return (
       <Typography variant='h4' component='h4' align='center'>
-        Zapisy
+        <Translate contentKey={'enrolling.header.enrollments'}>Enrollments</Translate>
       </Typography>
     );
   }

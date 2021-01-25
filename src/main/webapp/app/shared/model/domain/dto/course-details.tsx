@@ -8,9 +8,9 @@ export default class CourseDetails {
   public readonly ects: number;
   public readonly form: ClassType;
   public readonly specialities: Array<string>;
-  public readonly enrolled: boolean;
+  public readonly studentEnrolled: boolean;
 
-  constructor(id: number, code: string, name: string, shortName: string, ects: number, form: ClassType, specialities: Array<string>, enrolled: boolean) {
+  constructor(id: number, code: string, name: string, shortName: string, ects: number, form: ClassType, specialities: Array<string>, studentEnrolled: boolean) {
     this.id = id;
     this.code = code;
     this.name = name;
@@ -18,6 +18,6 @@ export default class CourseDetails {
     this.ects = ects;
     this.form = form;
     this.specialities = specialities;
-    this.enrolled = enrolled;
+    this.studentEnrolled = studentEnrolled;
   }
 };

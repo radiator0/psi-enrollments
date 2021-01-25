@@ -10,7 +10,7 @@ import com.psi.domain.enumeration.ClassType;
  * A DTO for the {@link com.psi.domain.Course} entity.
  */
 public class CourseDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -21,7 +21,6 @@ public class CourseDTO implements Serializable {
     @NotNull
     private String code;
 
-    @NotNull
     @Min(value = 0)
     private Integer ects;
 
@@ -33,7 +32,7 @@ public class CourseDTO implements Serializable {
     private Long enrollmentDateId;
 
     private Long courseUnitId;
-    
+
     public Long getId() {
         return id;
     }

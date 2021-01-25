@@ -1,5 +1,5 @@
 id;code;is_enrollment_above_limit_allowed;people_limit;enrolled_count;is_full;course_id;main_lecturer_id
-1;instruction set;true;30;20;false;1;1
+1;Z00-01a;true;30;20;false;1;1
 2;viral exploit;false;20379;53877;true;2;1
 3;Designer Marketing;false;11347;46396;false;3;2
 4;integrated Gorgeous Metal Chair;true;54630;52767;false;4;2
@@ -9,3 +9,13 @@ id;code;is_enrollment_above_limit_allowed;people_limit;enrolled_count;is_full;co
 8;Cotton homogeneous Home Loan Account;false;92425;13022;false;8;4
 9;Cambridgeshire multimedia ROI;false;65237;55281;false;9;5
 10;Plastic Bedfordshire;true;43218;58424;false;10;6
+11;Z00-11a;false;30;20;false;11;1
+12;Z00-12a;true;30;20;false;12;2
+13;Z00-13a;false;30;20;false;13;3
+14;Z00-14a;true;30;20;false;14;4
+15;Z00-15a;false;30;20;false;15;5
+16;Z00-16a;true;30;20;false;16;6
+17;Z00-17a;false;30;20;false;17;7
+18;Z00-18a;true;30;20;false;18;8
+19;Z00-19a;false;30;20;false;19;9
+20;Z00-20a;true;30;20;false;20;10

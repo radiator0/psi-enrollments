@@ -13,6 +13,7 @@ import Collapse from '@material-ui/core/Collapse';
 import CourseRow from './course-row';
 import CourseUnitDetails from '../../../../shared/model/domain/dto/course-unit-details';
 import CourseDetails from '../../../../shared/model/domain/dto/course-details';
+import { translate } from 'react-jhipster';
 
 interface ICourseUnitRowRowProps {
     courseUnit: CourseUnitDetails,
@@ -37,7 +38,7 @@ class CourseUnitRow extends Component<ICourseUnitRowRowProps, ICourseUnitRowRowS
     }
 
     isEnrolledInAll() {
-        return this.props.courseUnit.courses.every(c => c.enrolled);
+        return this.props.courseUnit.courses.every(c => c.studentEnrolled);
     }
 
     renderExpandableItem() {
@@ -53,7 +54,10 @@ class CourseUnitRow extends Component<ICourseUnitRowRowProps, ICourseUnitRowRowS
                 </ListItemAvatar>
                 <ListItemText
                     primary={courseUnit.code}
-                    secondary={'Grupa'}
+                    secondary={courseUnit.isGroupOfCourses ? 
+                        translate('enrolling.course.courseGroup')
+                        : courseUnit.isStream ? translate('enrolling.course.stream') : ''
+                    }
                 />
                 <ListItemSecondaryAction>
                     <IconButton aria-label="expand row" size="small" onClick={() => this.setOpen(!isOpen)}>
@@ -68,7 +72,7 @@ class CourseUnitRow extends Component<ICourseUnitRowRowProps, ICourseUnitRowRowS
         const { courseUnit, onSelected } = this.props;
         return (
             <>
-                {courseUnit.courses.map(x => 
+                {courseUnit.courses.map(x =>
                     <CourseRow key={x.id} course={x} onSelected={onSelected} />
                 )}
             </>

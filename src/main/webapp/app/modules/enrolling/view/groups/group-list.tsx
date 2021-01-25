@@ -14,6 +14,7 @@ import { EnrollingAction } from '../../enrolling-action';
 import EnrollmentData from '../../../../modules/enrollments/enrollment-data';
 import isEnrollmentAtive from '../../../../shared/model/domain/util/is-enrollment-active';
 import log from 'app/config/log';
+import { Translate } from 'react-jhipster';
 
 
 
@@ -43,7 +44,7 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
     renderHeader(currentDate: Date) {
         return (
             <Typography variant='h4' style={{textAlign: 'center'}}>
-                Grupy
+                <Translate contentKey={'enrolling.header.groups'}>Groups</Translate>
             </Typography>
         );
     }
@@ -72,7 +73,7 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
         const { groupsData, enrollment, onSelected } = this.props;
         return (
             <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
+            <Table aria-label="table">
               <TableHead>
                 <TableRow>
                   <TableCell align="right">Kod grupy</TableCell>

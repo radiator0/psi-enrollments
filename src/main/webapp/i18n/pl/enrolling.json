@@ -1,0 +1,27 @@
+{
+  "enrolling": {
+    "header": {
+      "enrollments": "Zapisy",
+      "courses": "Kursy",
+      "groups": "Grupy"
+    },
+    "course": {
+      "selectableModule": "Moduł wybieralny",
+      "courseGroup": "Grupa kursów",
+      "stream": "Potok",
+      "course": "Kurs"
+    },
+    "group": {
+      "code": "Kod grupy",
+      "enrolled": "Zapisani",
+      "overLimit": "Ponad stan",
+      "schedule": "Termin",
+      "lecturer": "Prowadzący",
+      "action": "Akcja"
+    },
+    "notification": {
+      "enrolled": "Zapisano",
+      "disenrolled": "Wypisano"
+    }
+  }
+}

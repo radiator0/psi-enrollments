@@ -14,6 +14,7 @@ import Collapse from '@material-ui/core/Collapse';
 import CourseUnitRow from './course-unit-row';
 import SelectableCourseBlockDetails from '../../../../shared/model/domain/dto/selectable-course-block-details';
 import CourseDetails from '../../../../shared/model/domain/dto/course-details';
+import { translate } from 'react-jhipster';
 
 interface ISelectableCourseBlockRowProps {
     selectableCourseBlock: SelectableCourseBlockDetails;
@@ -50,7 +51,7 @@ class SelectableCourseBlockRow extends Component<ISelectableCourseBlockRowProps,
                 <ListItemAvatar>
                     <Avatar>{this.isEnrolledInAll() ? <CheckIcon /> : <ClearIcon />}</Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={selectableCourseBlock.name} secondary={'Blok wybieralny'} />
+                <ListItemText primary={selectableCourseBlock.name} secondary={translate('enrolling.course.selectableModule')} />
                 <ListItemSecondaryAction>
                     <IconButton aria-label="expand row" size="small" onClick={() => this.setOpen(!isOpen)}>
                         {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}

@@ -75,18 +75,10 @@ public interface SelectableModuleDetailsMapper extends EntityMapper<SelectableMo
         selectableModuleDetailsDTOS.addAll(
             selectableModuleListMap.getOrDefault(Optional.ofNullable(null), new ArrayList<>()).stream()
             .map(cu -> {
-            SelectableModuleDetailsDTO selectableModuleDetailsDTO = new SelectableModuleDetailsDTO();
-            selectableModuleDetailsDTO.setCourseUnits(new HashSet<>(Collections.singletonList(courseUnitToDto.apply(cu))));
-            return selectableModuleDetailsDTO;
-        }).collect(Collectors.toList())
-        );
-
-        selectableModuleDetailsDTOS.addAll(
-            courseUnitCourseMap.keySet().stream().filter(Optional::isPresent).map(cu -> {
-            SelectableModuleDetailsDTO selectableModuleDetailsDTO = new SelectableModuleDetailsDTO();
-            selectableModuleDetailsDTO.setCourseUnits(new HashSet<>(Collections.singletonList(courseUnitToDto.apply(cu.get()))));
-            return selectableModuleDetailsDTO;
-        }).collect(Collectors.toList())
+                SelectableModuleDetailsDTO selectableModuleDetailsDTO = new SelectableModuleDetailsDTO();
+                selectableModuleDetailsDTO.setCourseUnits(new HashSet<>(Collections.singletonList(courseUnitToDto.apply(cu))));
+                return selectableModuleDetailsDTO;
+            }).collect(Collectors.toList())
         );
 
         selectableModuleDetailsDTOS.addAll(

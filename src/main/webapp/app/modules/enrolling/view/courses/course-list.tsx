@@ -9,6 +9,7 @@ import nextId from "react-id-generator";
 import log from 'app/config/log';
 import CourseDetails from '../../../../shared/model/domain/dto/course-details';
 import CoursesData from '../../courses-data';
+import { Translate } from 'react-jhipster';
 
 export type ICourseListProps = {
     coursesData: Array<CoursesData>,
@@ -35,7 +36,7 @@ class CourseList extends Component<ICourseListProps, ICourseListState> {
     renderHeader() {
         return (
             <Typography variant='h4' style={{textAlign: 'center'}}>
-                Kursy
+                <Translate contentKey={'enrolling.header.courses'}>Courses</Translate>
             </Typography>
         );
     }
@@ -55,7 +56,7 @@ class CourseList extends Component<ICourseListProps, ICourseListState> {
         return (
             <>
                 {this.renderHeader()}
-                <Grid container spacing={2}>
+                <Grid container spacing={1}>
                     <List style={{flexDirection: 'row', width:'100%', flex:1}}>
                         {this.renderCourseRows()}
                     </List>

@@ -1,11 +1,17 @@
-id;code;ects;is_group_of_courses;is_stream;is_selectable
-1;pink invoice Identity;82336;true;false;false
-2;payment Cambridgeshire payment;32732;true;false;false
-3;Borders Computers;81750;true;true;true
-4;Florida Soft;33165;true;true;false
-5;New York back up bottom-line;22604;true;false;true
-6;Markets cutting-edge;74419;true;true;false
-7;Principal;76798;true;true;true
-8;GB Belgium;30538;false;true;false
-9;calculate reboot;58460;true;false;true
-10;Customer;66160;true;false;false
+id;code;ects;is_group_of_courses;is_stream;is_selectable;selectable_module_id
+1;Podstawy programowania;4;true;false;false;NULL
+2;payment Cambridgeshire payment;32732;true;false;false;NULL
+3;Borders Computers;81750;true;true;true;NULL
+4;Florida Soft;33165;true;true;false;NULL
+5;New York back up bottom-line;22604;true;false;true;NULL
+6;Markets cutting-edge;74419;true;true;false;NULL
+7;Principal;76798;true;true;true;NULL
+8;GB Belgium;30538;false;true;false;NULL
+9;calculate reboot;58460;true;false;true;NULL
+10;Customer;66160;true;false;false;NULL
+11;Algebra z geom. analit. A;4;true;false;false;1
+12;Analiza matematyczna 1.1 A;8;true;false;false;1
+13;Organizacja sys. komputerowych;3;true;false;false;NULL
+14;Systemy webowe;NULL;false;false;true;11
+15;Systemy wbudowane;NULL;false;false;true;11
+
