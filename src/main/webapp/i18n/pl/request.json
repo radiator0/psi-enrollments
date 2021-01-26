@@ -2,7 +2,7 @@
   "enrollmentsApp": {
     "request": {
       "home": {
-        "title": "Prośba",
+        "title": "Prośby o zapis ponad stan",
         "createLabel": "Dodaj prośbę",
         "createOrEditLabel": "Dodaj lub edytuj: prośbę",
         "notFound": "Brak aktywnych próśb o zapis ponad stan"
@@ -28,7 +28,7 @@
     "action": {
       "accept": "Zaakceptuj",
       "deny": "Odrzuć",
-      "undo": "Cofnij"
+      "backOff": "Wycofaj"
     }
   }
 }

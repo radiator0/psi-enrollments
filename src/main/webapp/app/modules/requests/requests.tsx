@@ -43,6 +43,9 @@ class Requests extends Component<IRequestsProps, IRequestsStates> {
     const isLecturer = account.authorities[0] === AUTHORITIES.LECTURER;
     return (
       <React.Fragment>
+        <Typography variant='h4' component='h4' align='center'>
+          <Translate contentKey={'enrollmentsApp.request.home.title'}>Semesters with enrollment right</Translate>
+        </Typography>
         {list && list.length > 0 ? (
           <TableContainer component={Paper}>
             <Table aria-label="table">
@@ -117,7 +120,7 @@ class Requests extends Component<IRequestsProps, IRequestsStates> {
                                 onClick={() => this.props.deleteEntity(req.id)}
                                 startIcon={<FontAwesomeIcon icon={faUndoAlt} />}
                                 color="primary">
-                                <Translate contentKey="enrollmentsApp.action.undo">Undo</Translate>
+                                <Translate contentKey="enrollmentsApp.action.backOff">Undo</Translate>
                               </Button>
                               :
                               null

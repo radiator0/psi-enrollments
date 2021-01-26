@@ -2,7 +2,7 @@
   "enrollmentsApp": {
     "request": {
       "home": {
-        "title": "Requests",
+        "title": "Requests for enrollment above limit",
         "createLabel": "Create a new Request",
         "createOrEditLabel": "Create or edit a Request",
         "notFound": "No Requests found"
@@ -28,7 +28,7 @@
     "action": {
       "accept": "Accept",
       "deny": "Deny",
-      "undo": "Undo"
+      "backOff": "Back off"
     }
   }
 }
