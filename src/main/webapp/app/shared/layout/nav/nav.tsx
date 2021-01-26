@@ -110,7 +110,10 @@ const Nav = (props: INavProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  props.notExaminedRequestsCount();
+  if (props.isAuthenticated && (props.isStudent || props.isLecturer)) {
+    props.notExaminedRequestsCount();
+  }
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -186,11 +189,11 @@ const Nav = (props: INavProps) => {
               {props.isStudent ? (
                 <>
                   <EnrollmentsMenu />
-                  <StudentAsks notExaminedCount={props.notExaminedCount}/>
+                  <StudentAsks notExaminedCount={props.notExaminedCount} />
                 </>
               ) : (
-                <LecturerAsks notExaminedCount= {props.notExaminedCount}/>
-              )}
+                  <LecturerAsks notExaminedCount={props.notExaminedCount} />
+                )}
             </List>
           </>
         )}

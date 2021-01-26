@@ -3,6 +3,7 @@ package com.psi.web.rest;
 import com.psi.domain.Lecturer;
 import com.psi.domain.Student;
 import com.psi.domain.User;
+import com.psi.service.ClassGroupService;
 import com.psi.service.RequestService;
 import com.psi.service.UserService;
 import com.psi.service.dto.RequestDTO;
@@ -43,10 +44,12 @@ public class RequestResource {
 
     private final RequestService requestService;
     private final UserService userService;
+    private final ClassGroupService classGroupService;
 
-    public RequestResource(RequestService requestService, UserService userService) {
+    public RequestResource(RequestService requestService, UserService userService, ClassGroupService classGroupService) {
         this.requestService = requestService;
         this.userService = userService;
+        this.classGroupService = classGroupService;
     }
 
     /**
@@ -58,15 +61,22 @@ public class RequestResource {
      */
     @PostMapping("/requests")
     public ResponseEntity<RequestDTO> createRequest(@Valid @RequestBody RequestDTO requestDTO) throws URISyntaxException {
+        if (requestDTO.getId() != null) {
+            throw new BadRequestAlertException("A new request cannot already have an ID", ENTITY_NAME, "idexists");
+        }
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
+        classGroupService.findOne(requestDTO.getClassGroupId()).ifPresent(classGroup -> {
+            if (!classGroup.isIsEnrollmentAboveLimitAllowed()) {
+                throw new RequestResource.RequestResourceException("Enrollment over limit is not allowed");
+            }
+            if(!classGroup.isIsFull()) {
+                throw new RequestResource.RequestResourceException("Requests to not full group are not allowed");
+            }
+        });
         if (userService.isUserStudent(user)) {
             Student student = userService.getStudentInstance(user);
             log.debug("REST request to save Request : {}", requestDTO);
-            if (requestDTO.getId() != null) {
-                throw new BadRequestAlertException("A new request cannot already have an ID", ENTITY_NAME, "idexists");
-            }
-            requestDTO.setIsExamined(false);
-            requestDTO.setIsAccepted(false);
+            requestDTO.setStudentId(student.getId());
             RequestDTO result = requestService.save(requestDTO);
             return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

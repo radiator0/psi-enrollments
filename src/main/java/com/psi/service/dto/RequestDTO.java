@@ -12,10 +12,8 @@ public class RequestDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private UUID uuid;
 
-    @NotNull
     private Instant date;
 
     @NotNull
@@ -25,6 +23,7 @@ public class RequestDTO implements Serializable {
 
     private Boolean isAccepted;
 
+    @NotNull
     private Long classGroupId;
 
     private Long studentId;

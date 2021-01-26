@@ -18,8 +18,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -60,6 +62,10 @@ public class RequestService {
     public RequestDTO save(RequestDTO requestDTO) {
         log.debug("Request to save Request : {}", requestDTO);
         Request request = requestMapper.toEntity(requestDTO);
+        request.setDate(Instant.now());
+        request.setUuid(UUID.randomUUID());
+        request.setIsExamined(false);
+        request.setIsAccepted(false);
         request = requestRepository.save(request);
         return requestMapper.toDto(request);
     }
