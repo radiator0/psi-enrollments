@@ -8,8 +8,8 @@
         "notFound": "No Requests found"
       },
       "created": "A new Request is created with identifier {{ param }}",
-      "updated": "A Request is updated with identifier {{ param }}",
-      "deleted": "A Request is deleted with identifier {{ param }}",
+      "updated": "A Request with identifier {{ param }} was examined",
+      "deleted": "A Request with identifier {{ param }} was deleted",
       "delete": {
         "question": "Are you sure you want to delete Request {{ id }}?"
       },
@@ -19,14 +19,16 @@
       "uuid": "Uuid",
       "date": "Date",
       "text": "Request",
-      "isExamined": "Is Examined",
-      "isAccepted": "Is Accepted",
+      "isExamined": "Examined",
+      "isAccepted": "Accepted",
       "classGroup": "Class Group",
-      "student": "Student"
+      "student": "Student",
+      "lecturer": "Lecturer"
     },
     "action": {
       "accept": "Accept",
-      "deny": "Deny"
+      "deny": "Deny",
+      "undo": "Undo"
     }
   }
 }

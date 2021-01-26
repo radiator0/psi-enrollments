@@ -4,10 +4,12 @@ import com.psi.domain.ClassGroup;
 import com.psi.domain.Lecturer;
 import com.psi.domain.Request;
 import com.psi.domain.Student;
+import com.psi.repository.LecturerRepository;
 import com.psi.repository.RequestRepository;
 import com.psi.repository.StudentRepository;
 import com.psi.service.dto.RequestDTO;
 import com.psi.service.mapper.RequestMapper;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,11 +39,16 @@ public class RequestService {
 
     private final StudentRepository studentRepository;
 
-    public RequestService(RequestRepository requestRepository, RequestMapper requestMapper, ClassGroupService classGroupService, StudentRepository studentRepository) {
+    private final LecturerRepository lecturerRepository;
+
+    public RequestService(RequestRepository requestRepository, RequestMapper requestMapper,
+                          ClassGroupService classGroupService, StudentRepository studentRepository,
+                          LecturerRepository lecturerRepository) {
         this.requestRepository = requestRepository;
         this.requestMapper = requestMapper;
         this.classGroupService = classGroupService;
         this.studentRepository = studentRepository;
+        this.lecturerRepository = lecturerRepository;
     }
 
     /**
@@ -68,7 +75,7 @@ public class RequestService {
         log.debug("Request to get all Requests");
         Page<RequestDTO> requestDTOS = requestRepository.findAll(pageable)
             .map(requestMapper::toDto);
-        requestDTOS.stream().forEach(requestDTO -> addStudentNameAndGroupCode(Optional.of(requestDTO)));
+        requestDTOS.stream().forEach(requestDTO -> addAdditionalDetails(Optional.of(requestDTO)));
         return requestDTOS;
     }
 
@@ -83,7 +90,7 @@ public class RequestService {
         log.debug("Request to get all Requests");
         List<RequestDTO> requestDTOS = requestRepository.findAllByStudent(student).stream()
             .map(requestMapper::toDto).collect(Collectors.toList());
-        requestDTOS.forEach(requestDTO -> addStudentNameAndGroupCode(Optional.of(requestDTO)));
+        requestDTOS.forEach(requestDTO -> addAdditionalDetails(Optional.of(requestDTO)));
         return requestDTOS;
     }
 
@@ -99,7 +106,7 @@ public class RequestService {
         List<ClassGroup> classGroups = classGroupService.findAllByLecturer(lecturer);
         List<RequestDTO> requestDTOS = requestRepository.findAllByClassGroupIn(classGroups).stream()
             .map(requestMapper::toDto).collect(Collectors.toList());
-        requestDTOS.forEach(requestDTO -> addStudentNameAndGroupCode(Optional.of(requestDTO)));
+        requestDTOS.forEach(requestDTO -> addAdditionalDetails(Optional.of(requestDTO)));
         return requestDTOS;
     }
 
@@ -114,7 +121,7 @@ public class RequestService {
         log.debug("Request to get Request : {}", id);
         Optional<RequestDTO> request = requestRepository.findById(id)
             .map(requestMapper::toDto);
-        addStudentNameAndGroupCode(request);
+        addAdditionalDetails(request);
         return request;
     }
 
@@ -162,13 +169,37 @@ public class RequestService {
         });
     }
 
-    private Optional<RequestDTO> addStudentNameAndGroupCode(Optional<RequestDTO> request) {
+    /**
+     * Get number of not examined requests for lecturer.
+     *
+     * @param isExamined is Request examined.
+     * @param lecturer the Lecturer.
+     */
+    public Integer countAllNotExaminedRequestsForLecturer(Boolean isExamined, Lecturer lecturer) {
+        List<ClassGroup> classGroups = classGroupService.findAllByLecturer(lecturer);
+        return requestRepository.countAllByIsExaminedAndClassGroupIn(isExamined, classGroups);
+    }
+
+    /**
+     * Get number of not examined requests for student.
+     *
+     * @param isExamined is Request examined.
+     * @param student the Student.
+     */
+    public Integer countAllNotExaminedRequestsForStudent(Boolean isExamined, Student student) {
+        return requestRepository.countAllByIsExaminedAndStudent(isExamined, student);
+    }
+
+
+    private void addAdditionalDetails(Optional<RequestDTO> request) {
         request.ifPresent((r) -> {
-            classGroupService.findOne(r.getClassGroupId()).ifPresent((classGroup) ->
-                r.setClassGroupCode(classGroup.getCode()));
+            classGroupService.findOne(r.getClassGroupId()).ifPresent((classGroup) -> {
+                r.setClassGroupCode(classGroup.getCode());
+                lecturerRepository.findById(classGroup.getMainLecturerId()).ifPresent(l ->
+                    r.setLecturerName(l.getName()));
+            });
             studentRepository.findById(r.getStudentId()).ifPresent((student) ->
-                r.setStudentName(student.getInternalUser().getName()));
+                r.setStudentName(student.getName()));
         });
-        return request;
     }
 }

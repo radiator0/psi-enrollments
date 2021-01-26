@@ -173,4 +173,18 @@ public class RequestResource {
         log.debug("REST request to delete Request : {}", id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/requests/not-examined-count")
+    public ResponseEntity<Integer> getNotExaminedCount() {
+        User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
+        Integer notExaminedCount = 0;
+        if (userService.isUserStudent(user)) {
+            notExaminedCount = requestService.countAllNotExaminedRequestsForStudent(false, userService.getStudentInstance(user));
+        } else if (userService.isUserLecturer(user)) {
+            notExaminedCount = requestService.countAllNotExaminedRequestsForLecturer(false, userService.getLecturerInstance(user));
+        } else {
+            throw new RequestResource.RequestResourceException("User hasn't correct authorities");
+        }
+        return ResponseEntity.of(Optional.of(notExaminedCount));
+    }
 }

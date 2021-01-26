@@ -14,6 +14,7 @@ export const ACTION_TYPES = {
   DELETE_REQUEST: 'request/DELETE_REQUEST',
   ACCEPT_REQUEST: 'request/ACCEPT_REQUEST',
   DECLINE_REQUEST: 'request/DECLINE_REQUEST',
+  NOT_EXAMINED_COUNT: 'request/NOT_EXAMINED_COUNT',
   RESET: 'request/RESET',
 };
 
@@ -22,6 +23,7 @@ const initialState = {
   errorMessage: null,
   entities: [] as ReadonlyArray<IRequest>,
   entity: defaultValue,
+  notExaminedCount: 0,
   updating: false,
   totalItems: 0,
   updateSuccess: false,
@@ -35,6 +37,7 @@ export default (state: RequestState = initialState, action): RequestState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.FETCH_REQUEST_LIST):
     case REQUEST(ACTION_TYPES.FETCH_REQUEST):
+    case REQUEST(ACTION_TYPES.NOT_EXAMINED_COUNT):
       return {
         ...state,
         errorMessage: null,
@@ -59,6 +62,7 @@ export default (state: RequestState = initialState, action): RequestState => {
     case FAILURE(ACTION_TYPES.DELETE_REQUEST):
     case FAILURE(ACTION_TYPES.ACCEPT_REQUEST):
     case FAILURE(ACTION_TYPES.DECLINE_REQUEST):
+    case FAILURE(ACTION_TYPES.NOT_EXAMINED_COUNT):
       return {
         ...state,
         loading: false,
@@ -95,6 +99,13 @@ export default (state: RequestState = initialState, action): RequestState => {
         updating: false,
         updateSuccess: true,
         entity: {},
+      };
+    case SUCCESS(ACTION_TYPES.NOT_EXAMINED_COUNT):
+      return {
+        ...state,
+        loading: false,
+        entity: {},
+        notExaminedCount: action.payload.data,
       };
     case ACTION_TYPES.RESET:
       return {
@@ -170,6 +181,14 @@ export const declineEntity: ICrudDeleteAction<IRequest> = id => async dispatch =
   });
   dispatch(getEntities());
   return result;
+};
+
+export const notExaminedRequestsCount: ICrudGetAllAction<number> = () => {
+  const requestUrl = `${apiUrl}/not-examined-count`;
+  return {
+    type: ACTION_TYPES.NOT_EXAMINED_COUNT,
+    payload: axios.get<number>(requestUrl),
+  };
 };
 
 export const reset = () => ({

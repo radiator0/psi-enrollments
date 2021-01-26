@@ -11,9 +11,11 @@ import { Box, ButtonGroup, Collapse, Container, createMuiTheme, IconButton, MuiT
 import { APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { Button } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faUndoAlt } from '@fortawesome/free-solid-svg-icons';
+import { CheckCircleIcon } from '@material-ui/data-grid';
+import BlockIcon from '@material-ui/icons/Block';
 
-const theme = createMuiTheme({ palette: { primary: red, secondary: green } })
+const theme = createMuiTheme({ palette: { primary: red, secondary: { main: green[500] } } })
 
 export interface IRequestsProps extends StateProps, DispatchProps { }
 
@@ -36,9 +38,12 @@ class Requests extends Component<IRequestsProps, IRequestsStates> {
   render() {
     const { requestList, loading, account } = this.props;
     const { open } = this.state;
+    const list = requestList.filter(r => !r.isExamined).sort((r1, r2) => Date.parse(r1.date) - Date.parse(r2.date));
+    const isStudent = account.authorities[0] === AUTHORITIES.STUDENT;
+    const isLecturer = account.authorities[0] === AUTHORITIES.LECTURER;
     return (
       <React.Fragment>
-        {requestList && requestList.length > 0 ? (
+        {list && list.length > 0 ? (
           <TableContainer component={Paper}>
             <Table aria-label="table">
               <TableHead>
@@ -56,14 +61,21 @@ class Requests extends Component<IRequestsProps, IRequestsStates> {
                   <TableCell>
                     <Translate contentKey="enrollmentsApp.request.classGroup">Class Group</Translate>
                   </TableCell>
-                  <TableCell>
-                    <Translate contentKey="enrollmentsApp.request.student">Student</Translate>
-                  </TableCell>
+                  {isLecturer ?
+                    <TableCell>
+                      <Translate contentKey="enrollmentsApp.request.student">Student</Translate>
+                    </TableCell>
+                    :
+                    isStudent ?
+                      <TableCell>
+                        <Translate contentKey="enrollmentsApp.request.lecturer">Lecturer</Translate>
+                      </TableCell>
+                      : null}
                   <TableCell />
                 </TableRow>
               </TableHead>
               <TableBody>
-                {requestList.map((request, i) => (
+                {list.map((req, i) => (
                   <React.Fragment key={`entity-${i}`}>
                     <TableRow>
                       <TableCell>
@@ -71,36 +83,41 @@ class Requests extends Component<IRequestsProps, IRequestsStates> {
                           {this.state.open[i] ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         </IconButton>
                       </TableCell>
-                      <TableCell>{request.date ? <TextFormat type="date" value={request.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</TableCell>
-                      <TableCell>{request.isExamined ? 'true' : 'false'}</TableCell>
-                      <TableCell>{request.isAccepted ? 'true' : 'false'}</TableCell>
-                      <TableCell>{request.classGroupCode}</TableCell>
-                      <TableCell>{request.studentName}</TableCell>
+                      <TableCell>{req.date ? <TextFormat type="date" value={req.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</TableCell>
+                      <TableCell>{req.isExamined ? <CheckCircleIcon style={{ color: green[500] }} ></CheckCircleIcon> : <BlockIcon style={{ color: red[900] }}></BlockIcon>}</TableCell>
+                      <TableCell>{req.isAccepted ? <CheckCircleIcon style={{ color: green[500] }} ></CheckCircleIcon> : <BlockIcon style={{ color: red[900] }}></BlockIcon>}</TableCell>
+                      <TableCell>{req.classGroupCode}</TableCell>
+                      {isLecturer ?
+                        <TableCell>{req.studentName}</TableCell>
+                        :
+                        isStudent ?
+                          <TableCell>{req.lecturerName}</TableCell>
+                          : null}
                       <TableCell className="text-right">
                         <MuiThemeProvider theme={theme}>
-                          {account.authorities[0] === AUTHORITIES.LECTURER ?
-                            <ButtonGroup variant="contained" color="primary">
+                          {isLecturer ?
+                            <ButtonGroup variant="contained" color="primary" disabled={req.isExamined}>
                               <Button
-                                onClick={() => this.props.declineEntity(request.id)}
+                                onClick={() => this.props.declineEntity(req.id)}
                                 startIcon={<FontAwesomeIcon icon={faTimes} />}
                                 color="primary"
                                 variant="contained">
                                 <Translate contentKey="enrollmentsApp.action.deny">Deny</Translate>
                               </Button>
                               <Button
-                                onClick={() => this.props.acceptEntity(request.id)}
+                                onClick={() => this.props.acceptEntity(req.id)}
                                 startIcon={<FontAwesomeIcon icon={faCheck} />}
                                 color="secondary"
                                 variant="text">
                                 <Translate contentKey="enrollmentsApp.action.accept">Accept</Translate>
                               </Button>
                             </ButtonGroup>
-                            : account.authorities[0] === AUTHORITIES.STUDENT ?
+                            : isStudent ?
                               <Button
-                                onClick={() => this.props.deleteEntity(request.id)}
-                                startIcon={<FontAwesomeIcon icon="trash" />}
+                                onClick={() => this.props.deleteEntity(req.id)}
+                                startIcon={<FontAwesomeIcon icon={faUndoAlt} />}
                                 color="primary">
-                                <Translate contentKey="entity.action.delete">Delete</Translate>
+                                <Translate contentKey="enrollmentsApp.action.undo">Undo</Translate>
                               </Button>
                               :
                               null
@@ -115,7 +132,7 @@ class Requests extends Component<IRequestsProps, IRequestsStates> {
                             <Typography variant="h6" gutterBottom component="div">
                               <Translate contentKey="enrollmentsApp.request.text">Request</Translate>
                             </Typography>
-                            <Typography variant="subtitle1">{request.text}</Typography>
+                            <Typography variant="subtitle1">{req.text}</Typography>
                           </Box>
                         </Collapse>
                       </TableCell>

@@ -157,4 +157,11 @@ public class Student implements Serializable {
             ", internalUser='" + getInternalUser() + "'" +
             "}";
     }
+
+    public String getName() {
+        return internalUser.getFirstName() + " " +
+            internalUser.getSecondName() + " " +
+            internalUser.getLastName() + " (" +
+            getId() + ")";
+    }
 }

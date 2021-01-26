@@ -19,4 +19,8 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
     List<Request> findAllByStudent(Student student);
 
     List<Request> findAllByClassGroupIn(List<ClassGroup> classGroup);
+
+    Integer countAllByIsExaminedAndClassGroupIn(Boolean isExamined, List<ClassGroup> classGroup);
+
+    Integer countAllByIsExaminedAndStudent(Boolean isExamined, Student student);
 }

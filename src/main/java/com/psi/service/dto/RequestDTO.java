@@ -33,6 +33,8 @@ public class RequestDTO implements Serializable {
 
     private String studentName;
 
+    private String lecturerName;
+
     public Long getId() {
         return id;
     }
@@ -111,6 +113,14 @@ public class RequestDTO implements Serializable {
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
+    }
+
+    public String getLecturerName() {
+        return lecturerName;
+    }
+
+    public void setLecturerName(String lecturerName) {
+        this.lecturerName = lecturerName;
     }
 
     @Override

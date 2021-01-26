@@ -24,6 +24,9 @@ import {
 } from './nav-components';
 import AccountItem from './account-menu';
 import LanguageItem from './language-menu';
+import { connect } from 'react-redux';
+import { notExaminedRequestsCount } from 'app/shared/reducers/request.reducer';
+import { IRootState } from 'app/shared/reducers';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
@@ -92,7 +95,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export interface INavProps {
+
+export interface INavProps extends StateProps, DispatchProps {
   isAuthenticated: boolean;
   isStudent: boolean;
   isLecturer: boolean;
@@ -106,6 +110,7 @@ const Nav = (props: INavProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  props.notExaminedRequestsCount();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -181,10 +186,10 @@ const Nav = (props: INavProps) => {
               {props.isStudent ? (
                 <>
                   <EnrollmentsMenu />
-                  <StudentAsks />
+                  <StudentAsks notExaminedCount={props.notExaminedCount}/>
                 </>
               ) : (
-                <LecturerAsks />
+                <LecturerAsks notExaminedCount= {props.notExaminedCount}/>
               )}
             </List>
           </>
@@ -195,4 +200,17 @@ const Nav = (props: INavProps) => {
   );
 };
 
-export default Nav;
+
+
+const mapStateToProps = ({ request }: IRootState) => ({
+  notExaminedCount: request.notExaminedCount,
+});
+
+const mapDispatchToProps = {
+  notExaminedRequestsCount,
+};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nav)

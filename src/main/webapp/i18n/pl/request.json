@@ -5,11 +5,11 @@
         "title": "Prośba",
         "createLabel": "Dodaj prośbę",
         "createOrEditLabel": "Dodaj lub edytuj: prośbę",
-        "notFound": "No Requests found"
+        "notFound": "Brak aktywnych próśb o zapis ponad stan"
       },
       "created": "Utworzono nowy obiekt typu Request z identyfikatorem {{ param }}",
-      "updated": "Uaktualniono obiekt typu Request z identyfikatorem {{ param }}",
-      "deleted": "Usunięto obiekt typu Request z identyfikatorem {{ param }}",
+      "updated": "Rozpatrzono prośbę z identyfikatorem {{ param }}",
+      "deleted": "Usunięto prośbę z identyfikatorem {{ param }}",
       "delete": {
         "question": "Czy na pewno chcesz usunąć prośbę {{ id }}?"
       },
@@ -19,14 +19,16 @@
       "uuid": "Uuid",
       "date": "Date",
       "text": "Prośba",
-      "isExamined": "Czy zweryfikowana",
-      "isAccepted": "Czy zaakceptowana",
+      "isExamined": "Rozpatrzona",
+      "isAccepted": "Zaakceptowana",
       "classGroup": "Kod grupy",
-      "student": "Student"
+      "student": "Student",
+      "lecturer": "Prowadzący"
     },
     "action": {
       "accept": "Zaakceptuj",
-      "deny": "Odrzuć"
+      "deny": "Odrzuć",
+      "undo": "Cofnij"
     }
   }
 }

@@ -9,6 +9,7 @@ export interface IRequest {
   studentId?: number;
   classGroupCode?: string;
   studentName?: string;
+  lecturerName?: string;
 }
 
 export const defaultValue: Readonly<IRequest> = {

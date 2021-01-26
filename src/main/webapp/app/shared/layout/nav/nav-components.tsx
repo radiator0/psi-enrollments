@@ -1,14 +1,16 @@
 import { Badge, Button, IconButton, ListItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
-import React from 'react';
+import React, { Component } from 'react';
 import TodayIcon from '@material-ui/icons/Today';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import { NavLink as RouterLink } from 'react-router-dom';
-import { Translate, translate } from 'react-jhipster';
+import { logInfo, Translate, translate } from 'react-jhipster';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import HelpOutlinedIcon from '@material-ui/icons/HelpOutlined';
 import HomeIcon from '@material-ui/icons/Home';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import { connect } from 'react-redux';
+import { IRootState } from 'app/shared/reducers';
 
 export const HomeMenu = () => (
   <ListItem button exact={true} component={RouterLink} activeClassName="nav-active" to="/">
@@ -56,11 +58,15 @@ export const EnrollmentsMenu = () => (
   </ListItem>
 );
 
-export const LecturerAsks = () => (
+export interface LecturerAsksProps {
+  notExaminedCount: number
+}
+
+export const LecturerAsks = (props: LecturerAsksProps) => (
   <ListItem button component={RouterLink} activeClassName="nav-active" to="/requests">
     <Tooltip title={translate('global.menu.requests')}>
       <ListItemIcon>
-        <Badge variant="dot" color="primary">
+        <Badge badgeContent={props.notExaminedCount} color="primary">
           <RateReviewIcon />
         </Badge>
       </ListItemIcon>
@@ -69,18 +75,23 @@ export const LecturerAsks = () => (
   </ListItem>
 );
 
-export const StudentAsks = () => (
+export interface StudentAsksProps {
+  notExaminedCount: number
+}
+
+export const StudentAsks = (props: StudentAsksProps) => (
+
   <ListItem button component={RouterLink} activeClassName="nav-active" to="/requests">
     <Tooltip title={translate('global.menu.requests')}>
       <ListItemIcon>
-        <Badge variant="dot" color="primary">
+        <Badge badgeContent={props.notExaminedCount} color="primary">
           <HelpOutlinedIcon />
         </Badge>
       </ListItemIcon>
     </Tooltip>
     <ListItemText primary={translate('global.menu.requests')} />
   </ListItem>
-);
+)
 
 export const SwaggerMenu = () => (
   <ListItem button component={RouterLink} activeClassName="nav-active" to="/admin/docs">
