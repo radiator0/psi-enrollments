@@ -117,7 +117,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     }
     if(collision.otherCoursesToDisenroll?.length > 0) {
       modalContent += translate('enrolling.modal.disenrollingNecessary');
-      collision.otherCoursesToDisenroll.forEach((v, i) => modalContent += `${i === 0 ? ' ' : ', '}${v.shortName || v.name} (${translate(`enrollmentsApp.ClassType.${v.form}`)})`)
+      collision.otherCoursesToDisenroll.forEach((v) => modalContent += `\n${v.shortName || v.name} (${translate(`enrollmentsApp.ClassType.${v.form}`)})`)
     }
     return modalContent;
   }
@@ -189,8 +189,8 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     if(!group.isLimitReached) {
       // we can enroll!
       const collisionText = this.createCollisionMessage(this.getGroupsToDisenrollFromBeforeEnrolling(group))
-      this.showModal(translate('enrolling.modal.attention'), `${translate('enrolling.modal.placeInGroup')} ${collisionText}`,
-        [cancelModalOption(() => {}), confirmAndEnrollModalOption(() => this.enroll(group)), confirmModalOption(() => this.recallAskOverLimit(group))], false, null)
+      this.showModal(translate('enrolling.modal.attention'), `${translate('enrolling.modal.placeInGroup')}${collisionText.length === 0 || '\n'}\n${collisionText}`,
+        [cancelModalOption(() => {}), confirmAndEnrollModalOption(() => this.enroll(group)), confirmModalOption(() => this.recallAskOverLimit(group))], true, null)
     }
     else {
       this.showModal(translate('enrolling.modal.attention'), translate('enrolling.modal.confirmAskForEnrollmentRecall'),

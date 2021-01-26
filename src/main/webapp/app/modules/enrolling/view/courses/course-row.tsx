@@ -36,11 +36,10 @@ class CourseRow extends Component<ICourseRowProps, ICourseRowState> {
 
     render() {
         const { course } = this.props;
-        log.info(course);
         return (
             <ListItem className="list-item" onClick={() => this.onSelected()}>
                 <ListItemAvatar>
-                        {course.studentEnrolled ? <CheckedAvatar /> : <UnCheckedAvatar />}
+                    {course.studentEnrolled ? <CheckedAvatar /> : <UnCheckedAvatar />}
                 </ListItemAvatar>
                 <ListItemText
                     primary={course.shortName || course.name}

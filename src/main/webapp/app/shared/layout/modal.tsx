@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Translate } from 'react-jhipster';
-import { TextField } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 
 interface IModalOption {
     optionNameKey: string,
@@ -35,7 +35,11 @@ const renderContent = (props: IAlertDialogProps, setUserText: (text: string) => 
     return (<>
         {props.content ?
         <DialogContentText id="alert-dialog-description">
-            {props.content}
+            <Typography>
+                <pre style={{ fontFamily: 'inherit', whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
+                    {props.content}
+                </pre>
+            </Typography>
         </DialogContentText> : <></>}
 
         {props.textField ?
