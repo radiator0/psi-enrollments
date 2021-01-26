@@ -18,23 +18,12 @@ import ErrorBoundary from 'app/shared/error/error-boundary';
 import { AUTHORITIES } from 'app/config/constants';
 import AppRoutes from 'app/routes';
 import Nav from './shared/layout/nav/nav';
-import { makeStyles, Theme, createStyles, ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline/CssBaseline';
 import LoadingBar from 'react-redux-loading-bar';
 import customTheme from './custom-theme-material';
 
 const baseHref = document.querySelector('base').getAttribute('href').replace(/\/$/, '');
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-    },
-  })
-);
 
 export interface IAppProps extends StateProps, DispatchProps {}
 
@@ -45,14 +34,13 @@ export const App = (props: IAppProps) => {
   }, []);
 
   const paddingTop = '60px';
-  const classes = useStyles();
 
   return (
     <Router basename={baseHref}>
       <div className="app-container" style={{ paddingTop }}>
         <ToastContainer position={toast.POSITION.TOP_LEFT} className="toastify-container" toastClassName="toastify-toast" />
         <ThemeProvider theme={customTheme}>
-          <div className={classes.root}>
+          <div className="flex-container">
             <CssBaseline />
             <ErrorBoundary>
               <Nav
@@ -78,8 +66,8 @@ export const App = (props: IAppProps) => {
           />
         </ErrorBoundary> */}
             <LoadingBar className="loading-bar" />
-            <div className="container-fluid view-container" id="app-view-container">
-              <Card className="jh-card">
+            <div className="container-fluid view-container max" id="app-view-container">
+              <Card className="jh-card max-calc">
                 <ErrorBoundary>
                   <AppRoutes />
                 </ErrorBoundary>

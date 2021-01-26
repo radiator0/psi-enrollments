@@ -1,5 +1,10 @@
 @import 'node_modules/bootstrap/scss/bootstrap';
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
 }
@@ -18,24 +23,42 @@ a:hover {
   }
 }
 
+.max {
+  min-height: 100%;
+}
+
+.max-calc {
+  min-height: calc(100% - 50px);
+}
+
 .app-container {
   box-sizing: border-box;
-  .view-container {
-    width: 100%;
-    height: calc(100% - 40px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 1rem;
-    .card {
+  height: 100%;
+  .flex-container {
+    display: flex;
+    min-height: 100%;
+    .view-container {
+      width: 100%;
+      min-height: calc(100% - 60px);
+      overflow-y: auto;
+      overflow-x: hidden;
       padding: 1rem;
-    }
-    .view-routes {
-      height: 100%;
-      > div {
+
+      .card {
+        padding: 1rem;
+      }
+      .view-routes {
         height: 100%;
+        > div {
+          height: 100%;
+        }
       }
     }
   }
+}
+
+#root {
+  height: 100%;
 }
 
 .fullscreen {

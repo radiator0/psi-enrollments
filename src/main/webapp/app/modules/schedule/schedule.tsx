@@ -1,3 +1,4 @@
+import './schedule.scss';
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
@@ -101,7 +102,7 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
     const { scheduleType } = this.props.match.params;
 
     return (
-      <Paper>
+      <Paper className={scheduleType}>
         <Scheduler
           data={data}
           height={800}

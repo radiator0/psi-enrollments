@@ -14,7 +14,8 @@
         "header": "Blocks",
         "start": "Start",
         "end": "End"
-      }
+      },
+      "select": "Select"
     }
   }
 }
