@@ -1,9 +1,9 @@
 package com.psi.service;
 
 import com.psi.domain.*;
+import com.psi.repository.ClassGroupRepository;
 import com.psi.repository.ClassScheduleRepository;
 import com.psi.repository.ClassUnitRepository;
-import com.psi.repository.EnrollmentRepository;
 import com.psi.service.dto.RecurringScheduleElementDTO;
 import com.psi.service.dto.ScheduleElementDTO;
 import com.psi.service.mapper.RecurringScheduleElementMapper;
@@ -28,16 +28,18 @@ public class ScheduleService {
 
     private final ClassUnitRepository classUnitRepository;
     private final ClassScheduleRepository classScheduleRepository;
+    private final ClassGroupRepository classGroupRepository;
 
     private final UserService userService;
 
     private final ScheduleElementMapper scheduleElementMapper;
     private final RecurringScheduleElementMapper recurringScheduleElementMapper;
 
-    public ScheduleService(ClassUnitRepository classUnitRepository, ClassScheduleRepository classScheduleRepository, UserService userService,
+    public ScheduleService(ClassUnitRepository classUnitRepository, ClassScheduleRepository classScheduleRepository, ClassGroupRepository classGroupRepository, UserService userService,
                            ScheduleElementMapper scheduleElementMapper, RecurringScheduleElementMapper recurringScheduleElementMapper) {
         this.classUnitRepository = classUnitRepository;
         this.classScheduleRepository = classScheduleRepository;
+        this.classGroupRepository = classGroupRepository;
         this.userService = userService;
         this.scheduleElementMapper = scheduleElementMapper;
         this.recurringScheduleElementMapper = recurringScheduleElementMapper;
@@ -82,15 +84,32 @@ public class ScheduleService {
             groupedSchedules = findAllRecurringForLecturer(userService.getLecturerInstance(user));
         }
 
-        if(!groupedSchedules.isEmpty()) {
+        if (!groupedSchedules.isEmpty()) {
             Integer lastSemesterNumber = Collections.max(groupedSchedules.keySet());
 
             return groupedSchedules.get(lastSemesterNumber).stream()
                 .map(recurringScheduleElementMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
-        }
-        else {
+        } else {
             return new LinkedList<RecurringScheduleElementDTO>();
+        }
+    }
+
+    /**
+     * Get all the recurring schedule elements by groupCode.
+     *
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public LinkedList<ScheduleElementDTO> findAllByGroupCode(String groupCode) {
+        log.debug("Request to get all ScheduleElementDTO by GroupCode");
+        Optional<ClassGroup> classGroup = classGroupRepository.findOneByCode(groupCode);
+        if (classGroup.isPresent()) {
+            return classGroup.get().getClassUnits().stream()
+                .map(scheduleElementMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+        }else{
+            throw new NotFoundException("This classGroup does not exists.");
         }
     }
 

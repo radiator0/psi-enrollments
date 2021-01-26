@@ -18,6 +18,7 @@ import { AUTHORITIES } from 'app/config/constants';
 import AsksForEnrollmentOverLimit from './modules/asks-for-enrollment-over-limit/asks-for-enrollment-over-limit';
 import Enrollments from './modules/enrollments/enrollments';
 import Enrolling from './modules/enrolling/enrolling';
+import GroupDetails from './modules/enrolling/group-details/group-details';
 
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
@@ -52,6 +53,7 @@ const Routes = () => (
       />
       <PrivateRoute path="/enrollments" component={Enrollments} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
       <PrivateRoute path="/enrolling" component={Enrolling} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
+      <PrivateRoute path="/group-details/:groupCode" component={GroupDetails} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
       <ErrorBoundaryRoute path="/" exact component={Home} />
       <PrivateRoute path="/" component={Entities} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
       <ErrorBoundaryRoute component={PageNotFound} />

@@ -1,5 +1,6 @@
 package com.psi.repository;
 
+import com.psi.domain.ClassGroup;
 import com.psi.domain.ClassSchedule;
 
 import com.psi.domain.Lecturer;
@@ -15,4 +16,5 @@ import java.util.List;
 @Repository
 public interface ClassScheduleRepository extends JpaRepository<ClassSchedule, Long> {
     List<ClassSchedule> findAllByLecturer(Lecturer lecturer);
+    List<ClassSchedule> findAllByClassGroup(ClassGroup classGroup);
 }

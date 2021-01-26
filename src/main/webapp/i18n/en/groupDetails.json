@@ -1,0 +1,12 @@
+{
+  "groupDetails": {
+    "header": "Schedule for group",
+    "column": {
+      "startDate": "Start date",
+      "endDate": "End date",
+      "building": "Building",
+      "room": "Room",
+      "lecturer": "Lecturer"
+    }
+  }
+}

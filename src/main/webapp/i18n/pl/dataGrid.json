@@ -1,0 +1,24 @@
+{
+  "dataGrid": {
+    "columnMenuSortAsc": "Sortuj rosnąco",
+    "columnMenuSortDesc": "Sortuj malejąco",
+    "columnMenuShowColumns": "Pokaż kolumny",
+    "columnMenuFilter": "Filtruj wartości",
+    "columnMenuHideColumn": "Ukryj kolumnę",
+    "columnMenuUnsort": "Wyczyść sortowanie",
+    "filterPanelAddFilter": "Dodaj filtr",
+    "filterPanelDeleteIconLabel": "Usuń",
+    "filterPanelOperators": "Warunki",
+    "filterPanelOperatorAnd": "Oraz",
+    "filterPanelOperatorOr": "Lub",
+    "filterPanelColumns": "Kolumny",
+    "columnHeaderSortIconLabel": "Sortuj",
+    "columnHeaderFiltersLabel": "Pokaż filtry",
+    "noRowsLabel": "Brak danych do wyświetlenia.",
+    "columnsPanelTextFieldLabel": "Znajdź kolumnę",
+    "columnsPanelTextFieldPlaceholder": "Nazwa kolumny",
+    "columnsPanelDragIconLabel": "Zmień kolejność",
+    "columnsPanelShowAllButton": "Pokaż wszystkie",
+    "columnsPanelHideAllButton": "Ukryj wszystkie"
+  }
+}

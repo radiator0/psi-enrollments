@@ -1,0 +1,11 @@
+.date-before {
+  div & {
+    color: red;
+  }
+}
+
+.date-after {
+  div & {
+    color: inherit;
+  }
+}

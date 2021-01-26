@@ -16,6 +16,7 @@ export const messages = {
   DATA_ERROR_ALERT: 'Internal Error',
 };
 
+export const APP_DATE_FORMAT_DOT = 'DD.MM.YYYY HH:mm';
 export const APP_DATE_FORMAT = 'DD/MM/YY HH:mm';
 export const APP_TIMESTAMP_FORMAT = 'DD/MM/YY HH:mm:ss';
 export const APP_LOCAL_DATE_FORMAT = 'DD/MM/YYYY';

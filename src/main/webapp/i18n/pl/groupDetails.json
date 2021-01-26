@@ -1,0 +1,12 @@
+{
+  "groupDetails": {
+    "header": "Harmonogram grupy",
+    "column": {
+      "startDate": "Data rozpoczęcia",
+      "endDate": "Data zakończenia",
+      "building": "Budynek",
+      "room": "Pokój",
+      "lecturer": "Prowadzący"
+    }
+  }
+}

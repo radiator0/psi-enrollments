@@ -1,0 +1,24 @@
+{
+  "dataGrid": {
+    "columnMenuSortAsc": "Sort by Asc",
+    "columnMenuSortDesc": "Sort by Desc",
+    "columnMenuShowColumns": "Show columns",
+    "columnMenuFilter": "Filter",
+    "columnMenuHideColumn": "Hide",
+    "columnMenuUnsort": "Unsort",
+    "filterPanelAddFilter": "Add Filter",
+    "filterPanelDeleteIconLabel": "Delete",
+    "filterPanelOperators": "Operators",
+    "filterPanelOperatorAnd": "And",
+    "filterPanelOperatorOr": "Or",
+    "filterPanelColumns": "Columns",
+    "columnHeaderSortIconLabel": "Sort",
+    "columnHeaderFiltersLabel": "Show Filters",
+    "noRowsLabel": "No data to display.",
+    "columnsPanelTextFieldLabel": "Find column",
+    "columnsPanelTextFieldPlaceholder": "Column title",
+    "columnsPanelDragIconLabel": "Reorder Column",
+    "columnsPanelShowAllButton": "Show All",
+    "columnsPanelHideAllButton": "Hide All"
+  }
+}
