@@ -21,7 +21,9 @@
     },
     "notification": {
       "enrolled": "Enrolled",
-      "disenrolled": "Disenrolled"
+      "disenrolled": "Disenrolled",
+      "enrollFailure": "Could not enroll!",
+      "disenrollFailure": "Could not disenroll!"
     }
   }
 }

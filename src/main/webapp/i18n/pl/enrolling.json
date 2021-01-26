@@ -21,7 +21,9 @@
     },
     "notification": {
       "enrolled": "Zapisano",
-      "disenrolled": "Wypisano"
+      "disenrolled": "Wypisano",
+      "enrollFailure": "Nie udało się zapisać!",
+      "disenrollFailure": "Nie udało się wypisać!"
     }
   }
 }

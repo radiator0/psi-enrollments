@@ -19,7 +19,7 @@ public interface EnrollingGroupDetailsMapper extends EntityMapper<EnrollingGroup
         EnrollingGroupDetailsDTO enrollingGroupDetailsDTO = new EnrollingGroupDetailsDTO();
         enrollingGroupDetailsDTO.setId(group.getId());
         enrollingGroupDetailsDTO.setGroupCode(group.getCode());
-        enrollingGroupDetailsDTO.setEnrolledCount(group.getEnrolledCount());
+        enrollingGroupDetailsDTO.setEnrolledCount(group.getEnrollments().size());
         enrollingGroupDetailsDTO.setLimit(group.getPeopleLimit());
         enrollingGroupDetailsDTO.setCanEnrollOverLimit(group.isIsEnrollmentAboveLimitAllowed());
         enrollingGroupDetailsDTO.setStudentEnrolled(group.getEnrollments().stream().anyMatch(e -> e.getStudent().equals(student)));

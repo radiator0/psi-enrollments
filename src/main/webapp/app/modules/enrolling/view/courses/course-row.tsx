@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import CourseDetails from '../../../../shared/model/domain/dto/course-details';
+import { translate } from 'react-jhipster';
 import log from 'app/config/log';
 import { CheckedAvatar, UnCheckedAvatar } from '../../custom-avatars';
 
@@ -46,7 +44,7 @@ class CourseRow extends Component<ICourseRowProps, ICourseRowState> {
                 </ListItemAvatar>
                 <ListItemText
                     primary={course.shortName || course.name}
-                    secondary={course.form}
+                    secondary={translate(`enrollmentsApp.ClassType.${course.form}`)}
                 />
             </ListItem>
         );

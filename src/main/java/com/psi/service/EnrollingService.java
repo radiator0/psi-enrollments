@@ -1,9 +1,6 @@
 package com.psi.service;
 
-import com.psi.domain.ClassGroup;
-import com.psi.domain.Enrollment;
-import com.psi.domain.Student;
-import com.psi.domain.User;
+import com.psi.domain.*;
 import com.psi.repository.ClassGroupRepository;
 import com.psi.repository.EnrollmentRepository;
 import com.psi.service.dto.EnrollmentDTO;
@@ -14,7 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link Enrollment}.
@@ -51,16 +52,48 @@ public class EnrollingService {
         log.debug("Request to enroll student : {}", student);
         ClassGroup classGroup = classGroupRepository.getOne(groupId);
 
+        Set<Enrollment> collidingEnrollments = getCollidingEnrollments(classGroup, student);
+        for(Enrollment e : collidingEnrollments) {
+            enrollmentRepository.delete(e);
+        }
+
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(student);
         enrollment.setClassGroup(classGroup);
         enrollment.setDate(Instant.now());
         enrollment.setIsAdministrative(false);
 
+
         enrollment = enrollmentRepository.save(enrollment);
         return enrollmentMapper.toDto(enrollment);
     }
 
+    private boolean validateTimeAndRights(ClassGroup classGroup, Student student) {
+        return true; // TODO xD
+    }
+
+    private Set<Enrollment> getCollidingEnrollments(ClassGroup classGroup, Student student)
+    {
+        Course course = classGroup.getCourse();
+        CourseUnit courseUnit = course.getCourseUnit();
+        SelectableModule selectableModule = courseUnit != null ? courseUnit.getSelectableModule() : null;
+
+        Set<Enrollment> collidingEnrollments = student.getEnrollments().stream()
+            .filter(e -> e.getClassGroup().getCourse().equals(course))
+            .collect(Collectors.toSet());
+
+        if(selectableModule != null) {
+            collidingEnrollments.addAll(
+                student.getEnrollments().stream()
+                .filter(e -> e.getClassGroup().getCourse().getCourseUnit() != null &&
+                    selectableModule.equals(e.getClassGroup().getCourse().getCourseUnit().getSelectableModule())
+                    && !courseUnit.equals(e.getClassGroup().getCourse().getCourseUnit()))
+                .collect(Collectors.toSet())
+            );
+        }
+
+        return collidingEnrollments;
+    }
     /**
      * Delete the enrollment by group id.
      *

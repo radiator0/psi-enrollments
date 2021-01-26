@@ -19,6 +19,7 @@ import EnrollmentData from '../enrollments/enrollment-data';
 import { EnrollingAction } from './enrolling-action';
 import { toast } from 'react-toastify';
 import { Translate, translate } from 'react-jhipster';
+import CourseUnitDetails from 'app/shared/model/domain/dto/course-unit-details';
 
 export type IEnrollingProps = RouteComponentProps<{ }, StaticContext, { enrollment: EnrollmentData }>;
 
@@ -53,7 +54,6 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   }
 
   componentDidMount() {
-    log.info(this.props);
     if(this.props.history.location.state.enrollment) {
       this.getCoursesData();
     }
@@ -70,25 +70,47 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   }
 
   enroll(group: GroupsData) {
+    log.info(this.getGroupsToDisenrollFromBeforeEnrolling(group));
+
     axios.post(`/api/enrolling`, { id: group.id })
     .then(r => {
-      log.info(r.data);
-    })
-    .catch(e => log.error(e))
-    .finally(() => {
       toast.success(translate("enrolling.notification.enrolled"))
+    })
+    .catch(e => {
+      log.error(e);
+      toast.error(translate("enrolling.notification.enrollFailure"))
+    })
+    .finally(() => {
       this.refresh();
     });
   }
 
+  getGroupsToDisenrollFromBeforeEnrolling(groupToEnrollTo: GroupsData) {
+    const flatMap : (a : Array<CourseUnitDetails>, f : (cu: CourseUnitDetails) => Array<CourseDetails>) => Array<CourseDetails>
+      = (xs, f) => [].concat(...xs.map(f))
+
+    const { coursesData, selectedCourse, groupsData } = this.state;
+    const selectableCourseBlock = coursesData.map(cd => cd.selectableCourseBlocks)
+      .find(s => s.courseUnits.some(cu => cu.courses.some(c => c === selectedCourse)));
+    const courseUnit = selectableCourseBlock.courseUnits.find(cu => cu.courses.some(c => c === selectedCourse));
+
+    const isAlreadyEnrolledInThisCourse = groupsData.some(g => g.isStudentEnrolled);
+
+    const otherCoursesToDisenroll = flatMap(selectableCourseBlock.courseUnits.filter(cu => cu !== courseUnit), cu => cu.courses).find(c => c.studentEnrolled);
+
+    return { isAlreadyEnrolledInThisCourse, otherCoursesToDisenroll };
+  }
+
   disenroll(group: GroupsData) {
-    axios.delete(`/api/enrolling`, { data: {id: group.id } })
+    axios.delete(`/api/enrolling`, { data: { id: group.id } })
     .then(r => {
-      log.info(r.data);
-    })
-    .catch(e => log.error(e))
-    .finally(() => {
       toast.success(translate("enrolling.notification.disenrolled"))
+    })
+    .catch(e => {
+      log.error(e);
+      toast.error(translate("enrolling.notification.disenrollFailure"))
+    })
+    .finally(() => {
       this.refresh();
     });
   }
@@ -125,7 +147,6 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     axios.get<Array<SelectableCourseBlockDetails>>(`/api/enrollment/${enrollment.id}/selectable-modules`)
     .then(r => {
       const data = r.data.map(element => mapSelectableCourseBlockToCoursesData(element));
-      log.info(data);
       this.setState({ coursesData: data })
     })
     .catch(e => log.error(e))
