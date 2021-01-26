@@ -37,7 +37,7 @@
       "typeAskForEnrollment": "Poproś prowadzącego o zapis ponad stan:",
       "confirmAskForEnrollmentRecall": "Jesteś pewien, że chcesz wycofać prośbę?",
       "placeInGroup": "W grupie jest wolne miejsce. Czy chcesz tylko wycofać prośbę czy też od razu zapisać się do grupy?",
-      "placeholderRequest": "\nproszę o zapis ponad stan do grupy.\n\nZ wyrazami szacunku\n"
+      "placeholderRequest": "\nproszę o zapis ponad stan.\n\nZ wyrazami szacunku\n"
     }
   }
 }
