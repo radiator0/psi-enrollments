@@ -14,7 +14,8 @@
         "header": "Bloki",
         "start": "Początek",
         "end": "Koniec"
-      }
+      },
+      "select": "Wybierz"
     }
   }
 }
