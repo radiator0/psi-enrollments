@@ -19,7 +19,8 @@ import EnrollmentData from '../enrollments/enrollment-data';
 import { EnrollingAction } from './enrolling-action';
 import { toast } from 'react-toastify';
 import { Translate, translate } from 'react-jhipster';
-import CourseUnitDetails from 'app/shared/model/domain/dto/course-unit-details';
+import CourseUnitDetails from '../../shared/model/domain/dto/course-unit-details';
+import Modal from '../../shared/layout/modal';
 
 export type IEnrollingProps = RouteComponentProps<{ }, StaticContext, { enrollment: EnrollmentData }>;
 
@@ -27,7 +28,8 @@ export type IEnrollingProps = RouteComponentProps<{ }, StaticContext, { enrollme
 interface IEnrollingState {
   coursesData: Array<CoursesData>
   selectedCourse: CourseDetails,
-  groupsData: Array<GroupsData>
+  groupsData: Array<GroupsData>,
+  modal: () => any
 };
 
 const gridStyle = {
@@ -42,6 +44,15 @@ const groupsListStyle = {
   width: '70%', 
 };
 
+interface IModalOption {
+  optionNameKey: string,
+  onClick: () => void
+}
+
+const confirmModalOption = (onClick: () => void) => {return { optionNameKey: 'enrolling.modal.confirm', onClick }};
+const cancelModalOption = (onClick: () => void) => {return { optionNameKey: 'enrolling.modal.cancel', onClick }};
+const confirmAndEnrollModalOption = (onClick: () => void) => {return { optionNameKey: 'enrolling.modal.confirmAndEnroll', onClick }};
+
 class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   constructor(props: IEnrollingProps) {
     super(props);
@@ -49,7 +60,8 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     this.state = {
       coursesData: [],
       selectedCourse: null,
-      groupsData: []
+      groupsData: [],
+      modal: () => <></>
     };
   }
 
@@ -64,14 +76,49 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     this.getGroupsData(this.state.selectedCourse.id);
   }
 
+  showModal(title: string, content: string, options: Array<IModalOption>, closeOnEveryOption: boolean) {
+    if(closeOnEveryOption) {
+      options = options.map(o => { return { optionNameKey: o.optionNameKey, onClick: () => { this.closeModal(); o.onClick() }}})
+    }
+    this.setState({ modal: () => <Modal title={title} content={content} options={options}></Modal>});
+  }
+
+  closeModal() {
+    this.setState({ modal: () => <></> });
+  }
+
   onCourseSelected(course: CourseDetails) {
     this.getGroupsData(course.id)
     this.setState( { selectedCourse: course } )
   }
 
-  enroll(group: GroupsData) {
-    log.info(this.getGroupsToDisenrollFromBeforeEnrolling(group));
+  onEnrollClick(group: GroupsData) {
+    log.info('clicked to enroll to course:');
+    log.info(this.state.selectedCourse);
 
+    const collision = this.getGroupsToDisenrollFromBeforeEnrolling();
+    log.info(collision);
+    
+    if(collision.isAlreadyEnrolledInThisCourse || collision.otherCoursesToDisenroll?.length > 0) {
+      const modalTitle = translate('enrolling.modal.attention');
+      let modalContent = '';
+      if(collision.isAlreadyEnrolledInThisCourse) {
+        modalContent += translate('enrolling.modal.enrolledInThisCourseAlready');
+      }
+      if(collision.otherCoursesToDisenroll?.length > 0) {
+        modalContent += translate('enrolling.modal.disenrollingNecessary');
+        collision.otherCoursesToDisenroll.forEach((v, i) => modalContent += `${i === 0 ? ' ' : ', '}${v.shortName || v.name} (${translate(`enrollmentsApp.ClassType.${v.form}`)})`)
+      }
+
+      this.showModal(modalTitle, modalContent, [cancelModalOption(() => {}), confirmModalOption(() => this.enroll(group))], true);
+    }
+    else
+    {
+      this.enroll(group);
+    }
+  }
+
+  enroll(group: GroupsData) {
     axios.post(`/api/enrolling`, { id: group.id })
     .then(r => {
       toast.success(translate("enrolling.notification.enrolled"))
@@ -85,20 +132,25 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     });
   }
 
-  getGroupsToDisenrollFromBeforeEnrolling(groupToEnrollTo: GroupsData) {
+  getGroupsToDisenrollFromBeforeEnrolling() {
     const flatMap : (a : Array<CourseUnitDetails>, f : (cu: CourseUnitDetails) => Array<CourseDetails>) => Array<CourseDetails>
       = (xs, f) => [].concat(...xs.map(f))
 
     const { coursesData, selectedCourse, groupsData } = this.state;
     const selectableCourseBlock = coursesData.map(cd => cd.selectableCourseBlocks)
-      .find(s => s.courseUnits.some(cu => cu.courses.some(c => c === selectedCourse)));
-    const courseUnit = selectableCourseBlock.courseUnits.find(cu => cu.courses.some(c => c === selectedCourse));
+      .find(s => s.courseUnits.some(cu => cu.courses.some(c => c.id === selectedCourse.id)));
+    const courseUnit = selectableCourseBlock.courseUnits.find(cu => cu.courses.some(c => c.id === selectedCourse.id));
 
     const isAlreadyEnrolledInThisCourse = groupsData.some(g => g.isStudentEnrolled);
 
-    const otherCoursesToDisenroll = flatMap(selectableCourseBlock.courseUnits.filter(cu => cu !== courseUnit), cu => cu.courses).find(c => c.studentEnrolled);
+    const otherCoursesToDisenroll = flatMap(selectableCourseBlock.courseUnits.filter(cu => cu !== courseUnit), cu => cu.courses).filter(c => c.studentEnrolled);
 
     return { isAlreadyEnrolledInThisCourse, otherCoursesToDisenroll };
+  }
+
+  onDisenrollClick(group: GroupsData) {
+    this.showModal(translate('enrolling.modal.attention'), translate('enrolling.modal.confirmDisenrollment'),
+      [cancelModalOption(() => {}), confirmModalOption(() => this.disenroll(group))], true)
   }
 
   disenroll(group: GroupsData) {
@@ -126,10 +178,10 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   onGroupSelected(group: GroupsData, action: EnrollingAction) {
     switch(action) {
       case EnrollingAction.Enroll:
-        this.enroll(group);
+        this.onEnrollClick(group);
         break;
       case EnrollingAction.Disenroll:
-        this.disenroll(group);
+        this.onDisenrollClick(group);
         break;
       case EnrollingAction.AskOverLimit:
         this.askOverLimit(group);
@@ -186,6 +238,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   render() {
     return (
       <>
+        {this.state.modal()}
         {this.renderHeader()}
         <Grid style={gridStyle}>
           <div style={courseListStyle}>

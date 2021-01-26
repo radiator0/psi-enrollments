@@ -24,6 +24,15 @@
       "disenrolled": "Wypisano",
       "enrollFailure": "Nie udało się zapisać!",
       "disenrollFailure": "Nie udało się wypisać!"
+    },
+    "modal": {
+      "attention": "Uwaga",
+      "confirm": "Potwierdź",
+      "cancel": "Anuluj",
+      "confirmAndEnroll": "Potwierdź i dopisz",
+      "confirmDisenrollment": "Jesteś pewien, że chcesz się wypisać?",
+      "enrolledInThisCourseAlready": "Jesteś już zapisany do innej grupy w ramach tego kursu. Dopisanie się spowoduje wypisanie z innej grupy.",
+      "disenrollingNecessary": "Wybrany kurs koliduje z innymi kursami. Zapis do tej grupy spowoduje wypisanie z kursów:"
     }
   }
 }

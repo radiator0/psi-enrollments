@@ -12,7 +12,6 @@ const recurringScheduleElementToLongDateString = (rse: RecurringScheduleElement)
 }
 
 
-
 const recurringScheduleElementToShortDateString = (rse: RecurringScheduleElement) => {
     const dayOfWeek = dayOfWeekToShortString(rse.dayOfWeek);
     const hours = `${dateToHour(rse.startDate)} - ${dateToHour(rse.endDate)}`;

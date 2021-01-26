@@ -56,7 +56,7 @@ public class EnrollingResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/enrolling")
-    public ResponseEntity<EnrollmentDTO> createEnrollment(@Valid @RequestBody IdDTO groupId) throws URISyntaxException {
+    public ResponseEntity<EnrollmentDTO> createEnrollment(@Valid @RequestBody IdDTO groupId) throws Exception, URISyntaxException {
         log.debug("REST request to enroll student to group : {}", groupId);
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new EnrollingResource.EnrollingResourceException("User cannot be found"));
 

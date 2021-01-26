@@ -24,6 +24,15 @@
       "disenrolled": "Disenrolled",
       "enrollFailure": "Could not enroll!",
       "disenrollFailure": "Could not disenroll!"
+    },
+    "modal": {
+      "attention": "Attention",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "confirmAndEnroll": "Confirm and enroll",
+      "confirmDisenrollment": "Are you sure you want do disenroll?",
+      "enrolledInThisCourseAlready": "You are already enrolled in another group for this course. Enrolling will result in disenrolling from another group.",
+      "disenrollingNecessary": "The selected course conflicts with other courses. Enrolling to this group will disenroll from the courses:"
     }
   }
 }

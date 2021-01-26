@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -47,10 +48,15 @@ public class EnrollingService {
      * @param user student to enroll.
      * @return the persisted entity.
      */
-    public EnrollmentDTO enrollStudent(Long groupId, User user) {
+    public EnrollmentDTO enrollStudent(Long groupId, User user) throws Exception {
+        Instant requestDate = Instant.now();
+
         Student student = userService.getStudentInstance(user);
         log.debug("Request to enroll student : {}", student);
         ClassGroup classGroup = classGroupRepository.getOne(groupId);
+
+        validateTimeAndRights(requestDate, classGroup, student);
+        validateGroupNotFull(classGroup);
 
         Set<Enrollment> collidingEnrollments = getCollidingEnrollments(classGroup, student);
         for(Enrollment e : collidingEnrollments) {
@@ -60,7 +66,7 @@ public class EnrollingService {
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(student);
         enrollment.setClassGroup(classGroup);
-        enrollment.setDate(Instant.now());
+        enrollment.setDate(requestDate);
         enrollment.setIsAdministrative(false);
 
 
@@ -68,8 +74,28 @@ public class EnrollingService {
         return enrollmentMapper.toDto(enrollment);
     }
 
-    private boolean validateTimeAndRights(ClassGroup classGroup, Student student) {
-        return true; // TODO xD
+    private void validateTimeAndRights(Instant requestDate, ClassGroup classGroup, Student student) throws Exception {  // TODO xD
+        EnrollmentRight correspondingRight = student.getEnrollmentRights().stream()
+            .filter(r -> r.getEnrollmentDate().getCourses().stream().anyMatch(c -> c.getClassGroups().contains(classGroup)))
+            .findFirst().orElseThrow(() -> new Exception("Student has no rights to perform this enrollment"));
+
+        if(requestDate.isBefore(correspondingRight.getStartDate())) {
+            throw new Exception("Student can not enroll in this moment.");
+        }
+        if(correspondingRight.getEnrollmentDate().getEnrollmentUnits().stream()
+            .noneMatch(u -> u.getStartDate().isBefore(requestDate) && u.getEndDate().isAfter(requestDate))) {
+            throw new Exception("Student can not enroll because enrollments are not active.");
+        }
+
+        if(classGroup.getCourse().getSpecialties() != null && !classGroup.getCourse().getSpecialties().isEmpty()
+            && !classGroup.getCourse().getSpecialties().contains(correspondingRight.getSpecialty())) {
+            throw new Exception("Student has no rights to enroll to a course with speciality restrictions.");
+        }
+    }
+    private void validateGroupNotFull(ClassGroup classGroup) throws Exception {  // TODO xD
+        if (classGroup.getEnrollments().size() >= classGroup.getPeopleLimit()) {
+            throw new Exception("Student can not enroll because group is full.");
+        }
     }
 
     private Set<Enrollment> getCollidingEnrollments(ClassGroup classGroup, Student student)
