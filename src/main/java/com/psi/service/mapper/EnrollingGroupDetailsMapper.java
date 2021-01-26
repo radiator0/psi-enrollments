@@ -31,7 +31,7 @@ public interface EnrollingGroupDetailsMapper extends EntityMapper<EnrollingGroup
             requestOverLimitDTO.setExamined(request.isIsExamined());
             requestOverLimitDTO.setAccepted(request.isIsExamined());    // TODO XD
 
-            enrollingGroupDetailsDTO.setRequestOverLimitDTO(requestOverLimitDTO);
+            enrollingGroupDetailsDTO.setRequestOverLimit(requestOverLimitDTO);
         }
 
         RecurringScheduleElementMapper recurringScheduleElementMapper = new RecurringScheduleElementMapperImpl();

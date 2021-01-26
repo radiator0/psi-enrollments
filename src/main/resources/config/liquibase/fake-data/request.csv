@@ -9,3 +9,5 @@ id;uuid;date;text;is_examined;class_group_id;student_id
 8;d3fae399-e076-4782-b835-17f2afc692ef;2021-01-14T11:11:00;Tasty Metal Shoes Canadian Dollar;false;8;8
 9;7b793143-64ea-4b10-a3f7-ed39793b9e11;2021-01-14T11:11:00;pricing structure Mobility Concrete;true;9;9
 10;357dba8e-0cd5-4ef0-b102-7400af7a13ed;2021-01-14T11:11:00;calculate;false;10;10
+31;357dba8e-0cd5-4ef0-b102-9c2698d60e03;2021-01-14T11:11:00;PLX PANIE PROWADZĄCY;false;31;1
+41;357dba8e-0cd5-4ef0-b102-78920baf6642;2021-01-14T11:11:00;PROSZE O GRUPE;false;41;1

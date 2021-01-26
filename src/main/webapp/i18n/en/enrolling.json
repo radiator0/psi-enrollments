@@ -27,12 +27,17 @@
     },
     "modal": {
       "attention": "Attention",
+      "ask": "Request",
       "confirm": "Confirm",
       "cancel": "Cancel",
       "confirmAndEnroll": "Confirm and enroll",
-      "confirmDisenrollment": "Are you sure you want do disenroll?",
+      "confirmDisenrollment": "Are you sure you want to disenroll?",
       "enrolledInThisCourseAlready": "You are already enrolled in another group for this course. Enrolling will result in disenrolling from another group.",
-      "disenrollingNecessary": "The selected course conflicts with other courses. Enrolling to this group will disenroll from the courses:"
+      "disenrollingNecessary": "The selected course conflicts with other courses. Enrolling to this group will disenroll from the courses:",
+      "typeAskForEnrollment": "Ask the lecturer for enrollment above the limit:",
+      "confirmAskForEnrollmentRecall": "Are you sure you want to recall the request?",
+      "placeInGroup": "There is a place in the group. Do you want only to recall the request or enroll too?",
+      "placeholderRequest": "\nproszę o zapis ponad stan do grupy.\n\nZ wyrazami szacunku\n"
     }
   }
 }

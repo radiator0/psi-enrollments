@@ -10,7 +10,7 @@ public class EnrollingGroupDetailsDTO implements Serializable {
     private Integer limit;
     private Boolean canEnrollOverLimit;
     private Boolean isStudentEnrolled;
-    private RequestOverLimitDTO requestOverLimitDTO;
+    private RequestOverLimitDTO requestOverLimit;
     private Set<RecurringScheduleElementDTO> schedules;
     private String lecturerTitle;
     private String lecturerFirstName;
@@ -57,12 +57,12 @@ public class EnrollingGroupDetailsDTO implements Serializable {
         this.canEnrollOverLimit = canEnrollOverLimit;
     }
 
-    public RequestOverLimitDTO getRequestOverLimitDTO() {
-        return requestOverLimitDTO;
+    public RequestOverLimitDTO getRequestOverLimit() {
+        return requestOverLimit;
     }
 
-    public void setRequestOverLimitDTO(RequestOverLimitDTO requestOverLimitDTO) {
-        this.requestOverLimitDTO = requestOverLimitDTO;
+    public void setRequestOverLimit(RequestOverLimitDTO requestOverLimit) {
+        this.requestOverLimit = requestOverLimit;
     }
 
     public Boolean getStudentEnrolled() {
@@ -122,7 +122,7 @@ public class EnrollingGroupDetailsDTO implements Serializable {
             ", limit=" + limit +
             ", canEnrollOverLimit=" + canEnrollOverLimit +
             ", isStudentEnrolled=" + isStudentEnrolled +
-            ", requestOverLimitDTO=" + requestOverLimitDTO +
+            ", requestOverLimitDTO=" + requestOverLimit +
             ", schedules=" + schedules +
             ", lecturerTitle='" + lecturerTitle + '\'' +
             ", lecturerFirstName='" + lecturerFirstName + '\'' +

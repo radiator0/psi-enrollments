@@ -22,7 +22,7 @@ import { Translate, translate } from 'react-jhipster';
 import CourseUnitDetails from '../../shared/model/domain/dto/course-unit-details';
 import Modal from '../../shared/layout/modal';
 
-export type IEnrollingProps = RouteComponentProps<{ }, StaticContext, { enrollment: EnrollmentData }>;
+export interface IEnrollingProps extends StateProps, RouteComponentProps<{ }, StaticContext, { enrollment: EnrollmentData }>{};
 
 
 interface IEnrollingState {
@@ -46,11 +46,11 @@ const groupsListStyle = {
 
 interface IModalOption {
   optionNameKey: string,
-  onClick: () => void
+  onClick: (text: string | null) => void
 }
 
-const confirmModalOption = (onClick: () => void) => {return { optionNameKey: 'enrolling.modal.confirm', onClick }};
-const cancelModalOption = (onClick: () => void) => {return { optionNameKey: 'enrolling.modal.cancel', onClick }};
+const confirmModalOption = (onClick: (text: string | null) => void) => {return { optionNameKey: 'enrolling.modal.confirm', onClick }};
+const cancelModalOption = (onClick: (text: string | null) => void) => {return { optionNameKey: 'enrolling.modal.cancel', onClick }};
 const confirmAndEnrollModalOption = (onClick: () => void) => {return { optionNameKey: 'enrolling.modal.confirmAndEnroll', onClick }};
 
 class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
@@ -76,11 +76,11 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     this.getGroupsData(this.state.selectedCourse.id);
   }
 
-  showModal(title: string, content: string, options: Array<IModalOption>, closeOnEveryOption: boolean) {
+  showModal(title: string, content: string, options: Array<IModalOption>, closeOnEveryOption: boolean, textField: { placeholderText: string}) {
     if(closeOnEveryOption) {
-      options = options.map(o => { return { optionNameKey: o.optionNameKey, onClick: () => { this.closeModal(); o.onClick() }}})
+      options = options.map(o => { return { optionNameKey: o.optionNameKey, onClick: (text) => { this.closeModal(); o.onClick(text) }}})
     }
-    this.setState({ modal: () => <Modal title={title} content={content} options={options}></Modal>});
+    this.setState({ modal: () => <Modal title={title} content={content} options={options} textField={textField}></Modal>});
   }
 
   closeModal() {
@@ -96,26 +96,30 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     log.info('clicked to enroll to course:');
     log.info(this.state.selectedCourse);
 
-    const collision = this.getGroupsToDisenrollFromBeforeEnrolling();
-    log.info(collision);
+    const collision = this.getGroupsToDisenrollFromBeforeEnrolling(group);
     
     if(collision.isAlreadyEnrolledInThisCourse || collision.otherCoursesToDisenroll?.length > 0) {
       const modalTitle = translate('enrolling.modal.attention');
-      let modalContent = '';
-      if(collision.isAlreadyEnrolledInThisCourse) {
-        modalContent += translate('enrolling.modal.enrolledInThisCourseAlready');
-      }
-      if(collision.otherCoursesToDisenroll?.length > 0) {
-        modalContent += translate('enrolling.modal.disenrollingNecessary');
-        collision.otherCoursesToDisenroll.forEach((v, i) => modalContent += `${i === 0 ? ' ' : ', '}${v.shortName || v.name} (${translate(`enrollmentsApp.ClassType.${v.form}`)})`)
-      }
+      const modalContent = this.createCollisionMessage(collision);
 
-      this.showModal(modalTitle, modalContent, [cancelModalOption(() => {}), confirmModalOption(() => this.enroll(group))], true);
+      this.showModal(modalTitle, modalContent, [cancelModalOption(() => {}), confirmModalOption(() => this.enroll(group))], true, null);
     }
     else
     {
       this.enroll(group);
     }
+  }
+
+  createCollisionMessage(collision: { isAlreadyEnrolledInThisCourse, otherCoursesToDisenroll }) {
+    let modalContent = '';
+    if(collision.isAlreadyEnrolledInThisCourse) {
+      modalContent += translate('enrolling.modal.enrolledInThisCourseAlready');
+    }
+    if(collision.otherCoursesToDisenroll?.length > 0) {
+      modalContent += translate('enrolling.modal.disenrollingNecessary');
+      collision.otherCoursesToDisenroll.forEach((v, i) => modalContent += `${i === 0 ? ' ' : ', '}${v.shortName || v.name} (${translate(`enrollmentsApp.ClassType.${v.form}`)})`)
+    }
+    return modalContent;
   }
 
   enroll(group: GroupsData) {
@@ -125,14 +129,14 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     })
     .catch(e => {
       log.error(e);
-      toast.error(translate("enrolling.notification.enrollFailure"))
+      toast.error(translate("enrolling.notification.enrollFailure"));
     })
     .finally(() => {
       this.refresh();
     });
   }
 
-  getGroupsToDisenrollFromBeforeEnrolling() {
+  getGroupsToDisenrollFromBeforeEnrolling(group: GroupsData) {
     const flatMap : (a : Array<CourseUnitDetails>, f : (cu: CourseUnitDetails) => Array<CourseDetails>) => Array<CourseDetails>
       = (xs, f) => [].concat(...xs.map(f))
 
@@ -141,7 +145,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
       .find(s => s.courseUnits.some(cu => cu.courses.some(c => c.id === selectedCourse.id)));
     const courseUnit = selectableCourseBlock.courseUnits.find(cu => cu.courses.some(c => c.id === selectedCourse.id));
 
-    const isAlreadyEnrolledInThisCourse = groupsData.some(g => g.isStudentEnrolled);
+    const isAlreadyEnrolledInThisCourse = groupsData.some(g => g.isStudentEnrolled && g.id !== group.id);
 
     const otherCoursesToDisenroll = flatMap(selectableCourseBlock.courseUnits.filter(cu => cu !== courseUnit), cu => cu.courses).filter(c => c.studentEnrolled);
 
@@ -150,7 +154,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
 
   onDisenrollClick(group: GroupsData) {
     this.showModal(translate('enrolling.modal.attention'), translate('enrolling.modal.confirmDisenrollment'),
-      [cancelModalOption(() => {}), confirmModalOption(() => this.disenroll(group))], true)
+      [cancelModalOption(() => {}), confirmModalOption(() => this.disenroll(group))], true, null)
   }
 
   disenroll(group: GroupsData) {
@@ -167,12 +171,35 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     });
   }
 
-  askOverLimit(group: GroupsData) {
+  createPlaceholderRequestText() {
+    const { firstName, lastName } = this.props.account;
+    return `${translate('enrolling.modal.placeholderRequest')}${firstName} ${lastName}`;
+  }
 
+  onAskOverLimitClick(group: GroupsData) {
+    this.showModal(translate('enrolling.modal.ask'), translate('enrolling.modal.typeAskForEnrollment'),
+      [cancelModalOption(() => {}), confirmModalOption((text) => this.askOverLimit(group, text))], true, { placeholderText: this.createPlaceholderRequestText() })
+  }
+
+  askOverLimit(group: GroupsData, text: string) {
+    log.info(`asking over limit for group ${group.id} with text: '${text}'`);
+  }
+
+  onRecallAskOverLimitClick(group: GroupsData) {
+    if(!group.isLimitReached) {
+      // we can enroll!
+      const collisionText = this.createCollisionMessage(this.getGroupsToDisenrollFromBeforeEnrolling(group))
+      this.showModal(translate('enrolling.modal.attention'), `${translate('enrolling.modal.placeInGroup')} ${collisionText}`,
+        [cancelModalOption(() => {}), confirmAndEnrollModalOption(() => this.enroll(group)), confirmModalOption(() => this.recallAskOverLimit(group))], false, null)
+    }
+    else {
+      this.showModal(translate('enrolling.modal.attention'), translate('enrolling.modal.confirmAskForEnrollmentRecall'),
+      [cancelModalOption(() => {}), confirmModalOption(() => this.recallAskOverLimit(group))], true, null)
+    }
   }
 
   recallAskOverLimit(group: GroupsData) {
-
+    log.info(`recalling ask over limit for group ${group.id}`);
   }
 
   onGroupSelected(group: GroupsData, action: EnrollingAction) {
@@ -184,10 +211,10 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
         this.onDisenrollClick(group);
         break;
       case EnrollingAction.AskOverLimit:
-        this.askOverLimit(group);
+        this.onAskOverLimitClick(group);
         break;
       case EnrollingAction.RecallAsk:
-        this.recallAskOverLimit(group);
+        this.onRecallAskOverLimitClick(group);
         break;
       default:
         log.error('no action');
@@ -253,7 +280,8 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   }
 };
 
-const mapStateToProps = () => ({
+const mapStateToProps = storeState => ({
+  account: storeState.authentication.account,
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;

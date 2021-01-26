@@ -3,6 +3,7 @@ package com.psi.service;
 import com.psi.domain.*;
 import com.psi.repository.ClassGroupRepository;
 import com.psi.repository.EnrollmentRepository;
+import com.psi.repository.RequestRepository;
 import com.psi.service.dto.EnrollmentDTO;
 import com.psi.service.mapper.EnrollmentMapper;
 import org.slf4j.Logger;
@@ -11,11 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -29,14 +27,17 @@ public class EnrollingService {
 
     private final EnrollmentRepository enrollmentRepository;
     private final ClassGroupRepository classGroupRepository;
+    private final RequestRepository requestRepository;
 
     private final EnrollmentMapper enrollmentMapper;
 
     private final UserService userService;
 
-    public EnrollingService(EnrollmentRepository enrollmentRepository, ClassGroupRepository classGroupRepository, EnrollmentMapper enrollmentMapper, UserService userService) {
+    public EnrollingService(EnrollmentRepository enrollmentRepository, ClassGroupRepository classGroupRepository,
+                            RequestRepository requestRepository, EnrollmentMapper enrollmentMapper, UserService userService) {
         this.enrollmentRepository = enrollmentRepository;
         this.classGroupRepository = classGroupRepository;
+        this.requestRepository = requestRepository;
         this.enrollmentMapper = enrollmentMapper;
         this.userService = userService;
     }
@@ -63,12 +64,14 @@ public class EnrollingService {
             enrollmentRepository.delete(e);
         }
 
+        requestRepository.deleteAll(classGroup.getRequests().stream()
+            .filter(r -> r.getStudent().equals(student) && !r.isIsExamined()).collect(Collectors.toList()));
+
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(student);
         enrollment.setClassGroup(classGroup);
         enrollment.setDate(requestDate);
         enrollment.setIsAdministrative(false);
-
 
         enrollment = enrollmentRepository.save(enrollment);
         return enrollmentMapper.toDto(enrollment);

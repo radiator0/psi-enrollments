@@ -27,12 +27,17 @@
     },
     "modal": {
       "attention": "Uwaga",
+      "ask": "Prośba",
       "confirm": "Potwierdź",
       "cancel": "Anuluj",
       "confirmAndEnroll": "Potwierdź i dopisz",
       "confirmDisenrollment": "Jesteś pewien, że chcesz się wypisać?",
       "enrolledInThisCourseAlready": "Jesteś już zapisany do innej grupy w ramach tego kursu. Dopisanie się spowoduje wypisanie z innej grupy.",
-      "disenrollingNecessary": "Wybrany kurs koliduje z innymi kursami. Zapis do tej grupy spowoduje wypisanie z kursów:"
+      "disenrollingNecessary": "Wybrany kurs koliduje z innymi kursami. Zapis do tej grupy spowoduje wypisanie z kursów:",
+      "typeAskForEnrollment": "Poproś prowadzącego o zapis ponad stan:",
+      "confirmAskForEnrollmentRecall": "Jesteś pewien, że chcesz wycofać prośbę?",
+      "placeInGroup": "W grupie jest wolne miejsce. Czy chcesz tylko wycofać prośbę czy też od razu zapisać się do grupy?",
+      "placeholderRequest": "\nproszę o zapis ponad stan do grupy.\n\nZ wyrazami szacunku\n"
     }
   }
 }
