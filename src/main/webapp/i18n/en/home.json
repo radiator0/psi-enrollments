@@ -1,9 +1,9 @@
 {
   "home": {
-    "title": "Welcome, Java Hipster!",
+    "title": "Welcome to the enrollments system",
     "subtitle": "This is your homepage",
     "logged": {
-      "message": "You are logged in as user \"{{username}}\"."
+      "message": "Nice to see you again"
     },
     "question": "If you have any question on JHipster:",
     "link": {
@@ -12,6 +12,23 @@
       "bugtracker": "JHipster bug tracker",
       "chat": "JHipster public chat room",
       "follow": "follow @jhipster on Twitter"
+    },
+    "timeLineHeader": "How will your race for the best groups look like?",
+    "timeLine": {
+      "start": "Start",
+      "findCourses": "Select courses",
+      "findCoursesDescription": "Select courses where you want to enroll. Not all are obligatory - when they bolong to one selectable module you have to choose.",
+      "filterGroups": "Select groups",
+      "filterGroupsDescription": "Select the best groups. Filter them day of classes, lecturer or other parameter.",
+      "enroll": "Enroll",
+      "enrollDescription": "Is there a place in a group which suits you? Enroll!",
+      "requestOverLimit": "Request to lecturer for enroll over limit",
+      "requestOverLimitDescription": "There is no place in any of groups that suit you? You can send the tutor a request to enroll over limit (if he allowed).",
+      "repeat": "Repeat",
+      "repeatDescription": "Repeat until you enroll in all required courses.",
+      "checkSchedule": "Check your final schedule",
+      "checkScheduleDescription": "Check your schedule. Make sure the classes do not overlap.",
+      "finish": "Finish"
     },
     "like": "If you like JHipster, don't forget to give us a star on",
     "github": "GitHub"

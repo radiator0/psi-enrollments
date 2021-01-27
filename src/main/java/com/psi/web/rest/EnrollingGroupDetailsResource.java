@@ -1,6 +1,7 @@
 package com.psi.web.rest;
 
 import com.psi.domain.User;
+import com.psi.security.AuthoritiesConstants;
 import com.psi.service.EnrollingGroupDetailsService;
 import com.psi.service.SelectableModuleDetailsService;
 import com.psi.service.UserService;
@@ -9,6 +10,7 @@ import com.psi.service.dto.SelectableModuleDetailsDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +46,7 @@ public class EnrollingGroupDetailsResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of selectableModules in body.
      */
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.STUDENT + "\")")
     @GetMapping("/course/{id}/groups")
     public List<EnrollingGroupDetailsDTO> getAllGroupsForCourse(@PathVariable Long id) {
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new EnrollingGroupDetailsResource.EnrollingGroupDetailsResourceException("User cannot be found"));

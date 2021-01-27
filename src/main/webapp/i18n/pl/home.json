@@ -1,9 +1,9 @@
 {
   "home": {
-    "title": "Witamy, Java Hipsterze!",
+    "title": "Witamy w systemie zapisów",
     "subtitle": "To jest twoja strona domowa",
     "logged": {
-      "message": "Jesteś zalogowany jako użytkownik \"{{username}}\"."
+      "message": "Miło Cię widzieć ponownie"
     },
     "question": "Jeśli masz jakiekolwiek pytania na temat JHipster:",
     "link": {
@@ -12,6 +12,23 @@
       "bugtracker": "JHipster bug tracker",
       "chat": "Publiczny chat room JHipster",
       "follow": "skontaktuj się z @jhipster na Twitterze"
+    },
+    "timeLineHeader": "Jak będzie wyglądał Twój wyścig o najlepsze grupy?",
+    "timeLine": {
+      "start": "Start",
+      "findCourses": "Wybierz kursy",
+      "findCoursesDescription": "Wybierz kursy, na które chcesz się zapisać. Nie wszystkie są obowiązkowe - jeśli należą do jednego modułu wybieralnego musisz wybrać.",
+      "filterGroups": "Wybierz grupy",
+      "filterGroupsDescription": "Wybierz najlepsze grupy. Filtruj je po dniu zajęć, prowadzącym lub innym parametrze.",
+      "enroll": "Zapisz się",
+      "enrollDescription": "Jest wolne miejsce w odpowiadającej Ci grupie? Zapisz się!",
+      "requestOverLimit": "Poproś o zapis ponad stan",
+      "requestOverLimitDescription": "Nie ma wolnego miejsca w żadnej odpowiadającej Ci grupie? Możesz wysłać prowadzącemu zapytanie o zapis ponad stan (o ile na to pozwala).",
+      "repeat": "Powtórz",
+      "repeatDescription": "Powtarzaj, aż zapiszesz się na wszystkie wymagane kursy.",
+      "checkSchedule": "Sprawdź swój plan zajęć",
+      "checkScheduleDescription": "Sprawdź swój plan zajęć. Upewnij się, że zajęcia Ci się nie nakładają.",
+      "finish": "Meta"
     },
     "like": "Jeśli lubisz JHipster, nie zapomnij dać nam gwiazdki na",
     "github": "GitHubie"

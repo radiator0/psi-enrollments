@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ import java.util.*;
 /**
  * REST controller for managing the current user's account.
  */
+@ApiIgnore
 @RestController
 @RequestMapping("/api")
 public class AccountResource {

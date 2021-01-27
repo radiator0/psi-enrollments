@@ -1,6 +1,7 @@
 package com.psi.web.rest;
 
 import com.psi.domain.User;
+import com.psi.security.AuthoritiesConstants;
 import com.psi.security.SecurityUtils;
 import com.psi.service.SelectableModuleDetailsService;
 import com.psi.service.SelectableModuleService;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -50,6 +52,7 @@ public class SelectableModuleDetailsResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of selectableModules in body.
      */
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.STUDENT + "\")")
     @GetMapping("/enrollment/{id}/selectable-modules")
     public List<SelectableModuleDetailsDTO> getAllSelectableModulesForStudent(@PathVariable Long id) {
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new SelectableModuleDetailsResource.SelectableModuleDetailsResourceException("User cannot be found"));

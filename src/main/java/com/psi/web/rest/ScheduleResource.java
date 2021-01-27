@@ -1,6 +1,7 @@
 package com.psi.web.rest;
 
 import com.psi.domain.User;
+import com.psi.security.AuthoritiesConstants;
 import com.psi.service.ScheduleService;
 import com.psi.service.UserService;
 import com.psi.service.dto.RecurringScheduleElementDTO;
@@ -12,7 +13,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
+@PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.STUDENT + "\") or hasAuthority(\"" + AuthoritiesConstants.LECTURER + "\")")
 public class ScheduleResource {
 
     private static class ScheduleResourceException extends RuntimeException {

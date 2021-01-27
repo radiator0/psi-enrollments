@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
   },
   top: {
-    marginTop: '40px',
+    marginTop: '20px',
   },
 }));
 
@@ -44,18 +44,22 @@ export const Home = (props: IHomeProp) => {
   return (
     <>
       <Typography variant="h4" component="h4" align="center" className={classes.top}>
-        {/* <Translate contentKey={'schedule.header.semester'}>Semester</Translate> */}
-        Welcome to the enrollments system!
+        <Translate contentKey={'home.title'}>Welcome to the enrollments system!</Translate>
       </Typography>
       {account && account.login ? (
         <Typography variant="h6" component="h6" align="center">
-          Nice to see you again <b>{account.login}</b>.
+          <Translate contentKey={'home.logged.message'}>Nice to see you again</Translate><b> {account.firstName} {account.lastName}</b>.
         </Typography>
       ) : null}
+      <Typography variant="h6" component="h6" align="center" style={{marginTop: '10px'}}>
+        <Translate contentKey={'home.timeLineHeader'}>How will your race for the best groups look like?</Translate>
+      </Typography>
       <Timeline align="alternate" className={classes.top}>
         <TimelineItem>
           <TimelineOppositeContent>
-            <Typography variant="body2">Start</Typography>
+            <Typography variant="body2">
+              <Translate contentKey={'home.timeLine.start'}>Start</Translate>
+            </Typography>
           </TimelineOppositeContent>
           <TimelineSeparator>
             <TimelineDot>
@@ -66,9 +70,11 @@ export const Home = (props: IHomeProp) => {
           <TimelineContent>
             <Paper elevation={3} className={classes.paper}>
               <Typography variant="h6" component="h1">
-                Find courses
+                <Translate contentKey={'home.timeLine.findCourses'}>Find courses</Translate>
               </Typography>
-              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Typography>
+              <Typography>
+                <Translate contentKey={'home.timeLine.findCoursesDescription'}></Translate>
+              </Typography>
             </Paper>
           </TimelineContent>
         </TimelineItem>
@@ -82,9 +88,11 @@ export const Home = (props: IHomeProp) => {
           <TimelineContent>
             <Paper elevation={3} className={classes.paper}>
               <Typography variant="h6" component="h1">
-                Filter groups
+                <Translate contentKey={'home.timeLine.filterGroups'}>Filter groups</Translate>
               </Typography>
-              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Typography>
+              <Typography>
+                <Translate contentKey={'home.timeLine.filterGroupsDescription'}></Translate>
+              </Typography>
             </Paper>
           </TimelineContent>
         </TimelineItem>
@@ -98,9 +106,11 @@ export const Home = (props: IHomeProp) => {
           <TimelineContent>
             <Paper elevation={3} className={classes.paper}>
               <Typography variant="h6" component="h1">
-                Enroll
+                <Translate contentKey={'home.timeLine.enroll'}>Enroll</Translate>
               </Typography>
-              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Typography>
+              <Typography>
+                <Translate contentKey={'home.timeLine.enrollDescription'}></Translate>
+              </Typography>
             </Paper>
           </TimelineContent>
         </TimelineItem>
@@ -114,9 +124,11 @@ export const Home = (props: IHomeProp) => {
           <TimelineContent>
             <Paper elevation={3} className={classes.paper}>
               <Typography variant="h6" component="h1">
-                Request to lecturer for enroll over limit
+                <Translate contentKey={'home.timeLine.requestOverLimit'}>Request to lecturer for enroll over limit</Translate>
               </Typography>
-              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Typography>
+              <Typography>
+                <Translate contentKey={'home.timeLine.requestOverLimitDescription'}></Translate>
+              </Typography>
             </Paper>
           </TimelineContent>
         </TimelineItem>
@@ -130,15 +142,19 @@ export const Home = (props: IHomeProp) => {
           <TimelineContent>
             <Paper elevation={3} className={classes.paper}>
               <Typography variant="h6" component="h1">
-                Repeat
+                <Translate contentKey={'home.timeLine.repeat'}>Repeat</Translate>
               </Typography>
-              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Typography>
+              <Typography>
+                <Translate contentKey={'home.timeLine.repeatDescription'}></Translate>
+              </Typography>
             </Paper>
           </TimelineContent>
         </TimelineItem>
         <TimelineItem>
           <TimelineOppositeContent>
-            <Typography variant="body2">Finish</Typography>
+            <Typography variant="body2">
+              <Translate contentKey={'home.timeLine.finish'}>Finish</Translate>
+            </Typography>
           </TimelineOppositeContent>
           <TimelineSeparator>
             <TimelineDot color="primary">
@@ -148,9 +164,11 @@ export const Home = (props: IHomeProp) => {
           <TimelineContent>
             <Paper elevation={3} className={classes.paper}>
               <Typography variant="h6" component="h1">
-                Check your final plan
+                <Translate contentKey={'home.timeLine.checkSchedule'}>Check your final schedule</Translate>
               </Typography>
-              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Typography>
+              <Typography>
+                <Translate contentKey={'home.timeLine.checkScheduleDescription'}></Translate>
+              </Typography>
             </Paper>
           </TimelineContent>
         </TimelineItem>

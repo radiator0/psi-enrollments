@@ -5,6 +5,7 @@
       "password": "Password",
       "password.placeholder": "Your password",
       "rememberme": "Remember me",
+      "cancelButton": "Cancel",
       "button": "Sign in"
     },
     "messages": {

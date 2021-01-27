@@ -68,10 +68,10 @@ class LoginModal extends React.Component<ILoginModalProps> {
           </ModalBody>
           <ModalFooter>
             <Button onClick={handleClose} variant="contained" color="secondary" style={{ margin: '4px' }}>
-              Cancel
+              <Translate contentKey="login.form.cancelButton">Cancel</Translate>
             </Button>
             <Button variant="contained" color="primary" type="submit" style={{ margin: '4px' }}>
-              Sign In
+            <Translate contentKey="login.form.button">Sign in</Translate>
             </Button>
           </ModalFooter>
         </AvForm>

@@ -83,7 +83,7 @@ export const StudentAsks = () => (
 );
 
 export const SwaggerMenu = () => (
-  <ListItem button component={RouterLink} activeClassName="nav-active" to="/admin/docs">
+  <ListItem button component={RouterLink} activeClassName="nav-active" to="/docs">
     <Tooltip title={'Swagger'}>
       <ListItemIcon>
         <ImportContactsIcon />

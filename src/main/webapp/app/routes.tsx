@@ -3,7 +3,6 @@ import { Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
 import Login from 'app/modules/login/login';
-import Register from 'app/modules/account/register/register';
 import Activate from 'app/modules/account/activate/activate';
 import PasswordResetInit from 'app/modules/account/password-reset/init/password-reset-init';
 import PasswordResetFinish from 'app/modules/account/password-reset/finish/password-reset-finish';
@@ -19,6 +18,7 @@ import AsksForEnrollmentOverLimit from './modules/asks-for-enrollment-over-limit
 import Enrollments from './modules/enrollments/enrollments';
 import Enrolling from './modules/enrolling/enrolling';
 import GroupDetails from './modules/enrolling/group-details/group-details';
+import DocsPage from './modules/administration/docs/docs';
 
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
@@ -40,6 +40,7 @@ const Routes = () => (
       <ErrorBoundaryRoute path="/account/reset/request" component={PasswordResetInit} />
       <ErrorBoundaryRoute path="/account/reset/finish/:key?" component={PasswordResetFinish} />
       <PrivateRoute path="/schedule/:scheduleType" component={Schedule} hasAnyAuthorities={[AUTHORITIES.STUDENT, AUTHORITIES.LECTURER]} />
+      <PrivateRoute path="/docs" component={DocsPage} />
       <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
       <PrivateRoute
         path="/account"
@@ -53,7 +54,7 @@ const Routes = () => (
       />
       <PrivateRoute path="/enrollments" component={Enrollments} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
       <PrivateRoute path="/enrolling" component={Enrolling} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
-      <PrivateRoute path="/group-details/:groupCode" component={GroupDetails} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
+      <PrivateRoute path="/group-details/:groupCode" component={GroupDetails} hasAnyAuthorities={[AUTHORITIES.STUDENT, AUTHORITIES.LECTURER]} />
       <ErrorBoundaryRoute path="/" exact component={Home} />
       <PrivateRoute path="/" component={Entities} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
       <ErrorBoundaryRoute component={PageNotFound} />

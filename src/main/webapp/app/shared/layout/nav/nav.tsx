@@ -189,7 +189,7 @@ const Nav = (props: INavProps) => {
             </List>
           </>
         )}
-        {props.isAuthenticated && props.isSwaggerEnabled && props.isAdmin && <SwaggerMenu />}
+        {props.isAuthenticated && props.isSwaggerEnabled && process.env.NODE_ENV !== 'production' && <SwaggerMenu />}
       </Drawer>
     </>
   );

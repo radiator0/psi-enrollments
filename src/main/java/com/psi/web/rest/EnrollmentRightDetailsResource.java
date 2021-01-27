@@ -1,12 +1,14 @@
 package com.psi.web.rest;
 
 import com.psi.domain.User;
+import com.psi.security.AuthoritiesConstants;
 import com.psi.service.EnrollmentRightDetailsService;
 import com.psi.service.UserService;
 import com.psi.service.dto.EnrollmentRightDetailsDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +41,7 @@ public class EnrollmentRightDetailsResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of enrollment rights of student in body.
      */
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.STUDENT + "\")")
     @GetMapping("/enrollment-right")
     public List<EnrollmentRightDetailsDTO> getAllEnrollmentRights() {
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new EnrollmentRightDetailsResource.EnrollmentRightDetailsResourceException("User cannot be found"));

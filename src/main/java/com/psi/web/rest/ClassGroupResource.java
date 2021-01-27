@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -27,6 +28,7 @@ import java.util.Optional;
 /**
  * REST controller for managing {@link com.psi.domain.ClassGroup}.
  */
+@ApiIgnore
 @RestController
 @RequestMapping("/api")
 public class ClassGroupResource {
