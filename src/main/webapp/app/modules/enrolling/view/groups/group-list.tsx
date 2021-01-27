@@ -15,13 +15,15 @@ import EnrollmentData from '../../../../modules/enrollments/enrollment-data';
 import isEnrollmentAtive from '../../../../shared/model/domain/util/is-enrollment-active';
 import log from 'app/config/log';
 import { Translate } from 'react-jhipster';
+import { IRequest } from 'app/shared/model/request.model';
 
 
 export type IGroupListProps = {
     enrollment: EnrollmentData,
     groupsData: Array<GroupsData>,
+    requestOverLimit: readonly IRequest[],
     onSelected: (group: GroupsData, action: EnrollingAction) => void
-};;
+};
 
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -48,12 +50,12 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
         );
     }
 
-    determinePossibleActionForGroup(groupsData: GroupsData, enrollment: EnrollmentData, currentDate: Date) {
+    determinePossibleActionForGroup(groupsData: GroupsData, enrollment: EnrollmentData, currentDate: Date, requestOverLimit: IRequest) {
         log.info(groupsData);
         if(!isEnrollmentAtive(enrollment, currentDate)) {
             return EnrollingAction.NoAction;
         }
-        if(groupsData.requestOverLimit) {
+        if(requestOverLimit?.id) {
             return EnrollingAction.RecallAsk;
         }
         if(groupsData.isStudentEnrolled) {
@@ -69,7 +71,7 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
     }
 
     renderGroupsRows(currentDate: Date) {
-        const { groupsData, enrollment, onSelected } = this.props;
+        const { groupsData, enrollment, requestOverLimit, onSelected } = this.props;
         return (
             <TableContainer component={Paper}>
             <Table aria-label="table">
@@ -87,7 +89,7 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
                 {groupsData.map((row) => (
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
-                <Row key={row.id} row={row} action={this.determinePossibleActionForGroup(row, enrollment, currentDate)} onSelected={onSelected} />
+                <Row key={row.id} row={row} action={this.determinePossibleActionForGroup(row, enrollment, currentDate, requestOverLimit.find(ask => ask.classGroupId === row.id))} onSelected={onSelected} />
             ))}
               </TableBody>
             </Table>

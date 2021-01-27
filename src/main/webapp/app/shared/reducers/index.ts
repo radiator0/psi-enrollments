@@ -43,7 +43,7 @@ import student, {
 // prettier-ignore
 import request, {
   RequestState
-} from 'app/entities/request/request.reducer';
+} from 'app/shared/reducers/request.reducer';
 // prettier-ignore
 import specialty, {
   SpecialtyState

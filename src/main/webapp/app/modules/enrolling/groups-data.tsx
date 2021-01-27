@@ -1,4 +1,3 @@
-import RequestOverLimit from '../../shared/model/domain/dto/request-over-limit';
 import RecurringScheduleElement from '../../shared/model/domain/dto/recurring-schedule-element';
 
 export default class GroupsData {
@@ -9,14 +8,13 @@ export default class GroupsData {
     public readonly isLimitReached: boolean;
     public readonly isStudentEnrolled: boolean;
     public readonly canEnrollOverLimit: boolean;
-    public readonly requestOverLimit: RequestOverLimit;
     public readonly schedules: Array<RecurringScheduleElement>;
     public readonly lecturerTitle: string;
     public readonly lecturerFirstName: string;
     public readonly lecturerSecondName: string;
     public readonly lecturerLastName: string;
 
-    constructor(id: number, groupCode: string, enrolledCount: number, limit: number, isStudentEnrolled: boolean, canEnrollOverLimit: boolean, requestOverLimit: RequestOverLimit,
+    constructor(id: number, groupCode: string, enrolledCount: number, limit: number, isStudentEnrolled: boolean, canEnrollOverLimit: boolean,
         schedules: Array<RecurringScheduleElement>, lecturerTitle: string, lecturerFirstName: string, lecturerSecondName: string, lecturerLastName: string) {
       this.id = id;
       this.groupCode = groupCode;
@@ -25,7 +23,6 @@ export default class GroupsData {
       this.isLimitReached = enrolledCount >= limit;
       this.isStudentEnrolled = isStudentEnrolled;
       this.canEnrollOverLimit = canEnrollOverLimit;
-      this.requestOverLimit = requestOverLimit;
       this.schedules = schedules;
       this.lecturerTitle = lecturerTitle;
       this.lecturerFirstName = lecturerFirstName;

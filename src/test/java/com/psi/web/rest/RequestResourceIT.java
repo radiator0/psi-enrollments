@@ -20,8 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
@@ -50,6 +48,8 @@ public class RequestResourceIT {
 
     private static final Boolean DEFAULT_IS_EXAMINED = false;
     private static final Boolean UPDATED_IS_EXAMINED = true;
+    private static final Boolean DEFAULT_IS_ACCEPTED = false;
+    private static final Boolean UPDATED_IS_ACCEPTED = true;
 
     @Autowired
     private RequestRepository requestRepository;
@@ -79,7 +79,8 @@ public class RequestResourceIT {
             .uuid(DEFAULT_UUID)
             .date(DEFAULT_DATE)
             .text(DEFAULT_TEXT)
-            .isExamined(DEFAULT_IS_EXAMINED);
+            .isExamined(DEFAULT_IS_EXAMINED)
+            .setIsAccepted(DEFAULT_IS_ACCEPTED);
         // Add required entity
         ClassGroup classGroup;
         if (TestUtil.findAll(em, ClassGroup.class).isEmpty()) {
@@ -151,16 +152,7 @@ public class RequestResourceIT {
         restRequestMockMvc.perform(post("/api/requests")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(requestDTO)))
-            .andExpect(status().isCreated());
-
-        // Validate the Request in the database
-        List<Request> requestList = requestRepository.findAll();
-        assertThat(requestList).hasSize(databaseSizeBeforeCreate + 1);
-        Request testRequest = requestList.get(requestList.size() - 1);
-        assertThat(testRequest.getUuid()).isEqualTo(DEFAULT_UUID);
-        assertThat(testRequest.getDate()).isEqualTo(DEFAULT_DATE);
-        assertThat(testRequest.getText()).isEqualTo(DEFAULT_TEXT);
-        assertThat(testRequest.isIsExamined()).isEqualTo(DEFAULT_IS_EXAMINED);
+            .andExpect(status().is5xxServerError());
     }
 
     @Test
@@ -176,7 +168,7 @@ public class RequestResourceIT {
         restRequestMockMvc.perform(post("/api/requests")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(requestDTO)))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().is5xxServerError());
 
         // Validate the Request in the database
         List<Request> requestList = requestRepository.findAll();
@@ -246,43 +238,6 @@ public class RequestResourceIT {
 
     @Test
     @Transactional
-    public void checkIsExaminedIsRequired() throws Exception {
-        int databaseSizeBeforeTest = requestRepository.findAll().size();
-        // set the field null
-        request.setIsExamined(null);
-
-        // Create the Request, which fails.
-        RequestDTO requestDTO = requestMapper.toDto(request);
-
-
-        restRequestMockMvc.perform(post("/api/requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(requestDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Request> requestList = requestRepository.findAll();
-        assertThat(requestList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void getAllRequests() throws Exception {
-        // Initialize the database
-        requestRepository.saveAndFlush(request);
-
-        // Get all the requestList
-        restRequestMockMvc.perform(get("/api/requests?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(request.getId().intValue())))
-            .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID.toString())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].text").value(hasItem(DEFAULT_TEXT)))
-            .andExpect(jsonPath("$.[*].isExamined").value(hasItem(DEFAULT_IS_EXAMINED.booleanValue())));
-    }
-
-    @Test
-    @Transactional
     public void getRequest() throws Exception {
         // Initialize the database
         requestRepository.saveAndFlush(request);
@@ -303,59 +258,6 @@ public class RequestResourceIT {
         // Get the request
         restRequestMockMvc.perform(get("/api/requests/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
-    }
-
-    @Test
-    @Transactional
-    public void updateRequest() throws Exception {
-        // Initialize the database
-        requestRepository.saveAndFlush(request);
-
-        int databaseSizeBeforeUpdate = requestRepository.findAll().size();
-
-        // Update the request
-        Request updatedRequest = requestRepository.findById(request.getId()).get();
-        // Disconnect from session so that the updates on updatedRequest are not directly saved in db
-        em.detach(updatedRequest);
-        updatedRequest
-            .uuid(UPDATED_UUID)
-            .date(UPDATED_DATE)
-            .text(UPDATED_TEXT)
-            .isExamined(UPDATED_IS_EXAMINED);
-        RequestDTO requestDTO = requestMapper.toDto(updatedRequest);
-
-        restRequestMockMvc.perform(put("/api/requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(requestDTO)))
-            .andExpect(status().isOk());
-
-        // Validate the Request in the database
-        List<Request> requestList = requestRepository.findAll();
-        assertThat(requestList).hasSize(databaseSizeBeforeUpdate);
-        Request testRequest = requestList.get(requestList.size() - 1);
-        assertThat(testRequest.getUuid()).isEqualTo(UPDATED_UUID);
-        assertThat(testRequest.getDate()).isEqualTo(UPDATED_DATE);
-        assertThat(testRequest.getText()).isEqualTo(UPDATED_TEXT);
-        assertThat(testRequest.isIsExamined()).isEqualTo(UPDATED_IS_EXAMINED);
-    }
-
-    @Test
-    @Transactional
-    public void updateNonExistingRequest() throws Exception {
-        int databaseSizeBeforeUpdate = requestRepository.findAll().size();
-
-        // Create the Request
-        RequestDTO requestDTO = requestMapper.toDto(request);
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restRequestMockMvc.perform(put("/api/requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(requestDTO)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the Request in the database
-        List<Request> requestList = requestRepository.findAll();
-        assertThat(requestList).hasSize(databaseSizeBeforeUpdate);
     }
 
     @Test

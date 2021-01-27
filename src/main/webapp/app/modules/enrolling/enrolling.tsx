@@ -18,11 +18,14 @@ import { StaticContext } from 'react-router';
 import EnrollmentData from '../enrollments/enrollment-data';
 import { EnrollingAction } from './enrolling-action';
 import { toast } from 'react-toastify';
-import { Translate, translate } from 'react-jhipster';
+import { logInfo, Translate, translate } from 'react-jhipster';
 import CourseUnitDetails from '../../shared/model/domain/dto/course-unit-details';
 import Modal from '../../shared/layout/modal';
+import { createEntity, getEntities, deleteEntity } from 'app/shared/reducers/request.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { IRequest } from 'app/shared/model/request.model';
 
-export interface IEnrollingProps extends StateProps, RouteComponentProps<{ }, StaticContext, { enrollment: EnrollmentData }>{};
+export interface IEnrollingProps extends StateProps, DispatchProps, RouteComponentProps<{}, StaticContext, { enrollment: EnrollmentData }> { };
 
 
 interface IEnrollingState {
@@ -41,7 +44,7 @@ const courseListStyle = {
 };
 
 const groupsListStyle = {
-  width: '70%', 
+  width: '70%',
 };
 
 interface IModalOption {
@@ -49,9 +52,9 @@ interface IModalOption {
   onClick: (text: string | null) => void
 }
 
-const confirmModalOption = (onClick: (text: string | null) => void) => {return { optionNameKey: 'enrolling.modal.confirm', onClick }};
-const cancelModalOption = (onClick: (text: string | null) => void) => {return { optionNameKey: 'enrolling.modal.cancel', onClick }};
-const confirmAndEnrollModalOption = (onClick: () => void) => {return { optionNameKey: 'enrolling.modal.confirmAndEnroll', onClick }};
+const confirmModalOption = (onClick: (text: string | null) => void) => { return { optionNameKey: 'enrolling.modal.confirm', onClick } };
+const cancelModalOption = (onClick: (text: string | null) => void) => { return { optionNameKey: 'enrolling.modal.cancel', onClick } };
+const confirmAndEnrollModalOption = (onClick: () => void) => { return { optionNameKey: 'enrolling.modal.confirmAndEnroll', onClick } };
 
 class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   constructor(props: IEnrollingProps) {
@@ -66,7 +69,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   }
 
   componentDidMount() {
-    if(this.props.history.location.state.enrollment) {
+    if (this.props.history.location.state.enrollment) {
       this.getCoursesData();
     }
   }
@@ -76,11 +79,11 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     this.getGroupsData(this.state.selectedCourse.id);
   }
 
-  showModal(title: string, content: string, options: Array<IModalOption>, closeOnEveryOption: boolean, textField: { placeholderText: string}) {
-    if(closeOnEveryOption) {
-      options = options.map(o => { return { optionNameKey: o.optionNameKey, onClick: (text) => { this.closeModal(); o.onClick(text) }}})
+  showModal(title: string, content: string, options: Array<IModalOption>, closeOnEveryOption: boolean, textField: { placeholderText: string }) {
+    if (closeOnEveryOption) {
+      options = options.map(o => { return { optionNameKey: o.optionNameKey, onClick: (text) => { this.closeModal(); o.onClick(text) } } })
     }
-    this.setState({ modal: () => <Modal title={title} content={content} options={options} textField={textField}></Modal>});
+    this.setState({ modal: () => <Modal title={title} content={content} options={options} textField={textField}></Modal> });
   }
 
   closeModal() {
@@ -89,7 +92,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
 
   onCourseSelected(course: CourseDetails) {
     this.getGroupsData(course.id)
-    this.setState( { selectedCourse: course } )
+    this.setState({ selectedCourse: course })
   }
 
   onEnrollClick(group: GroupsData) {
@@ -97,25 +100,24 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     log.info(this.state.selectedCourse);
 
     const collision = this.getGroupsToDisenrollFromBeforeEnrolling(group);
-    
-    if(collision.isAlreadyEnrolledInThisCourse || collision.otherCoursesToDisenroll?.length > 0) {
+
+    if (collision.isAlreadyEnrolledInThisCourse || collision.otherCoursesToDisenroll?.length > 0) {
       const modalTitle = translate('enrolling.modal.attention');
       const modalContent = this.createCollisionMessage(collision);
 
-      this.showModal(modalTitle, modalContent, [cancelModalOption(() => {}), confirmModalOption(() => this.enroll(group))], true, null);
+      this.showModal(modalTitle, modalContent, [cancelModalOption(() => { }), confirmModalOption(() => this.enroll(group))], true, null);
     }
-    else
-    {
+    else {
       this.enroll(group);
     }
   }
 
   createCollisionMessage(collision: { isAlreadyEnrolledInThisCourse, otherCoursesToDisenroll }) {
     let modalContent = '';
-    if(collision.isAlreadyEnrolledInThisCourse) {
+    if (collision.isAlreadyEnrolledInThisCourse) {
       modalContent += translate('enrolling.modal.enrolledInThisCourseAlready');
     }
-    if(collision.otherCoursesToDisenroll?.length > 0) {
+    if (collision.otherCoursesToDisenroll?.length > 0) {
       modalContent += translate('enrolling.modal.disenrollingNecessary');
       collision.otherCoursesToDisenroll.forEach((v) => modalContent += `\n${v.shortName || v.name} (${translate(`enrollmentsApp.ClassType.${v.form}`)})`)
     }
@@ -124,20 +126,20 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
 
   enroll(group: GroupsData) {
     axios.post(`/api/enrolling`, { id: group.id })
-    .then(r => {
-      toast.success(translate("enrolling.notification.enrolled"))
-    })
-    .catch(e => {
-      log.error(e);
-      toast.error(translate("enrolling.notification.enrollFailure"));
-    })
-    .finally(() => {
-      this.refresh();
-    });
+      .then(r => {
+        toast.success(translate("enrolling.notification.enrolled"))
+      })
+      .catch(e => {
+        log.error(e);
+        toast.error(translate("enrolling.notification.enrollFailure"));
+      })
+      .finally(() => {
+        this.refresh();
+      });
   }
 
   getGroupsToDisenrollFromBeforeEnrolling(group: GroupsData) {
-    const flatMap : (a : Array<CourseUnitDetails>, f : (cu: CourseUnitDetails) => Array<CourseDetails>) => Array<CourseDetails>
+    const flatMap: (a: Array<CourseUnitDetails>, f: (cu: CourseUnitDetails) => Array<CourseDetails>) => Array<CourseDetails>
       = (xs, f) => [].concat(...xs.map(f))
 
     const { coursesData, selectedCourse, groupsData } = this.state;
@@ -154,21 +156,21 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
 
   onDisenrollClick(group: GroupsData) {
     this.showModal(translate('enrolling.modal.attention'), translate('enrolling.modal.confirmDisenrollment'),
-      [cancelModalOption(() => {}), confirmModalOption(() => this.disenroll(group))], true, null)
+      [cancelModalOption(() => { }), confirmModalOption(() => this.disenroll(group))], true, null)
   }
 
   disenroll(group: GroupsData) {
     axios.delete(`/api/enrolling`, { data: { id: group.id } })
-    .then(r => {
-      toast.success(translate("enrolling.notification.disenrolled"))
-    })
-    .catch(e => {
-      log.error(e);
-      toast.error(translate("enrolling.notification.disenrollFailure"))
-    })
-    .finally(() => {
-      this.refresh();
-    });
+      .then(r => {
+        toast.success(translate("enrolling.notification.disenrolled"))
+      })
+      .catch(e => {
+        log.error(e);
+        toast.error(translate("enrolling.notification.disenrollFailure"))
+      })
+      .finally(() => {
+        this.refresh();
+      });
   }
 
   createPlaceholderRequestText() {
@@ -178,32 +180,39 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
 
   onAskOverLimitClick(group: GroupsData) {
     this.showModal(translate('enrolling.modal.ask'), translate('enrolling.modal.typeAskForEnrollment'),
-      [cancelModalOption(() => {}), confirmModalOption((text) => this.askOverLimit(group, text))], true, { placeholderText: this.createPlaceholderRequestText() })
+      [cancelModalOption(() => { }), confirmModalOption((text) => this.askOverLimit(group, text))], true, { placeholderText: this.createPlaceholderRequestText() })
   }
 
   askOverLimit(group: GroupsData, text: string) {
-    log.info(`asking over limit for group ${group.id} with text: '${text}'`);
+    const askOverLimit: IRequest = {
+      classGroupId: group.id,
+      text
+    };
+    logInfo(askOverLimit);
+    this.props.createEntity(askOverLimit);
   }
 
   onRecallAskOverLimitClick(group: GroupsData) {
-    if(!group.isLimitReached) {
+    const askOverLimit = this.props.asksOverLimit.find(ask => ask.classGroupId = group.id);
+    if (!group.isLimitReached) {
       // we can enroll!
       const collisionText = this.createCollisionMessage(this.getGroupsToDisenrollFromBeforeEnrolling(group))
       this.showModal(translate('enrolling.modal.attention'), `${translate('enrolling.modal.placeInGroup')}${collisionText.length === 0 || '\n'}\n${collisionText}`,
-        [cancelModalOption(() => {}), confirmAndEnrollModalOption(() => this.enroll(group)), confirmModalOption(() => this.recallAskOverLimit(group))], true, null)
+        [cancelModalOption(() => { }), confirmAndEnrollModalOption(() => { this.enroll(group); this.recallAskOverLimit(askOverLimit) }),
+        confirmModalOption(() => this.recallAskOverLimit(askOverLimit))], true, null)
     }
     else {
       this.showModal(translate('enrolling.modal.attention'), translate('enrolling.modal.confirmAskForEnrollmentRecall'),
-      [cancelModalOption(() => {}), confirmModalOption(() => this.recallAskOverLimit(group))], true, null)
+        [cancelModalOption(() => { }), confirmModalOption(() => this.recallAskOverLimit(askOverLimit))], true, null)
     }
   }
 
-  recallAskOverLimit(group: GroupsData) {
-    log.info(`recalling ask over limit for group ${group.id}`);
+  recallAskOverLimit(askOverLimit: IRequest) {
+    this.props.deleteEntity(askOverLimit.id);
   }
 
   onGroupSelected(group: GroupsData, action: EnrollingAction) {
-    switch(action) {
+    switch (action) {
       case EnrollingAction.Enroll:
         this.onEnrollClick(group);
         break;
@@ -224,22 +233,22 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   getCoursesData() {
     const { enrollment } = this.props.history.location.state;
     axios.get<Array<SelectableCourseBlockDetails>>(`/api/enrollment/${enrollment.id}/selectable-modules`)
-    .then(r => {
-      const data = r.data.map(element => mapSelectableCourseBlockToCoursesData(element));
-      this.setState({ coursesData: data })
-    })
-    .catch(e => log.error(e))
+      .then(r => {
+        const data = r.data.map(element => mapSelectableCourseBlockToCoursesData(element));
+        this.setState({ coursesData: data })
+      })
+      .catch(e => log.error(e))
     // this.setState({ coursesData: fakeData });
   }
 
   getGroupsData(id: number) {
     axios.get<Array<EnrollingGroupDetails>>(`/api/course/${id}/groups`)
-    .then(r => {
-      const data = r.data.map(element => mapEnrollingGroupDetailsToGroupsData(element));
-      this.setState({ groupsData: data })
-      log.info('updating group list')
-    })
-    .catch(e => log.error(e))
+      .then(r => {
+        const data = r.data.map(element => mapEnrollingGroupDetailsToGroupsData(element));
+        this.setState({ groupsData: data })
+        log.info('updating group list')
+      })
+      .catch(e => log.error(e))
   }
 
   renderHeader() {
@@ -258,7 +267,12 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
 
   renderGroupsTable() {
     return (
-      <GroupList groupsData={this.state.groupsData} enrollment={this.props.history.location.state.enrollment} onSelected={this.onGroupSelected.bind(this)}></GroupList>
+      <GroupList
+        groupsData={this.state.groupsData}
+        enrollment={this.props.history.location.state.enrollment}
+        onSelected={this.onGroupSelected.bind(this)}
+        requestOverLimit={this.props.asksOverLimit}
+      />
     );
   }
 
@@ -280,10 +294,18 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   }
 };
 
-const mapStateToProps = storeState => ({
-  account: storeState.authentication.account,
+const mapStateToProps = ({ authentication, request }: IRootState) => ({
+  account: authentication.account,
+  asksOverLimit: request.entities,
 });
 
-type StateProps = ReturnType<typeof mapStateToProps>;
+const mapDispatchToProps = {
+  createEntity,
+  getEntities,
+  deleteEntity,
+};
 
-export default connect(mapStateToProps)(Enrolling);
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Enrolling);

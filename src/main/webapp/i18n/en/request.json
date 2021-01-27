@@ -2,14 +2,14 @@
   "enrollmentsApp": {
     "request": {
       "home": {
-        "title": "Requests",
+        "title": "Requests for enrollment above limit",
         "createLabel": "Create a new Request",
         "createOrEditLabel": "Create or edit a Request",
         "notFound": "No Requests found"
       },
-      "created": "A new Request is created with identifier {{ param }}",
-      "updated": "A Request is updated with identifier {{ param }}",
-      "deleted": "A Request is deleted with identifier {{ param }}",
+      "created": "Created new Request",
+      "updated": "Request examined",
+      "deleted": "Request deleted",
       "delete": {
         "question": "Are you sure you want to delete Request {{ id }}?"
       },
@@ -18,10 +18,17 @@
       },
       "uuid": "Uuid",
       "date": "Date",
-      "text": "Text",
-      "isExamined": "Is Examined",
+      "text": "Request",
+      "isExamined": "Examined",
+      "isAccepted": "Accepted",
       "classGroup": "Class Group",
-      "student": "Student"
+      "student": "Student",
+      "lecturer": "Lecturer"
+    },
+    "action": {
+      "accept": "Accept",
+      "deny": "Deny",
+      "recall": "Recall"
     }
   }
 }

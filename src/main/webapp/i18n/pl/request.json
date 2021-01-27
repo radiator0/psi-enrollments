@@ -2,26 +2,33 @@
   "enrollmentsApp": {
     "request": {
       "home": {
-        "title": "Request",
-        "createLabel": "Dodaj Request",
-        "createOrEditLabel": "Dodaj lub edytuj: Request",
-        "notFound": "No Requests found"
+        "title": "Prośby o zapis ponad stan",
+        "createLabel": "Dodaj prośbę",
+        "createOrEditLabel": "Dodaj lub edytuj: prośbę",
+        "notFound": "Brak aktywnych próśb o zapis ponad stan"
       },
-      "created": "Utworzono nowy obiekt typu Request z identyfikatorem {{ param }}",
-      "updated": "Uaktualniono obiekt typu Request z identyfikatorem {{ param }}",
-      "deleted": "Usunięto obiekt typu Request z identyfikatorem {{ param }}",
+      "created": "Utworzono nową prośbę",
+      "updated": "Rozpatrzono prośbę",
+      "deleted": "Usunięto prośbę",
       "delete": {
-        "question": "Czy na pewno chcesz usunąć Request {{ id }}?"
+        "question": "Czy na pewno chcesz usunąć prośbę {{ id }}?"
       },
       "detail": {
-        "title": "Request"
+        "title": "Prośba"
       },
       "uuid": "Uuid",
       "date": "Date",
-      "text": "Text",
-      "isExamined": "Is Examined",
-      "classGroup": "Class Group",
-      "student": "Student"
+      "text": "Prośba",
+      "isExamined": "Rozpatrzona",
+      "isAccepted": "Zaakceptowana",
+      "classGroup": "Kod grupy",
+      "student": "Student",
+      "lecturer": "Prowadzący"
+    },
+    "action": {
+      "accept": "Zaakceptuj",
+      "deny": "Odrzuć",
+      "recall": "Wycofaj"
     }
   }
 }

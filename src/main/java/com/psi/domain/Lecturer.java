@@ -145,4 +145,10 @@ public class Lecturer implements Serializable {
             ", title='" + getTitle() + "'" +
             "}";
     }
+
+    public String getName() {
+        return getTitle() + " " +
+            internalUser.getFirstName() + " " +
+            internalUser.getSecondName() + " ";
+    }
 }
