@@ -71,12 +71,14 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   componentDidMount() {
     if (this.props.history.location.state.enrollment) {
       this.getCoursesData();
+      this.props.getEntities();
     }
   }
 
   refresh() {
     this.getCoursesData();
     this.getGroupsData(this.state.selectedCourse.id);
+    this.props.getEntities();
   }
 
   showModal(title: string, content: string, options: Array<IModalOption>, closeOnEveryOption: boolean, textField: { placeholderText: string }) {
@@ -192,7 +194,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
   }
 
   onRecallAskOverLimitClick(group: GroupsData) {
-    const askOverLimit = this.props.asksOverLimit.find(ask => ask.classGroupId = group.id);
+    const askOverLimit = this.props.asksOverLimit.find(ask => ask.classGroupId === group.id);
     if (!group.isLimitReached) {
       // we can enroll!
       const collisionText = this.createCollisionMessage(this.getGroupsToDisenrollFromBeforeEnrolling(group))

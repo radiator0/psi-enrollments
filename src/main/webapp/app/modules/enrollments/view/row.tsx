@@ -71,7 +71,7 @@ function Row(props: IRowProps) {
           {rightsIcon(row.rightStartDate)}
           {`${row.rightStartDate.toLocaleDateString()} ${row.rightStartDate.toLocaleTimeString()}`}
         </TableCell>
-        <TableCell>
+        <TableCell align="right">
           <Button variant="contained" color="primary" onClick={() => onSelected(row)} endIcon={<KeyboardArrowRightIcon />}>
             <Translate contentKey={'enrollments.right.select'}>Select</Translate>
           </Button>

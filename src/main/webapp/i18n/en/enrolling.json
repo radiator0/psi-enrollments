@@ -39,6 +39,12 @@
       "confirmAskForEnrollmentRecall": "Are you sure you want to recall the request?",
       "placeInGroup": "There is a place in the group. Do you want only to recall the request or enroll too?",
       "placeholderRequest": "\nI'm asking for enrollment over limit.\n\nWith kind regards\n"
+    },
+    "filters": {
+      "hideFullGroups": "Hide full groups",
+      "hideNotOverLimit": "Hide not over limit",
+      "filterLecturer": "Filter lecturer",
+      "lecturer": "Lecturer"
     }
   }
 }

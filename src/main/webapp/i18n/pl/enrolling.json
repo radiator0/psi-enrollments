@@ -39,6 +39,12 @@
       "confirmAskForEnrollmentRecall": "Jesteś pewien, że chcesz wycofać prośbę?",
       "placeInGroup": "W grupie jest wolne miejsce. Czy chcesz tylko wycofać prośbę czy też od razu zapisać się do grupy?",
       "placeholderRequest": "\nproszę o zapis ponad stan.\n\nZ wyrazami szacunku\n"
+    },
+    "filters": {
+      "hideFullGroups": "Ukryj pełne grupy",
+      "hideNotOverLimit": "Ukryj brak zapisu ponad stan",
+      "filterLecturer": "Filtruj prowadzącego",
+      "lecturer": "Prowadzący"
     }
   }
 }

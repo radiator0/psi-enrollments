@@ -38,18 +38,18 @@ class GroupDetails extends Component<RouteComponentProps<MatchParams>, IGroupDet
         headerName: translate('groupDetails.column.startDate'),
         valueFormatter: (params: ValueFormatterParams) => moment(params.value as Date).format(APP_DATE_FORMAT_DOT),
         cellClassName: (params: CellClassParams) => (moment(params.value as Date).isBefore(moment()) ? 'date-before' : 'date-after'),
-        width: 250,
+        flex: 1,
       },
       {
         field: 'endDate',
         headerName: translate('groupDetails.column.endDate'),
         valueFormatter: (params: ValueFormatterParams) => moment(params.value as Date).format(APP_DATE_FORMAT_DOT),
         cellClassName: (params: CellClassParams) => (moment(params.value as Date).isBefore(moment()) ? 'date-before' : 'date-after'),
-        width: 250,
+        flex: 1,
       },
-      { field: 'building', headerName: translate('groupDetails.column.building'), width: 300 },
-      { field: 'room', headerName: translate('groupDetails.column.room'), width: 200 },
-      { field: 'lecturer', headerName: translate('groupDetails.column.lecturer'), width: 400 },
+      { field: 'building', headerName: translate('groupDetails.column.building'), flex: 1 },
+      { field: 'room', headerName: translate('groupDetails.column.room'), flex: 1 },
+      { field: 'lecturer', headerName: translate('groupDetails.column.lecturer'), flex: 1 },
     ];
   }
 
