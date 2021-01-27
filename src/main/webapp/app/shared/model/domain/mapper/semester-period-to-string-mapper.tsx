@@ -1,4 +1,4 @@
-import SemesterPeriod from "../enum/semester-period"
+import { SemesterPeriod } from '../../enumerations/semester-period.model';
 import { translate } from 'react-jhipster';
 
 const semesterPeriodToLongString = (sp: SemesterPeriod) => {

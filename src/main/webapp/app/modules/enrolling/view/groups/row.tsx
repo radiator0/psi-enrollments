@@ -38,12 +38,12 @@ const renderSchedule = (row: GroupsData) => {
     }
     const shortDates = row.schedules.map(s => recurringScheduleElementToShortDateString(s));
     return shortDates.reduce((previousValue, currentValue, index) => {
-        return `${previousValue} ${index > 1 ? ', ' : ''} ${currentValue}`;
+        return `${previousValue}${index > 0 ? ', ' : ''}${currentValue}`;
     });
 }
 
 const renderLecturer = (row: GroupsData) => {
-    return `${row.lecturerTitle && ' '}${row.lecturerFirstName && ' '}${row.lecturerSecondName && ' '}${row.lecturerLastName && ' '}`
+    return `${row.lecturerTitle && `${row.lecturerTitle} ` ||  ' '}${row.lecturerFirstName && `${row.lecturerFirstName} ` || ' '}${row.lecturerSecondName && `${row.lecturerSecondName} ` || ' '}${row.lecturerLastName || ' '}`
 }
 
 const getActionButton = (row: GroupsData, action: EnrollingAction) => {

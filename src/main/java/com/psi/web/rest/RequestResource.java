@@ -71,7 +71,7 @@ public class RequestResource {
             if (!classGroup.isIsEnrollmentAboveLimitAllowed()) {
                 throw new RequestResource.RequestResourceException("Enrollment over limit is not allowed");
             }
-            if(!classGroup.isIsFull()) {
+            if(classGroup.getEnrolledCount() < classGroup.getPeopleLimit()) {
                 throw new RequestResource.RequestResourceException("Requests to not full group are not allowed");
             }
         });

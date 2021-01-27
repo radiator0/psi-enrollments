@@ -25,7 +25,6 @@ import CommandButton from './view/appointment-command-button';
 import { Translate, translate} from 'react-jhipster';
 import downloadFile from 'js-file-download';
 import { toast } from 'react-toastify';
-import { error, exception } from 'console';
 
 interface IScheduleState {
   data: Array<ScheduleData>;

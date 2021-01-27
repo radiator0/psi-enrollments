@@ -1,5 +1,5 @@
-import SemesterPeriod from '../../shared/model/domain/enum/semester-period'
-import WeekType from '../../shared/model/domain/enum/week-type';
+import { SemesterPeriod } from '../../shared/model/enumerations/semester-period.model';
+import { WeekType } from '../../shared/model/enumerations/week-type.model';
 
 export default class ScheduleData {
   public readonly id: number;

@@ -10,8 +10,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { translate } from 'react-jhipster';
 import { weekTypeToLongString } from '../../../shared/model/domain/mapper/week-type-to-string-mapper';
 import { semesterPeriodToLongString } from '../../../shared/model/domain/mapper/semester-period-to-string-mapper';
-import WeekType from '../../../shared/model/domain/enum/week-type';
-import SemesterPeriod from '../../../shared/model/domain/enum/semester-period';
+import { WeekType } from '../../../shared/model/enumerations/week-type.model';
+import { SemesterPeriod } from '../../../shared/model/enumerations/semester-period.model';
 
 const style = ({ palette }) => ({
   textCenter: {

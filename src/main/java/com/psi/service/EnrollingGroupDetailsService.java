@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +50,7 @@ public class EnrollingGroupDetailsService {
         Optional<Course> course = courseRepository.findById(courseId);
 
         return course.get().getClassGroups().stream()
+            .sorted(Comparator.comparing(ClassGroup::getId))
             .map(c -> enrollingGroupDetailsMapper.toDto(c, student))
             .collect(Collectors.toList());
     }

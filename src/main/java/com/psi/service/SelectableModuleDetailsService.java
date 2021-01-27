@@ -1,9 +1,6 @@
 package com.psi.service;
 
-import com.psi.domain.EnrollmentRight;
-import com.psi.domain.SelectableModule;
-import com.psi.domain.Student;
-import com.psi.domain.User;
+import com.psi.domain.*;
 import com.psi.repository.StudentRepository;
 import com.psi.service.dto.SelectableModuleDetailsDTO;
 import com.psi.service.mapper.SelectableModuleDetailsMapper;
@@ -12,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,9 +45,10 @@ public class SelectableModuleDetailsService {
             .filter(r -> r.getEnrollmentDate().getId().equals(enrollmentsId)).findFirst().get();
 
         return selectableModuleDetailsMapper.toDtos(
-            right.getEnrollmentDate().getCourses().stream()
-            .filter(c -> c.getSpecialties().isEmpty() || c.getSpecialties().contains(right.getSpecialty()))
-            .collect(Collectors.toCollection(LinkedList::new)), student
+                right.getEnrollmentDate().getCourses().stream()
+                .filter(c -> c.getSpecialties().isEmpty() || c.getSpecialties().contains(right.getSpecialty()))
+                .sorted(Comparator.comparing(Course::getId))
+                .collect(Collectors.toCollection(LinkedList::new)), student
         );
     }
 }

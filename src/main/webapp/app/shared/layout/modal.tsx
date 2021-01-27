@@ -35,9 +35,9 @@ const renderContent = (props: IAlertDialogProps, setUserText: (text: string) => 
     return (<>
         {props.content ?
         <DialogContentText id="alert-dialog-description">
-            <Typography style={{ fontFamily: 'inherit', whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
+            <span style={{ fontFamily: 'inherit', whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
                 {props.content}
-            </Typography>
+            </span>
         </DialogContentText> : <></>}
 
         {props.textField ?

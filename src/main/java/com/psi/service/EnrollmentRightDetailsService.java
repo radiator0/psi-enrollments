@@ -1,6 +1,8 @@
 package com.psi.service;
 
+import com.psi.domain.ClassGroup;
 import com.psi.domain.EnrollmentDate;
+import com.psi.domain.EnrollmentRight;
 import com.psi.domain.User;
 import com.psi.service.dto.EnrollmentRightDetailsDTO;
 import com.psi.service.mapper.EnrollmentRightDetailsMapper;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +43,7 @@ public class EnrollmentRightDetailsService {
         log.debug("Request to get all EnrollmentRights of student");
         return userService.getStudentInstance(user)
             .getEnrollmentRights().stream()
+            .sorted(Comparator.comparing(EnrollmentRight::getId))
             .map(enrollmentRightDetailsMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }

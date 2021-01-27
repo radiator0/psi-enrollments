@@ -1,24 +1,15 @@
 id;code;is_enrollment_above_limit_allowed;people_limit;enrolled_count;is_full;course_id;main_lecturer_id
-1;Z00-01a;true;30;20;false;1;1
-2;viral exploit;false;20379;53877;true;2;1
-3;Designer Marketing;false;11347;46396;false;3;2
-4;integrated Gorgeous Metal Chair;true;54630;52767;false;4;2
-5;Wisconsin International payment;false;27281;74051;true;5;2
-6;De-engineered;false;33914;24105;true;6;3
-7;Florida;true;90117;14779;true;7;3
-8;Cotton homogeneous Home Loan Account;false;92425;13022;false;8;4
-9;Cambridgeshire multimedia ROI;false;65237;55281;false;9;5
-10;Plastic Bedfordshire;true;43218;58424;false;10;6
-11;Z00-11a;false;30;20;false;11;1
-12;Z00-12a;true;30;20;false;12;2
-13;Z00-13a;false;30;20;false;13;3
-14;Z00-14a;true;30;20;false;14;4
-15;Z00-15a;false;30;20;false;15;5
-16;Z00-16a;true;30;20;false;16;6
-17;Z00-17a;false;30;20;false;17;7
-18;Z00-18a;true;30;20;false;18;8
-19;Z00-19a;false;30;20;false;19;9
-20;Z00-20a;true;30;20;false;20;10
+1;Z00-01a;true;2;0;false;1;1
+11;Z00-11a;false;1;0;false;11;1
+12;Z00-12a;true;0;0;false;12;2
+13;Z00-13a;false;2;0;false;13;3
+14;Z00-14a;true;1;0;false;14;4
+15;Z00-15a;false;2;0;false;15;5
+16;Z00-16a;true;2;0;false;16;6
+17;Z00-17a;false;1;0;false;17;7
+18;Z00-18a;true;1;0;false;18;8
+19;Z00-19a;false;2;0;false;19;9
+20;Z00-20a;true;0;0;false;20;10
 21;Z00-21a;true;2;0;false;11;1
 22;Z00-22a;false;2;0;false;12;2
 23;Z00-23a;true;2;0;false;13;3
@@ -29,16 +20,16 @@ id;code;is_enrollment_above_limit_allowed;people_limit;enrolled_count;is_full;co
 28;Z00-28a;false;2;0;false;18;8
 29;Z00-29a;true;2;0;false;19;9
 30;Z00-30a;false;2;0;false;20;10
-31;Z00-31a;false;0;0;true;11;1
-32;Z00-32a;false;0;0;true;12;2
-33;Z00-33a;true;0;0;true;13;3
-34;Z00-34a;true;0;0;true;14;4
-35;Z00-35a;false;0;0;true;15;5
-36;Z00-36a;false;0;0;true;16;6
-37;Z00-37a;true;0;0;true;17;7
-38;Z00-38a;true;0;0;true;18;8
-39;Z00-39a;false;0;0;true;19;9
-40;Z00-40a;false;0;0;true;20;10
+31;Z00-31a;false;0;0;false;11;1
+32;Z00-32a;false;0;0;false;12;2
+33;Z00-33a;true;0;0;false;13;3
+34;Z00-34a;true;0;0;false;14;4
+35;Z00-35a;false;0;0;false;15;5
+36;Z00-36a;false;0;0;false;16;6
+37;Z00-37a;true;0;0;false;17;7
+38;Z00-38a;true;0;0;false;18;8
+39;Z00-39a;false;0;0;false;19;9
+40;Z00-40a;false;0;0;false;20;10
 41;Z00-41a;true;1;0;false;11;1
 42;Z00-42a;true;1;0;false;12;2
 43;Z00-43a;true;1;0;false;13;3
@@ -48,20 +39,20 @@ id;code;is_enrollment_above_limit_allowed;people_limit;enrolled_count;is_full;co
 47;Z00-47a;true;1;0;false;17;7
 48;Z00-48a;true;1;0;false;18;8
 49;Z00-49a;true;01;0;false;19;9
-50;Z00-40a;true;1;0;false;20;10
-111;Z00-11z;true;0;0;false;21;1
-112;Z00-11z;true;2;0;false;21;1
-113;Z00-11z;true;1;0;false;21;1
-121;Z00-12z;true;0;0;false;22;4
-122;Z00-12z;true;2;0;false;22;5
-123;Z00-12z;true;1;0;false;22;6
-131;Z00-31z;true;0;0;false;23;1
-132;Z00-31z;true;2;0;false;23;7
-133;Z00-31z;true;1;0;false;23;1
-141;Z00-41z;true;0;0;false;24;2
-142;Z00-41z;true;2;0;false;24;3
-143;Z00-41z;true;1;0;false;24;1
-151;Z00-51z;true;1;0;false;25;1
-152;Z00-52z;true;2;0;false;25;2
-153;Z00-53z;true;1;0;false;25;3
+50;Z00-50a;true;1;0;false;20;10
+111;Z01-11z;true;0;0;false;21;1
+112;Z02-11z;true;2;0;false;21;1
+113;Z03-11z;true;1;0;false;21;1
+121;Z01-12z;true;0;0;false;22;4
+122;Z02-12z;true;2;0;false;22;5
+123;Z03-12z;true;1;0;false;22;6
+131;Z01-31z;true;0;0;false;23;1
+132;Z02-31z;true;2;0;false;23;7
+133;Z03-31z;true;1;0;false;23;1
+141;Z01-41z;true;0;0;false;24;2
+142;Z02-41z;true;2;0;false;24;3
+143;Z03-41z;true;1;0;false;24;1
+151;Z01-51z;true;1;0;false;25;1
+152;Z02-52z;true;2;0;false;25;2
+153;Z03-53z;true;1;0;false;25;3
 

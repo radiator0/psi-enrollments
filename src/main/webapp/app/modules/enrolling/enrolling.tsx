@@ -188,7 +188,6 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
       classGroupId: group.id,
       text
     };
-    logInfo(askOverLimit);
     this.props.createEntity(askOverLimit);
   }
 

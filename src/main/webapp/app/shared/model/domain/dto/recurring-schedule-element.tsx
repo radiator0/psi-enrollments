@@ -1,6 +1,6 @@
 import { DayOfWeek } from '../../enumerations/day-of-week.model';
-import SemesterPeriod from '../enum/semester-period';
-import WeekType from '../enum/week-type';
+import { SemesterPeriod } from '../../enumerations/semester-period.model';
+import { WeekType } from '../../enumerations/week-type.model';
 import ClassType from '../enum/class-type';
 
 export default class ScheduleElement {

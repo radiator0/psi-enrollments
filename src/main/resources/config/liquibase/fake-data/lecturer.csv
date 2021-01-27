@@ -1,11 +1,11 @@
 id;title;login
-1;Licensed Rubber Chips;lecturer1
-2;Corporate Cambridgeshire Credit Card Account;lecturer2
-3;Corporate Cambridgeshire Credit Card Account;lecturer3
-4;Corporate Cambridgeshire Credit Card Account;lecturer4
-5;Corporate Cambridgeshire Credit Card Account;lecturer5
-6;Corporate Cambridgeshire Credit Card Account;lecturer6
-7;Corporate Cambridgeshire Credit Card Account;lecturer7
-8;Corporate Cambridgeshire Credit Card Account;lecturer8
-9;Corporate Cambridgeshire Credit Card Account;lecturer9
-10;Corporate Cambridgeshire Credit Card Account;lecturer10
+1;prof. dr hab.;lecturer1
+2;NULL;lecturer2
+3;inż.;lecturer3
+4;inż.;lecturer4
+5;prof. dr hab.;lecturer5
+6;dr hab.;lecturer6
+7;dr hab.;lecturer7
+8;dr inż.;lecturer8
+9;mgr.;lecturer9
+10;mgr.;lecturer10

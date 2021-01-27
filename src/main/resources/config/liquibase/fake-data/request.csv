@@ -1,13 +1,4 @@
 id;uuid;date;text;is_examined;is_accepted;class_group_id;student_id
-1;312e6e10-356d-41f0-9dae-62352496ce76;2021-01-14T11:11:00;Crossroad system engine;false;false;1;1
-2;c3257d05-91f7-4f4e-aa79-bd72091f6c8f;2021-01-14T11:11:00;Internal Savings Account Table;true;false;2;2
-3;759464d5-d7d1-4522-80c1-9c2698d60e03;2021-01-14T11:11:00;backing up Agent;false;false;3;3
-4;7e9beebf-cc5a-40c7-bec4-4b7c7eb09e25;2021-01-14T11:11:00;RSS;true;false;4;4
-5;f2d0fc70-c467-42fd-87ef-30c2021cc080;2021-01-14T11:11:00;sky blue index tan;true;true;5;5
-6;1fa7e44f-9a2d-4a11-9526-eef8655caeff;2021-01-14T11:11:00;Unbranded;true;true;6;6
-7;3b6e0129-6679-4e3d-90a6-78920baf6642;2021-01-14T11:11:00;customer loyalty violet parsing;true;true;7;7
-8;d3fae399-e076-4782-b835-17f2afc692ef;2021-01-14T11:11:00;Tasty Metal Shoes Canadian Dollar;false;false;8;8
-9;7b793143-64ea-4b10-a3f7-ed39793b9e11;2021-01-14T11:11:00;pricing structure Mobility Concrete;true;false;9;9
-10;357dba8e-0cd5-4ef0-b102-7400af7a13ed;2021-01-14T11:11:00;calculate;false;false;10;10
+1;312e6e10-356d-41f0-9dae-62352496ce76;2021-01-14T11:11:00;BLAGAM PRZYJM MIE;false;false;1;1
 31;357dba8e-0cd5-4ef0-b102-9c2698d60e03;2021-01-14T11:11:00;PLX PANIE PROWADZĄCY;false;false;31;1
 41;357dba8e-0cd5-4ef0-b102-78920baf6642;2021-01-14T11:11:00;PROSZE O GRUPE;false;false;41;1
