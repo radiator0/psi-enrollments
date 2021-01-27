@@ -12,7 +12,8 @@ import { CheckedAvatar, UnCheckedAvatar } from '../../custom-avatars';
 
 interface ICourseRowProps {
     course: CourseDetails,
-    onSelected: (course: CourseDetails) => void
+    onSelected: (course: CourseDetails) => void,
+    selectedCourse: CourseDetails
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -35,9 +36,9 @@ class CourseRow extends Component<ICourseRowProps, ICourseRowState> {
     }
 
     render() {
-        const { course } = this.props;
+        const { course, selectedCourse } = this.props;
         return (
-            <ListItem className="list-item" onClick={() => this.onSelected()}>
+            <ListItem className={"list-item " + ( selectedCourse && course.id === selectedCourse.id ? 'list-item-selected' : null)} onClick={() => this.onSelected()}>
                 <ListItemAvatar>
                     {course.studentEnrolled ? <CheckedAvatar /> : <UnCheckedAvatar />}
                 </ListItemAvatar>

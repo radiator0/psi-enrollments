@@ -18,7 +18,8 @@ import { CheckedAvatar, UnCheckedAvatar } from '../../custom-avatars';
 
 interface ICourseUnitRowRowProps {
     courseUnit: CourseUnitDetails,
-    onSelected: (course: CourseDetails) => void
+    onSelected: (course: CourseDetails) => void,
+    selectedCourse: CourseDetails
 };
 
 interface ICourseUnitRowRowState {
@@ -68,11 +69,11 @@ class CourseUnitRow extends Component<ICourseUnitRowRowProps, ICourseUnitRowRowS
     }
 
     renderCourseRows() {
-        const { courseUnit, onSelected } = this.props;
+        const { courseUnit, onSelected, selectedCourse } = this.props;
         return (
             <>
                 {courseUnit.courses.map(x =>
-                    <CourseRow key={x.id} course={x} onSelected={onSelected} />
+                    <CourseRow key={x.id} course={x} onSelected={onSelected} selectedCourse={selectedCourse}  />
                 )}
             </>
         );

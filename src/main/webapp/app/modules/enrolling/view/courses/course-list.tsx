@@ -12,7 +12,8 @@ import { Translate } from 'react-jhipster';
 
 export type ICourseListProps = {
     coursesData: Array<CoursesData>,
-    onSelected: (course: CourseDetails) => void
+    onSelected: (course: CourseDetails) => void,
+    selectedCourse: CourseDetails
 };;
 
 
@@ -41,11 +42,11 @@ class CourseList extends Component<ICourseListProps, ICourseListState> {
     }
 
     renderCourseRows() {
-        const { coursesData, onSelected } = this.props;
+        const { coursesData, onSelected, selectedCourse } = this.props;
         return (
             <>
                 {coursesData?.map((x, id) => 
-                    <SelectableCourseBlockRow key={id} selectableCourseBlock={x.selectableCourseBlocks} onSelected={onSelected} />
+                    <SelectableCourseBlockRow key={id} selectableCourseBlock={x.selectableCourseBlocks} onSelected={onSelected} selectedCourse={selectedCourse} />
                 )}
             </>
         );
@@ -55,7 +56,7 @@ class CourseList extends Component<ICourseListProps, ICourseListState> {
         return (
             <>
                 {this.renderHeader()}
-                <Grid container spacing={1}>
+                <Grid container>
                     <List style={{flexDirection: 'row', width:'100%', flex:1}}>
                         {this.renderCourseRows()}
                     </List>

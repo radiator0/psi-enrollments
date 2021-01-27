@@ -19,6 +19,7 @@ import { CheckedAvatar, UnCheckedAvatar } from '../../custom-avatars';
 interface ISelectableCourseBlockRowProps {
     selectableCourseBlock: SelectableCourseBlockDetails;
     onSelected: (course: CourseDetails) => void;
+    selectedCourse: CourseDetails;
 }
 
 interface ISelectableCourseBlockRowState {
@@ -62,11 +63,11 @@ class SelectableCourseBlockRow extends Component<ISelectableCourseBlockRowProps,
     }
 
     renderEmbeddedRows() {
-        const { selectableCourseBlock, onSelected } = this.props;
+        const { selectableCourseBlock, onSelected, selectedCourse } = this.props;
         return (
             <>
                 {selectableCourseBlock.courseUnits.map((x, id) =>
-                    <CourseUnitRow key={id} courseUnit={x} onSelected={onSelected} />
+                    <CourseUnitRow key={id} courseUnit={x} onSelected={onSelected} selectedCourse={selectedCourse} />
                 )}
             </>
         );

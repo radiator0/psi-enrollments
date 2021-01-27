@@ -261,7 +261,7 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
 
   renderCoursesList() {
     return (
-      <CourseList coursesData={this.state.coursesData} onSelected={this.onCourseSelected.bind(this)}></CourseList>
+      <CourseList coursesData={this.state.coursesData} onSelected={this.onCourseSelected.bind(this)} selectedCourse={this.state.selectedCourse}></CourseList>
     );
   }
 
