@@ -1,101 +1,161 @@
 import './home.scss';
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Translate } from 'react-jhipster';
 import { connect } from 'react-redux';
-import { Row, Col, Alert } from 'reactstrap';
 
 import { IRootState } from 'app/shared/reducers';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
+import SearchIcon from '@material-ui/icons/Search';
+import LaptopMacIcon from '@material-ui/icons/LaptopMac';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
+import RepeatIcon from '@material-ui/icons/Repeat';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import { Translate } from 'react-jhipster';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import blue from '@material-ui/core/colors/blue';
 
 export type IHomeProp = StateProps;
 
+const useStyles = makeStyles(theme => ({
+  paper: {
+    padding: '6px 16px',
+  },
+  secondaryTail: {
+    backgroundColor: theme.palette.secondary.main,
+  },
+  top: {
+    marginTop: '40px',
+  },
+}));
+
 export const Home = (props: IHomeProp) => {
   const { account } = props;
+  const classes = useStyles();
 
   return (
-    <Row>
-      <Col md="9">
-        <h2>
-          <Translate contentKey="home.title">Welcome, Java Hipster!</Translate>
-        </h2>
-        <p className="lead">
-          <Translate contentKey="home.subtitle">This is your homepage</Translate>
-        </p>
-        {account && account.login ? (
-          <div>
-            <Alert color="success">
-              <Translate contentKey="home.logged.message" interpolate={{ username: account.login }}>
-                You are logged in as user {account.login}.
-              </Translate>
-            </Alert>
-          </div>
-        ) : (
-          <div>
-            <Alert color="warning">
-              <Translate contentKey="global.messages.info.authenticated.prefix">If you want to </Translate>
-              <Link to="/login" className="alert-link">
-                <Translate contentKey="global.messages.info.authenticated.link"> sign in</Translate>
-              </Link>
-              <Translate contentKey="global.messages.info.authenticated.suffix">
-                , you can try the default accounts:
-                <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-                <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
-              </Translate>
-            </Alert>
-
-            <Alert color="warning">
-              <Translate contentKey="global.messages.info.register.noaccount">You do not have an account yet?</Translate>&nbsp;
-              <Link to="/account/register" className="alert-link">
-                <Translate contentKey="global.messages.info.register.link">Register a new account</Translate>
-              </Link>
-            </Alert>
-          </div>
-        )}
-        <p>
-          <Translate contentKey="home.question">If you have any question on JHipster:</Translate>
-        </p>
-
-        <ul>
-          <li>
-            <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.homepage">JHipster homepage</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.stackoverflow">JHipster on Stack Overflow</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.bugtracker">JHipster bug tracker</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.chat">JHipster public chat room</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.follow">follow @jhipster on Twitter</Translate>
-            </a>
-          </li>
-        </ul>
-
-        <p>
-          <Translate contentKey="home.like">If you like JHipster, do not forget to give us a star on</Translate>{' '}
-          <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-            Github
-          </a>
-          !
-        </p>
-      </Col>
-      <Col md="3" className="pad">
-        <span className="hipster rounded" />
-      </Col>
-    </Row>
+    <>
+      <Typography variant="h4" component="h4" align="center" className={classes.top}>
+        {/* <Translate contentKey={'schedule.header.semester'}>Semester</Translate> */}
+        Welcome to the enrollments system!
+      </Typography>
+      {account && account.login ? (
+        <Typography variant="h6" component="h6" align="center">
+          Nice to see you again <b>{account.login}</b>.
+        </Typography>
+      ) : null}
+      <Timeline align="alternate" className={classes.top}>
+        <TimelineItem>
+          <TimelineOppositeContent>
+            <Typography variant="body2">Start</Typography>
+          </TimelineOppositeContent>
+          <TimelineSeparator>
+            <TimelineDot>
+              <SearchIcon />
+            </TimelineDot>
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent>
+            <Paper elevation={3} className={classes.paper}>
+              <Typography variant="h6" component="h1">
+                Find courses
+              </Typography>
+              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Typography>
+            </Paper>
+          </TimelineContent>
+        </TimelineItem>
+        <TimelineItem>
+          <TimelineSeparator>
+            <TimelineDot color="primary">
+              <FilterListIcon />
+            </TimelineDot>
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent>
+            <Paper elevation={3} className={classes.paper}>
+              <Typography variant="h6" component="h1">
+                Filter groups
+              </Typography>
+              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Typography>
+            </Paper>
+          </TimelineContent>
+        </TimelineItem>
+        <TimelineItem>
+          <TimelineSeparator>
+            <TimelineDot color="primary" variant="outlined">
+              <PersonAddIcon />
+            </TimelineDot>
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent>
+            <Paper elevation={3} className={classes.paper}>
+              <Typography variant="h6" component="h1">
+                Enroll
+              </Typography>
+              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Typography>
+            </Paper>
+          </TimelineContent>
+        </TimelineItem>
+        <TimelineItem>
+          <TimelineSeparator>
+            <TimelineDot color="primary">
+              <LiveHelpIcon></LiveHelpIcon>
+            </TimelineDot>
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent>
+            <Paper elevation={3} className={classes.paper}>
+              <Typography variant="h6" component="h1">
+                Request to lecturer for enroll over limit
+              </Typography>
+              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Typography>
+            </Paper>
+          </TimelineContent>
+        </TimelineItem>
+        <TimelineItem>
+          <TimelineSeparator>
+            <TimelineDot color="secondary">
+              <RepeatIcon />
+            </TimelineDot>
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent>
+            <Paper elevation={3} className={classes.paper}>
+              <Typography variant="h6" component="h1">
+                Repeat
+              </Typography>
+              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Typography>
+            </Paper>
+          </TimelineContent>
+        </TimelineItem>
+        <TimelineItem>
+          <TimelineOppositeContent>
+            <Typography variant="body2">Finish</Typography>
+          </TimelineOppositeContent>
+          <TimelineSeparator>
+            <TimelineDot color="primary">
+              <LaptopMacIcon />
+            </TimelineDot>
+          </TimelineSeparator>
+          <TimelineContent>
+            <Paper elevation={3} className={classes.paper}>
+              <Typography variant="h6" component="h1">
+                Check your final plan
+              </Typography>
+              <Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Typography>
+            </Paper>
+          </TimelineContent>
+        </TimelineItem>
+      </Timeline>
+    </>
   );
 };
 
