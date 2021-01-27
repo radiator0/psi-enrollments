@@ -342,3 +342,11 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
   background-color: rgba(165, 165, 165, 0.507);
   cursor: pointer !important;
 }
+
+.Toastify__toast--error {
+  background-color: #f44336;
+}
+
+.Toastify__toast--success {
+  background-color: #4caf50;
+}

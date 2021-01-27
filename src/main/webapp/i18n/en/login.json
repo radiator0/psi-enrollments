@@ -14,6 +14,13 @@
     },
     "password": {
       "forgot": "Did you forget your password?"
+    },
+    "cannot-empty": " cannot be empty."
+  },
+  "enrollmentsApp": {
+    "loginVM": {
+      "password": "password",
+      "username": "username"
     }
   }
 }

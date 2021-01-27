@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 
 import { IRootState } from 'app/shared/reducers';
 import { logout } from 'app/shared/reducers/authentication';
+import { RouteComponentProps } from 'react-router-dom';
 
-export interface ILogoutProps extends StateProps, DispatchProps {
+export interface ILogoutProps extends StateProps, DispatchProps, RouteComponentProps {
   idToken: string;
   logoutUrl: string;
 }
@@ -23,6 +24,7 @@ export const Logout = (props: ILogoutProps) => {
 
   return (
     <div className="p-5">
+      {props.history.push('/')}
       <h4>Logged out successfully!</h4>
     </div>
   );

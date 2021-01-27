@@ -8,6 +8,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import HelpOutlinedIcon from '@material-ui/icons/HelpOutlined';
 import HomeIcon from '@material-ui/icons/Home';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
 export const HomeMenu = () => (
   <ListItem button exact={true} component={RouterLink} activeClassName="nav-active" to="/">
@@ -78,6 +79,17 @@ export const StudentAsks = () => (
       </ListItemIcon>
     </Tooltip>
     <ListItemText primary={translate('global.menu.asks-for-enrollment-over-limit')} />
+  </ListItem>
+);
+
+export const SwaggerMenu = () => (
+  <ListItem button component={RouterLink} activeClassName="nav-active" to="/admin/docs">
+    <Tooltip title={'Swagger'}>
+      <ListItemIcon>
+        <ImportContactsIcon />
+      </ListItemIcon>
+    </Tooltip>
+    <ListItemText primary={'Swagger'} />
   </ListItem>
 );
 
