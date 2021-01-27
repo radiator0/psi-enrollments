@@ -104,7 +104,6 @@ export default (state: RequestState = initialState, action): RequestState => {
       return {
         ...state,
         loading: false,
-        entity: {},
         notExaminedCount: action.payload.data,
       };
     case ACTION_TYPES.RESET:
@@ -136,12 +135,21 @@ export const getEntity: ICrudGetAction<IRequest> = id => {
   };
 };
 
+export const notExaminedRequestsCount: ICrudGetAllAction<number> = () => {
+  const requestUrl = `${apiUrl}/not-examined-count`;
+  return {
+    type: ACTION_TYPES.NOT_EXAMINED_COUNT,
+    payload: axios.get<number>(requestUrl),
+  };
+};
+
 export const createEntity: ICrudPutAction<IRequest> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_REQUEST,
     payload: axios.post(apiUrl, cleanEntity(entity)),
   });
   dispatch(getEntities());
+  dispatch(notExaminedRequestsCount());
   return result;
 };
 
@@ -160,6 +168,7 @@ export const deleteEntity: ICrudDeleteAction<IRequest> = id => async dispatch =>
     payload: axios.delete(requestUrl),
   });
   dispatch(getEntities());
+  dispatch(notExaminedRequestsCount());
   return result;
 };
 
@@ -170,6 +179,7 @@ export const acceptEntity: ICrudDeleteAction<IRequest> = id => async dispatch =>
     payload: axios.post(requestUrl),
   });
   dispatch(getEntities());
+  dispatch(notExaminedRequestsCount());
   return result;
 };
 
@@ -180,15 +190,8 @@ export const declineEntity: ICrudDeleteAction<IRequest> = id => async dispatch =
     payload: axios.post(requestUrl),
   });
   dispatch(getEntities());
+  dispatch(notExaminedRequestsCount());
   return result;
-};
-
-export const notExaminedRequestsCount: ICrudGetAllAction<number> = () => {
-  const requestUrl = `${apiUrl}/not-examined-count`;
-  return {
-    type: ACTION_TYPES.NOT_EXAMINED_COUNT,
-    payload: axios.get<number>(requestUrl),
-  };
 };
 
 export const reset = () => ({

@@ -7,9 +7,9 @@
         "createOrEditLabel": "Dodaj lub edytuj: prośbę",
         "notFound": "Brak aktywnych próśb o zapis ponad stan"
       },
-      "created": "Utworzono nowy obiekt typu Request z identyfikatorem {{ param }}",
-      "updated": "Rozpatrzono prośbę z identyfikatorem {{ param }}",
-      "deleted": "Usunięto prośbę z identyfikatorem {{ param }}",
+      "created": "Utworzono nową prośbę",
+      "updated": "Rozpatrzono prośbę",
+      "deleted": "Usunięto prośbę",
       "delete": {
         "question": "Czy na pewno chcesz usunąć prośbę {{ id }}?"
       },
@@ -28,7 +28,7 @@
     "action": {
       "accept": "Zaakceptuj",
       "deny": "Odrzuć",
-      "backOff": "Wycofaj"
+      "recall": "Wycofaj"
     }
   }
 }

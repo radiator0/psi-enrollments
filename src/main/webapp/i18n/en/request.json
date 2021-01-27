@@ -7,9 +7,9 @@
         "createOrEditLabel": "Create or edit a Request",
         "notFound": "No Requests found"
       },
-      "created": "A new Request is created with identifier {{ param }}",
-      "updated": "A Request with identifier {{ param }} was examined",
-      "deleted": "A Request with identifier {{ param }} was deleted",
+      "created": "Created new Request",
+      "updated": "Request examined",
+      "deleted": "Request deleted",
       "delete": {
         "question": "Are you sure you want to delete Request {{ id }}?"
       },
@@ -28,7 +28,7 @@
     "action": {
       "accept": "Accept",
       "deny": "Deny",
-      "backOff": "Back off"
+      "recall": "Recall"
     }
   }
 }

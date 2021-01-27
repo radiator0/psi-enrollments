@@ -120,7 +120,7 @@ class Requests extends Component<IRequestsProps, IRequestsStates> {
                                 onClick={() => this.props.deleteEntity(req.id)}
                                 startIcon={<FontAwesomeIcon icon={faUndoAlt} />}
                                 color="primary">
-                                <Translate contentKey="enrollmentsApp.action.backOff">Undo</Translate>
+                                <Translate contentKey="enrollmentsApp.action.recall">Recall</Translate>
                               </Button>
                               :
                               null
