@@ -12,7 +12,7 @@ import { Translate } from 'react-jhipster';
 
 export type ICourseListProps = {
     coursesData: Array<CoursesData>,
-    onSelected: (course: CourseDetails) => void,
+    onSelected: (courseId: CourseDetails) => void,
     selectedCourse: CourseDetails
 };;
 

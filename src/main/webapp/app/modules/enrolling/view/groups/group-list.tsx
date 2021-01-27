@@ -14,67 +14,113 @@ import { EnrollingAction } from '../../enrolling-action';
 import EnrollmentData from '../../../../modules/enrollments/enrollment-data';
 import isEnrollmentAtive from '../../../../shared/model/domain/util/is-enrollment-active';
 import log from 'app/config/log';
-import { Translate } from 'react-jhipster';
+import { translate, Translate } from 'react-jhipster';
 import { IRequest } from 'app/shared/model/request.model';
-
+import { CellClassParams, CellParams, ColDef, Columns, DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
+import { APP_DATE_FORMAT_DOT } from 'app/config/constants';
+import moment from 'moment';
 
 export type IGroupListProps = {
-    enrollment: EnrollmentData,
-    groupsData: Array<GroupsData>,
-    requestOverLimit: readonly IRequest[],
-    onSelected: (group: GroupsData, action: EnrollingAction) => void
+  enrollment: EnrollmentData;
+  groupsData: Array<GroupsData>;
+  requestOverLimit: readonly IRequest[];
+  onSelected: (group: GroupsData, action: EnrollingAction) => void;
 };
-
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IGroupListState {
-};
+interface IGroupListState {}
 
 class GroupList extends Component<IGroupListProps, IGroupListState> {
-    constructor(props: IGroupListProps) {
-        super(props);
+  constructor(props: IGroupListProps) {
+    super(props);
 
-        this.state = {
-            coursesData: [],
-        };
-    }
-
-    componentDidMount() {
+    this.state = {
+      coursesData: [],
     };
+  }
 
-    renderHeader(currentDate: Date) {
-        return (
-            <Typography variant='h4' style={{textAlign: 'center'}}>
-                <Translate contentKey={'enrolling.header.groups'}>Grupy</Translate>
-            </Typography>
-        );
+  componentDidMount() {
+    console.error(this.props.groupsData);
+  }
+
+  renderHeader(currentDate: Date) {
+    return (
+      <Typography variant="h4" style={{ textAlign: 'center' }}>
+        <Translate contentKey={'enrolling.header.groups'}>Grupy</Translate>
+      </Typography>
+    );
+  }
+
+  getColumns(): ColDef[] {
+    return [
+      {
+        field: 'groupCode',
+        headerName: translate('enrolling.group.code'),
+        flex: 1,
+      },
+      {
+        field: 'enrolled',
+        headerName: translate('enrolling.group.enrolled'),
+        flex: 1,
+      },
+      {
+        field: 'overLimit',
+        headerName: translate('enrolling.group.overLimit'),
+        flex: 1,
+      },
+      {
+        field: 'schedule',
+        headerName: translate('enrolling.group.schedule'),
+        flex: 1,
+      },
+      {
+        field: 'lecturer',
+        headerName: translate('enrolling.group.lecturer'),
+        flex: 1,
+      },
+      {
+        field: 'action',
+        headerName: translate('enrolling.group.action'),
+        flex: 1,
+        renderCell: (params: ValueFormatterParams) => <p></p>,
+      },
+    ];
+  }
+
+  determinePossibleActionForGroup(groupsData: GroupsData, enrollment: EnrollmentData, currentDate: Date, requestOverLimit: IRequest) {
+    log.info(groupsData);
+    if (!isEnrollmentAtive(enrollment, currentDate)) {
+      return EnrollingAction.NoAction;
     }
-
-    determinePossibleActionForGroup(groupsData: GroupsData, enrollment: EnrollmentData, currentDate: Date, requestOverLimit: IRequest) {
-        log.info(groupsData);
-        if(!isEnrollmentAtive(enrollment, currentDate)) {
-            return EnrollingAction.NoAction;
-        }
-        if(requestOverLimit?.id) {
-            return EnrollingAction.RecallAsk;
-        }
-        if(groupsData.isStudentEnrolled) {
-            return EnrollingAction.Disenroll;
-        }
-        if(!groupsData.isLimitReached) {
-            return EnrollingAction.Enroll;
-        }
-        if(groupsData.canEnrollOverLimit) {
-            return EnrollingAction.AskOverLimit;
-        }
-        return EnrollingAction.NoAction;
+    if (requestOverLimit?.id) {
+      return EnrollingAction.RecallAsk;
     }
+    if (groupsData.isStudentEnrolled) {
+      return EnrollingAction.Disenroll;
+    }
+    if (!groupsData.isLimitReached) {
+      return EnrollingAction.Enroll;
+    }
+    if (groupsData.canEnrollOverLimit) {
+      return EnrollingAction.AskOverLimit;
+    }
+    return EnrollingAction.NoAction;
+  }
 
-    renderGroupsRows(currentDate: Date) {
-        const { groupsData, enrollment, requestOverLimit, onSelected } = this.props;
-        return (
-            <TableContainer component={Paper}>
-            <Table aria-label="table">
+  renderGroupsRows(currentDate: Date) {
+    const { groupsData, enrollment, requestOverLimit, onSelected } = this.props;
+    return (
+      <>
+        <div style={{ height: '500px' }}>
+          <DataGrid
+            rows={groupsData}
+            columns={this.getColumns()}
+            localeText={translate('dataGrid')}
+            disableSelectionOnClick={true}
+            hideFooter={true}
+          />
+        </div>
+        {/* <Table aria-label="table">
               <TableHead>
                 <TableRow>
                   <TableCell align="right"><Translate contentKey={'enrolling.group.code'}>Group code</Translate></TableCell>
@@ -92,24 +138,23 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
                 <Row key={row.id} row={row} action={this.determinePossibleActionForGroup(row, enrollment, currentDate, requestOverLimit.find(ask => ask.classGroupId === row.id))} onSelected={onSelected} />
             ))}
               </TableBody>
-            </Table>
-          </TableContainer>
-        );
-    }
+            </Table> */}
+      </>
+    );
+  }
 
-    render() {
-        const currentDate = new Date();
-        return (
-            <>
-                {this.renderHeader(currentDate)}
-                {this.renderGroupsRows(currentDate)}
-            </>
-        );
-    }
-};
+  render() {
+    const currentDate = new Date();
+    return (
+      <>
+        {this.renderHeader(currentDate)}
+        {this.renderGroupsRows(currentDate)}
+      </>
+    );
+  }
+}
 
-const mapStateToProps = () => ({
-});
+const mapStateToProps = () => ({});
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 
