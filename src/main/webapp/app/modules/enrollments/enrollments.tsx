@@ -89,7 +89,7 @@ class Enrollments extends Component<IEnrollmentsProps, IEnrollmentsState> {
               <TableCell align="right"><Translate contentKey={'enrollments.right.enrollmentsStart'}>Start</Translate></TableCell>
               <TableCell align="right"><Translate contentKey={'enrollments.right.enrollmentsEnd'}>End</Translate></TableCell>
               <TableCell align="right"><Translate contentKey={'enrollments.right.rightStart'}>Right</Translate></TableCell>
-              <TableCell align='center'>
+              <TableCell align='right'>
                 <TextField
                   id="time"
                   type="time"

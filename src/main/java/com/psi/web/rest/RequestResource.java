@@ -6,6 +6,7 @@ import com.psi.domain.User;
 import com.psi.service.ClassGroupService;
 import com.psi.service.RequestService;
 import com.psi.service.UserService;
+import com.psi.service.dto.ClassGroupDTO;
 import com.psi.service.dto.RequestDTO;
 import com.psi.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
@@ -13,6 +14,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -67,22 +69,27 @@ public class RequestResource {
             throw new BadRequestAlertException("A new request cannot already have an ID", ENTITY_NAME, "idexists");
         }
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
-        classGroupService.findOne(requestDTO.getClassGroupId()).ifPresent(classGroup -> {
-            if (!classGroup.isIsEnrollmentAboveLimitAllowed()) {
+        Optional<ClassGroupDTO> classGroup = classGroupService.findOne(requestDTO.getClassGroupId());
+        classGroup.ifPresent(c -> {
+            if (!c.isIsEnrollmentAboveLimitAllowed()) {
                 throw new RequestResource.RequestResourceException("Enrollment over limit is not allowed");
             }
-            if(!classGroup.isIsFull()) {
+            if(c.getEnrolledCount() < c.getPeopleLimit()) {
                 throw new RequestResource.RequestResourceException("Requests to not full group are not allowed");
             }
         });
         if (userService.isUserStudent(user)) {
             Student student = userService.getStudentInstance(user);
-            log.debug("REST request to save Request : {}", requestDTO);
-            requestDTO.setStudentId(student.getId());
-            RequestDTO result = requestService.save(requestDTO);
-            return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
-                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-                .body(result);
+            if(classGroup.isPresent() && !requestService.existsByClassGroupAndAndStudent(classGroup.get(), student)){
+                log.debug("REST request to save Request : {}", requestDTO);
+                requestDTO.setStudentId(student.getId());
+                RequestDTO result = requestService.save(requestDTO);
+                return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
+                    .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                    .body(result);
+            } else {
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            }
         } else {
             throw new RequestResource.RequestResourceException("User hasn't correct authorities");
         }

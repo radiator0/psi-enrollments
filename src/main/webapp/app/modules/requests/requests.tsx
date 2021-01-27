@@ -14,6 +14,7 @@ import { green, red } from '@material-ui/core/colors';
 import { faCheck, faTimes, faUndoAlt } from '@fortawesome/free-solid-svg-icons';
 import { CheckCircleIcon } from '@material-ui/data-grid';
 import BlockIcon from '@material-ui/icons/Block';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 const theme = createMuiTheme({ palette: { primary: red, secondary: { main: green[500] } } })
 
@@ -147,9 +148,10 @@ class Requests extends Component<IRequestsProps, IRequestsStates> {
           </TableContainer>
         ) : (
             !loading && (
-              <Container className="alert alert-warning">
-                <Translate contentKey="enrollmentsApp.request.home.notFound">No Requests found</Translate>
-              </Container>
+              <Alert severity="info">
+                <AlertTitle>Info</AlertTitle>
+                <Translate contentKey="enrollmentsApp.request.home.notFound">No not examined requests found</Translate>
+              </Alert>
             )
           )}
       </React.Fragment>

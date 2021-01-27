@@ -168,9 +168,6 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
                 <Translate contentKey={'enrolling.group.lecturer'}>Lecturer</Translate>
               </TableCell>
               <TableCell align="right">
-                <Translate contentKey={'enrolling.group.action'}>Action</Translate>
-              </TableCell>
-              <TableCell align="center">
                 <TextField
                   id="time"
                   type="time"

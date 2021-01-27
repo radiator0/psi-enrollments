@@ -7,7 +7,9 @@ import com.psi.domain.Student;
 import com.psi.repository.LecturerRepository;
 import com.psi.repository.RequestRepository;
 import com.psi.repository.StudentRepository;
+import com.psi.service.dto.ClassGroupDTO;
 import com.psi.service.dto.RequestDTO;
+import com.psi.service.mapper.ClassGroupMapper;
 import com.psi.service.mapper.RequestMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,8 @@ public class RequestService {
 
     private final RequestMapper requestMapper;
 
+    private final ClassGroupMapper classGroupMapper;
+
     private final ClassGroupService classGroupService;
 
     private final StudentRepository studentRepository;
@@ -43,10 +47,11 @@ public class RequestService {
     private final LecturerRepository lecturerRepository;
 
     public RequestService(RequestRepository requestRepository, RequestMapper requestMapper,
-                          ClassGroupService classGroupService, StudentRepository studentRepository,
+                          ClassGroupMapper classGroupMapper, ClassGroupService classGroupService, StudentRepository studentRepository,
                           LecturerRepository lecturerRepository) {
         this.requestRepository = requestRepository;
         this.requestMapper = requestMapper;
+        this.classGroupMapper = classGroupMapper;
         this.classGroupService = classGroupService;
         this.studentRepository = studentRepository;
         this.lecturerRepository = lecturerRepository;
@@ -67,6 +72,17 @@ public class RequestService {
         request.setIsAccepted(false);
         request = requestRepository.save(request);
         return requestMapper.toDto(request);
+    }
+
+    /**
+     * Save a request.
+     *
+     * @param classGroup is class group.
+     * @param student is student
+     * @return the persisted entity.
+     */
+    public boolean existsByClassGroupAndAndStudent(ClassGroupDTO classGroup, Student student) {
+        return requestRepository.existsByClassGroupAndAndStudent(classGroupMapper.toEntity(classGroup), student);
     }
 
     /**
