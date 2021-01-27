@@ -1,20 +1,18 @@
 package com.psi.web.rest;
 
+import com.psi.domain.Lecturer;
+import com.psi.domain.Student;
+import com.psi.domain.User;
+import com.psi.service.ClassGroupService;
 import com.psi.service.RequestService;
-import com.psi.web.rest.errors.BadRequestAlertException;
+import com.psi.service.UserService;
 import com.psi.service.dto.RequestDTO;
-
+import com.psi.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -33,6 +31,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class RequestResource {
 
+    private static class RequestResourceException extends RuntimeException {
+        private RequestResourceException(String message) {
+            super(message);
+        }
+    }
+
     private final Logger log = LoggerFactory.getLogger(RequestResource.class);
 
     private static final String ENTITY_NAME = "request";
@@ -41,9 +45,13 @@ public class RequestResource {
     private String applicationName;
 
     private final RequestService requestService;
+    private final UserService userService;
+    private final ClassGroupService classGroupService;
 
-    public RequestResource(RequestService requestService) {
+    public RequestResource(RequestService requestService, UserService userService, ClassGroupService classGroupService) {
         this.requestService = requestService;
+        this.userService = userService;
+        this.classGroupService = classGroupService;
     }
 
     /**
@@ -55,49 +63,92 @@ public class RequestResource {
      */
     @PostMapping("/requests")
     public ResponseEntity<RequestDTO> createRequest(@Valid @RequestBody RequestDTO requestDTO) throws URISyntaxException {
-        log.debug("REST request to save Request : {}", requestDTO);
         if (requestDTO.getId() != null) {
             throw new BadRequestAlertException("A new request cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        RequestDTO result = requestService.save(requestDTO);
-        return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
+        classGroupService.findOne(requestDTO.getClassGroupId()).ifPresent(classGroup -> {
+            if (!classGroup.isIsEnrollmentAboveLimitAllowed()) {
+                throw new RequestResource.RequestResourceException("Enrollment over limit is not allowed");
+            }
+            if(!classGroup.isIsFull()) {
+                throw new RequestResource.RequestResourceException("Requests to not full group are not allowed");
+            }
+        });
+        if (userService.isUserStudent(user)) {
+            Student student = userService.getStudentInstance(user);
+            log.debug("REST request to save Request : {}", requestDTO);
+            requestDTO.setStudentId(student.getId());
+            RequestDTO result = requestService.save(requestDTO);
+            return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        } else {
+            throw new RequestResource.RequestResourceException("User hasn't correct authorities");
+        }
     }
 
     /**
-     * {@code PUT  /requests} : Updates an existing request.
+     * {@code PUT  /requests} : Accepts an existing request.
      *
-     * @param requestDTO the requestDTO to update.
+     * @param id the id of the requestDTO to accept.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated requestDTO,
-     * or with status {@code 400 (Bad Request)} if the requestDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the requestDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * or with status {@code 400 (Bad Request)} if the id is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the requestDTO couldn't be accepted.
      */
-    @PutMapping("/requests")
-    public ResponseEntity<RequestDTO> updateRequest(@Valid @RequestBody RequestDTO requestDTO) throws URISyntaxException {
-        log.debug("REST request to update Request : {}", requestDTO);
-        if (requestDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+    @PostMapping("/requests/{id}/accept")
+    public ResponseEntity<RequestDTO> acceptRequest(@PathVariable Long id) {
+        User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
+        if (userService.isUserLecturer(user)) {
+            requestService.accept(id);
+        } else {
+            throw new RequestResource.RequestResourceException("User hasn't authorities to accept request");
         }
-        RequestDTO result = requestService.save(requestDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, requestDTO.getId().toString()))
-            .body(result);
+        log.debug("REST request to accept Request : {}", id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * {@code PUT  /requests} : Declines an existing request.
+     *
+     * @param id the id of the requestDTO to accept.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated requestDTO,
+     * or with status {@code 400 (Bad Request)} if the id is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the requestDTO couldn't be accepted.
+     */
+    @PostMapping("/requests/{id}/decline")
+    public ResponseEntity<RequestDTO> declineRequest(@PathVariable Long id) {
+        User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
+        if (userService.isUserLecturer(user)) {
+            requestService.decline(id);
+        } else {
+            throw new RequestResource.RequestResourceException("User hasn't authorities to decline request");
+        }
+        log.debug("REST request to decline Request : {}", id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
     /**
      * {@code GET  /requests} : get all the requests.
      *
-     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of requests in body.
      */
     @GetMapping("/requests")
-    public ResponseEntity<List<RequestDTO>> getAllRequests(Pageable pageable) {
-        log.debug("REST request to get a page of Requests");
-        Page<RequestDTO> page = requestService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public ResponseEntity<List<RequestDTO>> getAllRequests() {
+        User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
+        List<RequestDTO> requestDTOList;
+        if (userService.isUserStudent(user)) {
+            Student student = userService.getStudentInstance(user);
+            log.debug("REST request to get a list of Student Requests");
+            requestDTOList = requestService.findAllByStudent(student);
+        } else if (userService.isUserLecturer(user)) {
+            Lecturer lecturer = userService.getLecturerInstance(user);
+            log.debug("REST request to get a list of Lecturer Requests");
+            requestDTOList = requestService.findAllByLecturer(lecturer);
+        } else {
+            throw new RequestResource.RequestResourceException("User hasn't correct authorities");
+        }
+        return ResponseEntity.ok().body(requestDTOList);
     }
 
     /**
@@ -108,6 +159,10 @@ public class RequestResource {
      */
     @GetMapping("/requests/{id}")
     public ResponseEntity<RequestDTO> getRequest(@PathVariable Long id) {
+        User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
+        if (!userService.isUserStudent(user) && !userService.isUserLecturer(user)) {
+            throw new RequestResource.RequestResourceException("User hasn't correct authorities");
+        }
         log.debug("REST request to get Request : {}", id);
         Optional<RequestDTO> requestDTO = requestService.findOne(id);
         return ResponseUtil.wrapOrNotFound(requestDTO);
@@ -121,8 +176,27 @@ public class RequestResource {
      */
     @DeleteMapping("/requests/{id}")
     public ResponseEntity<Void> deleteRequest(@PathVariable Long id) {
+        User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
+        if (userService.isUserStudent(user)) {
+            requestService.delete(id);
+        } else if (userService.isUserLecturer(user)) {
+            throw new RequestResource.RequestResourceException("User hasn't correct authorities to delete request");
+        }
         log.debug("REST request to delete Request : {}", id);
-        requestService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/requests/not-examined-count")
+    public ResponseEntity<Integer> getNotExaminedCount() {
+        User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
+        Integer notExaminedCount = 0;
+        if (userService.isUserStudent(user)) {
+            notExaminedCount = requestService.countAllNotExaminedRequestsForStudent(false, userService.getStudentInstance(user));
+        } else if (userService.isUserLecturer(user)) {
+            notExaminedCount = requestService.countAllNotExaminedRequestsForLecturer(false, userService.getLecturerInstance(user));
+        } else {
+            throw new RequestResource.RequestResourceException("User hasn't correct authorities");
+        }
+        return ResponseEntity.of(Optional.of(notExaminedCount));
     }
 }

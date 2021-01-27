@@ -1,4 +1,3 @@
-import RequestOverLimit from './request-over-limit';
 import RecurringScheduleElement from './recurring-schedule-element';
 
 export default class EnrollingGroupDetails {
@@ -8,14 +7,13 @@ export default class EnrollingGroupDetails {
     public readonly limit: number;
     public readonly studentEnrolled: boolean;
     public readonly canEnrollOverLimit: boolean;    
-    public readonly requestOverLimit: RequestOverLimit;
     public readonly schedules: Array<RecurringScheduleElement>;
     public readonly lecturerTitle: string;
     public readonly lecturerFirstName: string;
     public readonly lecturerSecondName: string;
     public readonly lecturerLastName: string;
 
-    constructor(id: number, groupCode: string, enrolledCount: number, limit: number, studentEnrolled: boolean, canEnrollOverLimit: boolean, requestOverLimit: RequestOverLimit,
+    constructor(id: number, groupCode: string, enrolledCount: number, limit: number, studentEnrolled: boolean, canEnrollOverLimit: boolean,
         schedules: Array<RecurringScheduleElement>, lecturerTitle: string, lecturerFirstName: string, lecturerSecondName: string, lecturerLastName: string) {
       this.id = id;
       this.groupCode = groupCode;
@@ -23,7 +21,6 @@ export default class EnrollingGroupDetails {
       this.limit = limit;
       this.studentEnrolled = studentEnrolled;
       this.canEnrollOverLimit = canEnrollOverLimit;
-      this.requestOverLimit = requestOverLimit;
       this.schedules = schedules;
       this.lecturerTitle = lecturerTitle;
       this.lecturerFirstName = lecturerFirstName;

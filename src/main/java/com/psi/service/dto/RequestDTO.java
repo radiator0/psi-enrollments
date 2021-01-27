@@ -12,22 +12,27 @@ public class RequestDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private UUID uuid;
 
-    @NotNull
     private Instant date;
 
     @NotNull
     private String text;
 
-    @NotNull
     private Boolean isExamined;
 
+    private Boolean isAccepted;
 
+    @NotNull
     private Long classGroupId;
 
     private Long studentId;
+
+    private String classGroupCode;
+
+    private String studentName;
+
+    private String lecturerName;
 
     public Long getId() {
         return id;
@@ -69,6 +74,14 @@ public class RequestDTO implements Serializable {
         this.isExamined = isExamined;
     }
 
+    public Boolean isIsAccepted() {
+        return isAccepted;
+    }
+
+    public void setIsAccepted(Boolean isAccepted) {
+        this.isAccepted = isAccepted;
+    }
+
     public Long getClassGroupId() {
         return classGroupId;
     }
@@ -83,6 +96,30 @@ public class RequestDTO implements Serializable {
 
     public void setStudentId(Long studentId) {
         this.studentId = studentId;
+    }
+
+    public String getClassGroupCode() {
+        return classGroupCode;
+    }
+
+    public void setClassGroupCode(String classGroupCode) {
+        this.classGroupCode = classGroupCode;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getLecturerName() {
+        return lecturerName;
+    }
+
+    public void setLecturerName(String lecturerName) {
+        this.lecturerName = lecturerName;
     }
 
     @Override
@@ -111,6 +148,7 @@ public class RequestDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", text='" + getText() + "'" +
             ", isExamined='" + isIsExamined() + "'" +
+            ", isAccepted='" + isIsAccepted() + "'" +
             ", classGroupId=" + getClassGroupId() +
             ", studentId=" + getStudentId() +
             "}";

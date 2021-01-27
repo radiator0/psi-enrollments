@@ -14,7 +14,7 @@ import PrivateRoute from 'app/shared/auth/private-route';
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
-import AsksForEnrollmentOverLimit from './modules/asks-for-enrollment-over-limit/asks-for-enrollment-over-limit';
+import Requests from './modules/requests/requests';
 import Enrollments from './modules/enrollments/enrollments';
 import Enrolling from './modules/enrolling/enrolling';
 import GroupDetails from './modules/enrolling/group-details/group-details';
@@ -48,8 +48,8 @@ const Routes = () => (
         hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT, AUTHORITIES.LECTURER]}
       />
       <PrivateRoute
-        path="/asks-for-enrollment-over-limit"
-        component={AsksForEnrollmentOverLimit}
+        path="/requests"
+        component={Requests}
         hasAnyAuthorities={[AUTHORITIES.STUDENT, AUTHORITIES.LECTURER]}
       />
       <PrivateRoute path="/enrollments" component={Enrollments} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />

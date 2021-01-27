@@ -111,7 +111,6 @@ Row.propTypes = {
         lecturerFirstName: PropTypes.string,
         lecturerSecondName: PropTypes.string,
         lecturerLastName: PropTypes.string,
-        requestOverLimit: PropTypes.any,
         schedules: PropTypes.arrayOf(PropTypes.any),
     }).isRequired,
 };

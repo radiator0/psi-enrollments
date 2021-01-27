@@ -1,6 +1,7 @@
 package com.psi.service;
 
 import com.psi.domain.ClassGroup;
+import com.psi.domain.Lecturer;
 import com.psi.repository.ClassGroupRepository;
 import com.psi.service.dto.ClassGroupDTO;
 import com.psi.service.mapper.ClassGroupMapper;
@@ -12,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link ClassGroup}.
@@ -58,6 +61,18 @@ public class ClassGroupService {
             .map(classGroupMapper::toDto);
     }
 
+
+    /**
+     * Get all the classGroups by lecturer.
+     *
+     * @param lecturer the lecturer
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<ClassGroup> findAllByLecturer(Lecturer lecturer) {
+        log.debug("Request to get all ClassGroups");
+        return classGroupRepository.findAllByMainLecturer(lecturer);
+    }
 
     /**
      * Get one classGroup by id.
