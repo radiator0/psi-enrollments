@@ -29,7 +29,7 @@ public interface EnrollingGroupDetailsMapper extends EntityMapper<EnrollingGroup
             RequestOverLimitDTO requestOverLimitDTO = new RequestOverLimitDTO();
             requestOverLimitDTO.setId(request.getId());
             requestOverLimitDTO.setExamined(request.isIsExamined());
-            requestOverLimitDTO.setAccepted(request.isIsExamined());    // TODO XD
+            requestOverLimitDTO.setAccepted(request.isIsAccepted());
 
             enrollingGroupDetailsDTO.setRequestOverLimit(requestOverLimitDTO);
         }

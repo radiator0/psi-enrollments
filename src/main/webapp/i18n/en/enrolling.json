@@ -6,6 +6,7 @@
       "groups": "Groups"
     },
     "course": {
+      "streamModule": "Module with streams",
       "selectableModule": "Selectable module",
       "courseGroup": "Course group",
       "stream": "Stream",

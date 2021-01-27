@@ -6,6 +6,7 @@
       "groups": "Grupy"
     },
     "course": {
+      "streamModule": "Moduł z potokami",
       "selectableModule": "Moduł wybieralny",
       "courseGroup": "Grupa kursów",
       "stream": "Potok",

@@ -12,6 +12,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface EnrollmentRightDetailsMapper extends EntityMapper<EnrollmentRightDetailsDTO, EnrollmentRight> {
 
+    @Mapping(source = "enrollmentDate.id", target = "id")
     @Mapping(source = "enrollmentDate.name", target = "name")
     @Mapping(source = "enrollmentDate.isPreEnrollment", target = "isPreEnrollment")
     @Mapping(source = "enrollmentDate.startDate", target = "enrollmentsStartDate")

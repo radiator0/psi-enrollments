@@ -53,6 +53,7 @@
             <column name="start_date" type="date"/>
             <column name="enrollment_date_id" type="numeric"/>
             <column name="student_id" type="numeric"/>
+            <column name="specialty_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

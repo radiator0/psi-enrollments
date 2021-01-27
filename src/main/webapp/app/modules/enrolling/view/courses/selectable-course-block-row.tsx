@@ -15,6 +15,7 @@ import SelectableCourseBlockDetails from '../../../../shared/model/domain/dto/se
 import CourseDetails from '../../../../shared/model/domain/dto/course-details';
 import { translate } from 'react-jhipster';
 import { CheckedAvatar, UnCheckedAvatar } from '../../custom-avatars';
+import { Typography } from '@material-ui/core';
 
 interface ISelectableCourseBlockRowProps {
     selectableCourseBlock: SelectableCourseBlockDetails;
@@ -45,13 +46,20 @@ class SelectableCourseBlockRow extends Component<ISelectableCourseBlockRowProps,
     rendedExpandableItem() {
         const { selectableCourseBlock } = this.props;
         const { isOpen } = this.state;
-
+        const isStreamBlock = selectableCourseBlock.courseUnits.every(cu => cu.isStream);
         return (
             <ListItem>
                 <ListItemAvatar>
                 {this.isEnrolledInAll() ? <CheckedAvatar /> : <UnCheckedAvatar />}
                 </ListItemAvatar>
-                <ListItemText primary={selectableCourseBlock.name} secondary={translate('enrolling.course.selectableModule')} />
+                <ListItemText
+                    primary={selectableCourseBlock.name}
+                    secondary={
+                        <Typography variant='body2' style={{ width: '100%' }}>
+                            {isStreamBlock ? translate('enrolling.course.streamModule') : translate('enrolling.course.selectableModule')}
+                        </Typography>
+                    }
+                />
                 <ListItemSecondaryAction>
                     <IconButton aria-label="expand row" size="small" onClick={() => this.setOpen(!isOpen)}>
                         {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}

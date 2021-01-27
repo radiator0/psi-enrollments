@@ -12,10 +12,15 @@ id;name;short_name;code;ects;form;enrollment_date_id;course_unit_id
 11;Podstawy programowania;NULL;INZ001519C;NULL;Exercises;1;1
 12;Podstawy programowania;NULL;INZ001519W;NULL;Lecture;1;1
 13;Algebra z geometrią analitityczną A;Algebra z geom. analit. A;INZ001519C;NULL;Lecture;1;11
-14;Algebra z geometrią analitityczną A;NULL;MAT001403C;NULL;Exercises;1;11
+14;Algebra z geometrią analitityczną A;Algebra z geom. analit. A;MAT001403C;NULL;Exercises;1;11
 15;Analiza matematyczna 1.1 A;NULL;MAT001413W;NULL;Lecture;1;12
 16;Analiza matematyczna 1.1 A;NULL;MAT001413C;NULL;Exercises;1;12
 17;Organizacja systemów komputerowych;Organizacja sys. komputerowych;INZ001726W;NULL;Lecture;1;13
 18;Organizacja systemów komputerowych;Organizacja sys. komputerowych;INZ001726C;NULL;Exercises;1;13
 19;Systemy webowe;NULL;INZ001756P;3;Project;1;14
 20;Systemy wbudowane;NULL;INZ001756C;3;Project;1;15
+21;Matematyka dyskretna;NULL;INZ001256W;3;Lecture;1;16
+22;Matematyka dyskretna;NULL;INZ001256C;2;Exercises;1;16
+23;Matematyka dyskretna;NULL;INZ001257W;3;Lecture;1;17
+24;Matematyka dyskretna;NULL;INZ001257C;2;Exercises;1;17
+25;Systemy nieoperacyjne;NULL;INZ001257C;2;Laboratory;1;NULL

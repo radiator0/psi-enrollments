@@ -9,9 +9,10 @@ id;code;ects;is_group_of_courses;is_stream;is_selectable;selectable_module_id
 8;GB Belgium;30538;false;true;false;NULL
 9;calculate reboot;58460;true;false;true;NULL
 10;Customer;66160;true;false;false;NULL
-11;Algebra z geom. analit. A;4;true;false;false;1
+11;Algebra z geom. analit. A;8;true;false;false;1
 12;Analiza matematyczna 1.1 A;8;true;false;false;1
 13;Organizacja sys. komputerowych;3;true;false;false;NULL
 14;Systemy webowe;NULL;false;false;true;11
 15;Systemy wbudowane;NULL;false;false;true;11
-
+16;Mat. dys. 1;NULL;false;true;true;12
+17;Mat. dys. 2;NULL;false;true;true;12

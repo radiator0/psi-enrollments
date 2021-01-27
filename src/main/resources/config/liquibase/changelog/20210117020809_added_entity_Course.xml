@@ -80,5 +80,14 @@
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
-
+    <changeSet id="20210117020809-2-data" author="jhipster" context="faker">
+        <loadData
+            file="config/liquibase/fake-data/course_specialty.csv"
+            separator=";"
+            tableName="course_specialty">
+            <column name="specialty_id" type="numeric"/>
+            <column name="course_id" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
 </databaseChangeLog>
