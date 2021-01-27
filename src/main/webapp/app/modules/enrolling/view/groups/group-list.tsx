@@ -138,7 +138,7 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
         const lecturer = `${groupData.lecturerTitle + ' '}${groupData.lecturerFirstName + ' '}${groupData.lecturerSecondName + ' '}${
           groupData.lecturerLastName + ' '
         }`;
-        lecturer.includes(this.state.lecturer);
+        return lecturer.toLowerCase().includes(this.state.lecturer.toLowerCase());
       });
     }
     return filteredGroups;
