@@ -23,4 +23,6 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
     Integer countAllByIsExaminedAndClassGroupIn(Boolean isExamined, List<ClassGroup> classGroup);
 
     Integer countAllByIsExaminedAndStudent(Boolean isExamined, Student student);
+
+    Boolean existsByClassGroupAndAndStudent(ClassGroup classGroup, Student student);
 }

@@ -88,8 +88,7 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
                             <TableCell align="center"><Translate contentKey={'enrolling.group.overLimit'}>Over limit</Translate></TableCell>
                             <TableCell align="right"><Translate contentKey={'enrolling.group.schedule'}>Schedule</Translate></TableCell>
                             <TableCell align="right"><Translate contentKey={'enrolling.group.lecturer'}>Lecturer</Translate></TableCell>
-                            <TableCell align="right"><Translate contentKey={'enrolling.group.action'}>Action</Translate></TableCell>
-                            <TableCell align="center">
+                            <TableCell align="right">
                                 <TextField
                                     id="time"
                                     type="time"

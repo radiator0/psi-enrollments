@@ -5,9 +5,9 @@
         "title": "Requests for enrollment above limit",
         "createLabel": "Create a new Request",
         "createOrEditLabel": "Create or edit a Request",
-        "notFound": "No Requests found"
+        "notFound": "No not examined requests found"
       },
-      "created": "Created new Request",
+      "created": "Request sent",
       "updated": "Request examined",
       "deleted": "Request deleted",
       "delete": {
