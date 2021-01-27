@@ -14,6 +14,13 @@
     },
     "password": {
       "forgot": "Zapomniałeś swojego hasła?"
+    },
+    "cannot-empty": " to pole które nie może być puste."
+  },
+  "enrollmentsApp": {
+    "loginVM": {
+      "password": "hasło",
+      "username": "nazwa użytkownika"
     }
   }
 }

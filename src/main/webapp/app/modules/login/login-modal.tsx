@@ -1,14 +1,18 @@
+import './login-modal.scss';
 import React from 'react';
 import { Translate, translate } from 'react-jhipster';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Alert, Row, Col } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Label, Row, Col } from 'reactstrap';
 import { AvForm, AvField, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { Link } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField/TextField';
+import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
 
 export interface ILoginModalProps {
   showModal: boolean;
   loginError: boolean;
   handleLogin: Function;
-  handleClose: Function;
+  handleClose;
 }
 
 class LoginModal extends React.Component<ILoginModalProps> {
@@ -21,7 +25,7 @@ class LoginModal extends React.Component<ILoginModalProps> {
     const { loginError, handleClose } = this.props;
 
     return (
-      <Modal isOpen={this.props.showModal} toggle={handleClose} backdrop="static" id="login-page" autoFocus={false}>
+      <Modal centered isOpen={this.props.showModal} toggle={handleClose} backdrop="static" id="login-page" autoFocus={false}>
         <AvForm onSubmit={this.handleSubmit}>
           <ModalHeader id="login-title" toggle={handleClose}>
             <Translate contentKey="login.title">Sign in</Translate>
@@ -30,7 +34,7 @@ class LoginModal extends React.Component<ILoginModalProps> {
             <Row>
               <Col md="12">
                 {loginError ? (
-                  <Alert color="danger">
+                  <Alert severity="error" style={{ marginBottom: '8px' }}>
                     <Translate contentKey="login.messages.error.authentication">
                       <strong>Failed to sign in!</strong> Please check your credentials and try again.
                     </Translate>
@@ -43,7 +47,7 @@ class LoginModal extends React.Component<ILoginModalProps> {
                   label={translate('global.form.username.label')}
                   placeholder={translate('global.form.username.placeholder')}
                   required
-                  errorMessage="Username cannot be empty!"
+                  errorMessage={translate('global.form.username.label') + translate('login.cannot-empty')}
                   autoFocus
                 />
                 <AvField
@@ -52,36 +56,22 @@ class LoginModal extends React.Component<ILoginModalProps> {
                   label={translate('login.form.password')}
                   placeholder={translate('login.form.password.placeholder')}
                   required
-                  errorMessage="Password cannot be empty!"
+                  errorMessage={translate('login.form.password') + translate('login.cannot-empty')}
                 />
-                <AvGroup check inline>
-                  <Label className="form-check-label">
-                    <AvInput type="checkbox" name="rememberMe" /> <Translate contentKey="login.form.rememberme">Remember me</Translate>
-                  </Label>
-                </AvGroup>
               </Col>
             </Row>
-            <div className="mt-1">&nbsp;</div>
-            <Alert color="warning">
+            <Alert severity="info">
               <Link to="/account/reset/request">
                 <Translate contentKey="login.password.forgot">Did you forget your password?</Translate>
               </Link>
             </Alert>
-            <Alert color="warning">
-              <span>
-                <Translate contentKey="global.messages.info.register.noaccount">You don&apos;t have an account yet?</Translate>
-              </span>{' '}
-              <Link to="/account/register">
-                <Translate contentKey="global.messages.info.register.link">Register a new account</Translate>
-              </Link>
-            </Alert>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={handleClose} tabIndex="1">
-              <Translate contentKey="entity.action.cancel">Cancel</Translate>
-            </Button>{' '}
-            <Button color="primary" type="submit">
-              <Translate contentKey="login.form.button">Sign in</Translate>
+            <Button onClick={handleClose} variant="contained" color="secondary" style={{ margin: '4px' }}>
+              Cancel
+            </Button>
+            <Button variant="contained" color="primary" type="submit" style={{ margin: '4px' }}>
+              Sign In
             </Button>
           </ModalFooter>
         </AvForm>

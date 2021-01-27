@@ -17,6 +17,8 @@ import { IconButton } from '@material-ui/core';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
+import InfoIcon from '@material-ui/icons/Info';
+import { NavLink } from 'react-router-dom';
 
 const useRowStyles = makeStyles({
     root: {
@@ -67,6 +69,10 @@ const renderActionButton = (row: GroupsData, action: EnrollingAction, onSelected
     );
 }
 
+const renderInfoButton = (groupCode) => {
+    return (<IconButton component={NavLink} to={"/group-details/"+ groupCode}><InfoIcon/></IconButton>)
+}
+
 export type IRowProps = {
     row: GroupsData,
     action: EnrollingAction,
@@ -80,7 +86,10 @@ function Row(props: IRowProps) {
     return (
         <React.Fragment>
             <TableRow className={classes.root}>
-                <TableCell align="right">{row.groupCode}</TableCell>
+                <TableCell align="right">
+                    {row.groupCode}
+                    {renderInfoButton(row.groupCode)}
+                </TableCell>
                 <TableCell align="right">{`${row.enrolledCount}/${row.limit}`}</TableCell>
                 <TableCell align="center">{renderCanEnrollOverLimit(row)}</TableCell>
                 <TableCell align="right">{renderSchedule(row)}</TableCell>

@@ -12,7 +12,16 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { Translate, Storage } from 'react-jhipster';
-import { EnrollmentsMenu, HomeMenu, LecturerAsks, LoginItem, ScheduleSemesterMenu, ScheduleWeekMenu, StudentAsks } from './nav-components';
+import {
+  EnrollmentsMenu,
+  HomeMenu,
+  LecturerAsks,
+  LoginItem,
+  ScheduleSemesterMenu,
+  ScheduleWeekMenu,
+  StudentAsks,
+  SwaggerMenu,
+} from './nav-components';
 import AccountItem from './account-menu';
 import LanguageItem from './language-menu';
 
@@ -87,10 +96,8 @@ export interface INavProps {
   isAuthenticated: boolean;
   isStudent: boolean;
   isLecturer: boolean;
-  // isAdmin: boolean;
-  // ribbonEnv: string;
-  // isInProduction: boolean;
-  // isSwaggerEnabled: boolean;
+  isAdmin: boolean;
+  isSwaggerEnabled: boolean;
   currentLocale: string;
   onLocaleChange: Function;
 }
@@ -182,6 +189,7 @@ const Nav = (props: INavProps) => {
             </List>
           </>
         )}
+        {props.isAuthenticated && props.isSwaggerEnabled && props.isAdmin && <SwaggerMenu />}
       </Drawer>
     </>
   );

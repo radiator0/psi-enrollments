@@ -38,7 +38,7 @@ export const App = (props: IAppProps) => {
   return (
     <Router basename={baseHref}>
       <div className="app-container" style={{ paddingTop }}>
-        <ToastContainer position={toast.POSITION.TOP_LEFT} className="toastify-container" toastClassName="toastify-toast" />
+        <ToastContainer position={toast.POSITION.TOP_RIGHT} className="toastify-container" toastClassName="toastify-toast" />
         <ThemeProvider theme={customTheme}>
           <div className="flex-container">
             <CssBaseline />
@@ -49,22 +49,10 @@ export const App = (props: IAppProps) => {
                 currentLocale={props.currentLocale}
                 isStudent={props.isStudent}
                 isLecturer={props.isLecturer}
+                isSwaggerEnabled={props.isSwaggerEnabled}
+                isAdmin={props.isAdmin}
               />
             </ErrorBoundary>
-
-            {/* <ErrorBoundary>
-          <Header
-            isAuthenticated={props.isAuthenticated}
-            isStudent={props.isStudent}
-            isLecturer={props.isLecturer}
-            isAdmin={props.isAdmin}
-            currentLocale={props.currentLocale}
-            onLocaleChange={props.setLocale}
-            ribbonEnv={props.ribbonEnv}
-            isInProduction={props.isInProduction}
-            isSwaggerEnabled={props.isSwaggerEnabled}
-          />
-        </ErrorBoundary> */}
             <LoadingBar className="loading-bar" />
             <div className="container-fluid view-container max" id="app-view-container">
               <Card className="jh-card max-calc">
