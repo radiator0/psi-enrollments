@@ -1,7 +1,7 @@
 import './group-details.scss';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
+import { NavLink, RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 import log from 'app/config/log';
 import ScheduleElement from 'app/shared/model/domain/dto/schedule-element';
@@ -13,6 +13,8 @@ import mapScheduleElementToGroupData from './group-data-mapper';
 import moment from 'moment';
 import { APP_DATE_FORMAT_DOT } from 'app/config/constants';
 import { toast } from 'react-toastify';
+import IconButton from '@material-ui/core/IconButton/IconButton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 export interface MatchParams {
   groupCode: string;
@@ -76,7 +78,10 @@ class GroupDetails extends Component<RouteComponentProps<MatchParams>, IGroupDet
     const { isOk, data } = this.state;
     return isOk ? (
       <>
-        <Typography variant="h4" component="h4" align="center">
+        <IconButton onClick={() => this.props.history.goBack()}>
+          <ArrowBackIcon />
+        </IconButton>
+        <Typography style={{ marginBottom: '10px' }} variant="h4" component="h4" align="center">
           <Translate contentKey={'groupDetails.header'}></Translate>
           <span>{' ' + params.groupCode}</span>
         </Typography>

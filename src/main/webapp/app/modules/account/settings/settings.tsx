@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, Col, Alert, Row } from 'reactstrap';
+import { Col, Alert, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Translate, translate } from 'react-jhipster';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
@@ -8,8 +8,10 @@ import { locales, languages } from 'app/config/translation';
 import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
 import { saveAccountSettings, reset } from './settings.reducer';
+import { RouteComponentProps } from 'react-router-dom';
+import Button from '@material-ui/core/Button/Button';
 
-export interface IUserSettingsProps extends StateProps, DispatchProps {}
+export interface IUserSettingsProps extends StateProps, DispatchProps, RouteComponentProps {}
 
 export const SettingsPage = (props: IUserSettingsProps) => {
   useEffect(() => {
@@ -27,6 +29,7 @@ export const SettingsPage = (props: IUserSettingsProps) => {
 
     props.saveAccountSettings(account);
     event.persist();
+    props.history.push('/');
   };
 
   return (
@@ -95,7 +98,7 @@ export const SettingsPage = (props: IUserSettingsProps) => {
                 </option>
               ))}
             </AvField>
-            <Button color="primary" type="submit">
+            <Button variant="contained" color="primary" type="submit" style={{ margin: '4px' }}>
               <Translate contentKey="settings.form.button">Save</Translate>
             </Button>
           </AvForm>

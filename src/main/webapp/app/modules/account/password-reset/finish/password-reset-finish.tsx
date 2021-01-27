@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Col, Row, Button } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Translate, translate, getUrlParameter } from 'react-jhipster';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { handlePasswordResetFinish, reset } from '../password-reset.reducer';
 import PasswordStrengthBar from 'app/shared/layout/password/password-strength-bar';
+import Typography from '@material-ui/core/Typography/Typography';
+import Button from '@material-ui/core/Button/Button';
 
 export interface IPasswordResetFinishProps extends DispatchProps, RouteComponentProps<{ key: string }> {}
 
@@ -21,7 +23,10 @@ export const PasswordResetFinishPage = (props: IPasswordResetFinishProps) => {
     []
   );
 
-  const handleValidSubmit = (event, values) => props.handlePasswordResetFinish(key, values.newPassword);
+  const handleValidSubmit = (event, values) => {
+    props.handlePasswordResetFinish(key, values.newPassword);
+    props.history.push('/');
+  };
 
   const updatePassword = event => setPassword(event.target.value);
 
@@ -53,7 +58,7 @@ export const PasswordResetFinishPage = (props: IPasswordResetFinishProps) => {
             match: { value: 'newPassword', errorMessage: translate('global.messages.error.dontmatch') },
           }}
         />
-        <Button color="success" type="submit">
+        <Button variant="contained" color="primary" type="submit" style={{ margin: '4px' }}>
           <Translate contentKey="reset.finish.form.button">Validate new password</Translate>
         </Button>
       </AvForm>
@@ -64,9 +69,9 @@ export const PasswordResetFinishPage = (props: IPasswordResetFinishProps) => {
     <div>
       <Row className="justify-content-center">
         <Col md="4">
-          <h1>
+          <Typography variant="h4" component="h4" align="center">
             <Translate contentKey="reset.finish.title">Reset password</Translate>
-          </h1>
+          </Typography>
           <div>{key ? getResetForm() : null}</div>
         </Col>
       </Row>

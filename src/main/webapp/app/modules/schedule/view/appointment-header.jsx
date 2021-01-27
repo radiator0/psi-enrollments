@@ -5,6 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'clsx';
+import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
+import { NavLink } from 'react-router-dom';
 
 const style = ({ palette }) => ({
     icon: {
@@ -26,19 +28,22 @@ const getClassByLocation = (classes, location) => {
 const Header = withStyles(style, { name: 'Header' })(({
     children, appointmentData, classes, ...restProps
 }) => (
-    <AppointmentTooltip.Header
-        {...restProps}
-        className={classNames(getClassByLocation(classes, appointmentData.location), classes.header)}
-        appointmentData={appointmentData}
-    >
-        <IconButton
-            /* eslint-disable-next-line no-alert */
-            onClick={() => alert(JSON.stringify(appointmentData))}
-            className={classes.commandButton}
-        >
-            <MoreIcon />
-        </IconButton>
-    </AppointmentTooltip.Header>
-));
+        <AppointmentTooltip.Header
+            {...restProps}
+            className={classNames(getClassByLocation(classes, appointmentData.location), classes.header)}
+            appointmentData={appointmentData}>
+            {/* TOTO add groupcode here */}
+            <IconButton component={NavLink} to={"/group-details/Z00-19a"}
+                className={classes.commandButton}>
+                <UnfoldMoreIcon />
+            </IconButton>
+            <IconButton
+                /* eslint-disable-next-line no-alert */
+                onClick={() => alert(JSON.stringify(appointmentData))}
+                className={classes.commandButton}>
+                <MoreIcon />
+            </IconButton>
+        </AppointmentTooltip.Header>
+    ));
 
 export default Header;
