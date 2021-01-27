@@ -15,12 +15,16 @@ import axios from 'axios';
 import log from 'app/config/log';
 import EnrollmentData from './enrollment-data';
 import { Translate } from 'react-jhipster';
+import { TextField } from '@material-ui/core';
+import isEnrollmentAtive from '../../shared/model/domain/util/is-enrollment-active';
+import { red } from '@material-ui/core/colors';
 
 export type IEnrollmentsProps = StateProps;
 
 
 interface IEnrollmentsState {
-  enrollments: Array<EnrollmentData>
+  enrollments: Array<EnrollmentData>,
+  time: string,
 };
 
 
@@ -29,8 +33,14 @@ class Enrollments extends Component<IEnrollmentsProps, IEnrollmentsState> {
     super(props);
 
     this.state = {
-      enrollments: []
+      enrollments: [],
+      time: new Date().toLocaleTimeString(),
     };
+    setInterval(() => {
+      this.setState({
+        time: new Date().toLocaleTimeString()
+      })
+    }, 1000)
   }
 
   componentDidMount() {
@@ -39,18 +49,23 @@ class Enrollments extends Component<IEnrollmentsProps, IEnrollmentsState> {
 
   getData() {
     axios.get<Array<EnrollmentRightDetails>>("/api/enrollment-right")
-    .then(r => {
-      log.info(r.data);
-      const data = r.data.map(element => mapEnrollmentRightDetailsToEnrollmentData(element));
-      this.setState({ enrollments: data })
-    })
-    .catch(e => log.error(e))
+      .then(r => {
+        log.info(r.data);
+        const data = r.data.map(element => mapEnrollmentRightDetailsToEnrollmentData(element));
+        this.setState({ enrollments: data })
+      })
+      .catch(e => log.error(e))
   }
 
-  goToEnrollment(enrollmentData : EnrollmentData) {
+  isAnyEnrollmentActive(): boolean {
+    const currentDate = new Date();
+    return this.state.enrollments.some((element: EnrollmentData) => isEnrollmentAtive(element, currentDate));
+  }
+
+  goToEnrollment(enrollmentData: EnrollmentData) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    this.props.history.push( { pathname: `/enrolling`, state: { enrollment: enrollmentData }});
+    this.props.history.push({ pathname: `/enrolling`, state: { enrollment: enrollmentData } });
   }
 
   renderHeader() {
@@ -74,6 +89,20 @@ class Enrollments extends Component<IEnrollmentsProps, IEnrollmentsState> {
               <TableCell align="right"><Translate contentKey={'enrollments.right.enrollmentsStart'}>Start</Translate></TableCell>
               <TableCell align="right"><Translate contentKey={'enrollments.right.enrollmentsEnd'}>End</Translate></TableCell>
               <TableCell align="right"><Translate contentKey={'enrollments.right.rightStart'}>Right</Translate></TableCell>
+              <TableCell align='center'>
+                <TextField
+                  id="time"
+                  type="time"
+                  inputProps={{
+                    step: 1,
+                    style: {
+                      color: !this.isAnyEnrollmentActive() ? red[300] : 'black'
+                    }
+                  }}
+                  value={this.state.time}
+                  disabled={true}
+                />
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

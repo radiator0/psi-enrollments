@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -95,7 +95,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-
 export interface INavProps extends StateProps, DispatchProps {
   isAuthenticated: boolean;
   isStudent: boolean;
@@ -110,10 +109,12 @@ const Nav = (props: INavProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  if (props.isAuthenticated && (props.isStudent || props.isLecturer)) {
-    props.notExaminedRequestsCount();
-  }
 
+  useEffect(() => {
+    if (props.isAuthenticated && (props.isStudent || props.isLecturer)) {
+      props.notExaminedRequestsCount();
+    }
+  });
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -197,7 +198,7 @@ const Nav = (props: INavProps) => {
             </List>
           </>
         )}
-        {props.isAuthenticated && props.isSwaggerEnabled && process.env.NODE_ENV !== 'production' && <SwaggerMenu />}
+        {props.isAuthenticated && props.isSwaggerEnabled && props.isAdmin && <SwaggerMenu />}
       </Drawer>
     </>
   );
