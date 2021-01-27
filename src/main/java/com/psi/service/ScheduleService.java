@@ -8,11 +8,20 @@ import com.psi.service.dto.RecurringScheduleElementDTO;
 import com.psi.service.dto.ScheduleElementDTO;
 import com.psi.service.mapper.RecurringScheduleElementMapper;
 import com.psi.service.mapper.ScheduleElementMapper;
+import net.fortuna.ical4j.data.CalendarOutputter;
+import net.fortuna.ical4j.model.*;
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.property.*;
+import net.fortuna.ical4j.util.RandomUidGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,6 +44,9 @@ public class ScheduleService {
     private final ScheduleElementMapper scheduleElementMapper;
     private final RecurringScheduleElementMapper recurringScheduleElementMapper;
 
+    private final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+    private final RandomUidGenerator randomUidGenerator = new RandomUidGenerator();
+
     public ScheduleService(ClassUnitRepository classUnitRepository, ClassScheduleRepository classScheduleRepository, ClassGroupRepository classGroupRepository, UserService userService,
                            ScheduleElementMapper scheduleElementMapper, RecurringScheduleElementMapper recurringScheduleElementMapper) {
         this.classUnitRepository = classUnitRepository;
@@ -43,6 +55,9 @@ public class ScheduleService {
         this.userService = userService;
         this.scheduleElementMapper = scheduleElementMapper;
         this.recurringScheduleElementMapper = recurringScheduleElementMapper;
+
+        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setBasename("i18n/messages");
     }
 
     /**
@@ -51,21 +66,11 @@ public class ScheduleService {
      * @return the list of entities by user.
      */
     @Transactional(readOnly = true)
-    public List<ScheduleElementDTO> findAllForUser(User user) {
+    public List<ScheduleElementDTO> findAllScheduleElementsForUser(User user) {
         log.debug("Request to get all schedule elements for user: {}", user.getLogin());
-
-        if (userService.isUserStudent(user)) {
-            Student student = userService.getStudentInstance(user);
-            return classUnitRepository.findAll().stream()
-                .filter(unit -> unit.getClassGroup().getEnrollments().stream().anyMatch(e -> e.getStudent().equals(student)))
-                .map(scheduleElementMapper::toDto)
-                .collect(Collectors.toCollection(LinkedList::new));
-        } else {
-            Lecturer lecturer = userService.getLecturerInstance(user);
-            List<ClassUnit> classUnits = new ArrayList<>();
-            lecturer.getClassGroups().stream().map(ClassGroup::getClassUnits).forEach(classUnits::addAll);
-            return classUnits.stream().map(scheduleElementMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
-        }
+        return findAllClassUnitsForUser(user)
+            .map(scheduleElementMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**
@@ -91,7 +96,7 @@ public class ScheduleService {
                 .map(recurringScheduleElementMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
         } else {
-            return new LinkedList<RecurringScheduleElementDTO>();
+            return new LinkedList<>();
         }
     }
 
@@ -101,15 +106,85 @@ public class ScheduleService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public LinkedList<ScheduleElementDTO> findAllByGroupCode(String groupCode) {
+    public List<ScheduleElementDTO> findAllByGroupCode(String groupCode) {
         log.debug("Request to get all ScheduleElementDTO by GroupCode");
         Optional<ClassGroup> classGroup = classGroupRepository.findOneByCode(groupCode);
         if (classGroup.isPresent()) {
             return classGroup.get().getClassUnits().stream()
                 .map(scheduleElementMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
-        }else{
+        } else {
             throw new NotFoundException("This classGroup does not exists.");
+        }
+    }
+
+    /**
+     * Get all the schedule elements for lecturer and student in iCal format
+     *
+     * @return the list of entities by user in iCal format.
+     */
+    @Transactional(readOnly = true)
+    public byte[] findAllScheduleElementsInICalFormatForUser(User user, String language) throws IOException {
+        log.debug("Request to get all schedule elements in iCal format for user: {}", user.getLogin());
+        Stream<ClassUnit> classUnits = findAllClassUnitsForUser(user);
+
+        Calendar calendar = createCalendar(classUnits, language);
+
+        CalendarOutputter outputter = new CalendarOutputter();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        outputter.output(calendar, outputStream);
+
+        return outputStream.toByteArray();
+    }
+
+    private Calendar createCalendar(Stream<ClassUnit> classUnits, String language) {
+        Calendar calendar = new net.fortuna.ical4j.model.Calendar();
+        calendar.getProperties().add(new ProdId("-//Ben Fortuna//iCal4j 1.0//EN"));
+        calendar.getProperties().add(Version.VERSION_2_0);
+        calendar.getProperties().add(CalScale.GREGORIAN);
+
+        Stream<VEvent> events = classUnits.map(cu -> createEvent(cu, language));
+        events.forEach(e -> calendar.getComponents().add(e));
+
+        return calendar;
+    }
+
+    private VEvent createEvent(ClassUnit classUnit, String language) {
+        Locale locale = Locale.forLanguageTag(language);
+        Course course = classUnit.getClassGroup().getCourse();
+        Lecturer lecturer = classUnit.getClassGroup().getMainLecturer();
+        String formName = messageSource.getMessage(course.getForm().name(), new Object[0], locale);
+        String courseName = course.getShortName() != null ? course.getShortName() : course.getName();
+        DateTime start = new DateTime(DateTime.from(classUnit.getStartTime()).getTime());
+        DateTime end = new DateTime(DateTime.from(classUnit.getEndTime()).getTime());
+
+        VEvent event = new VEvent(start, end, String.format("%s (%s)", courseName, formName));
+        event.getProperties().add(randomUidGenerator.generateUid());
+        event.getProperties().add(new Categories(formName));
+
+        if(classUnit.getRoom() != null && classUnit.getRoom().getBuilding() != null) {
+            event.getProperties().add(new Location(classUnit.getRoom().getBuilding().getName() + " " + classUnit.getRoom().getNumber()));
+        }
+
+        if(lecturer != null) {
+            event.getProperties().add(new Contact(lecturer.getInternalUser().getEmail()));
+        }
+
+        if(lecturer != null) {
+            event.getProperties().add(new Description(lecturer.getTitle() != null ? lecturer.getTitle() + " " : lecturer.getInternalUser().getFirstName() + " "));
+        }
+
+        return event;
+    }
+
+    private Stream<ClassUnit> findAllClassUnitsForUser(User user) {
+        if (userService.isUserStudent(user)) {
+            Student student = userService.getStudentInstance(user);
+            return classUnitRepository.findAll().stream()
+                .filter(unit -> unit.getClassGroup().getEnrollments().stream().anyMatch(e -> e.getStudent().equals(student)));
+        } else {
+            Lecturer lecturer = userService.getLecturerInstance(user);
+            return lecturer.getClassGroups().stream().map(ClassGroup::getClassUnits).flatMap(Collection::stream);
         }
     }
 

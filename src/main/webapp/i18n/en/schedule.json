@@ -3,11 +3,15 @@
     "locale": "en-GB",
     "todayButtonText": "Today",
     "header": {
-      "semester": "Semester schedule"
+      "semester": "Semester schedule",
+      "exportCalendar": "Export"
     },
     "appointment": {
       "weekType": "Week type",
       "semesterPeriod": "Semester period"
+    },
+    "notification": {
+      "exportFailure": "Could not download calendar!"
     }
   }
 }

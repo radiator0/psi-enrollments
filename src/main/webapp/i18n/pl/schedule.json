@@ -3,11 +3,15 @@
     "locale": "pl-PL",
     "todayButtonText": "Dzisiaj",
     "header": {
-      "semester": "Plan semestru"
+      "semester": "Plan semestru",
+      "exportCalendar": "Wyeksportuj"
     },
     "appointment": {
       "weekType": "Typ tygodnia",
       "semesterPeriod": "Część semestru"
+    },
+    "notification": {
+      "exportFailure": "Nie udało się pobrać kalendarza!"
     }
   }
 }

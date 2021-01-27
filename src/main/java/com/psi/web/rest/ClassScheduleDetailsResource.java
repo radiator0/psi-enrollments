@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedList;
+import java.util.List;
 
 /**
  * REST controller for getting class schedules.
@@ -33,7 +33,7 @@ public class ClassScheduleDetailsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of classSchedules in body.
      */
     @GetMapping("/class-schedules-details/{groupCode}")
-    public LinkedList<ScheduleElementDTO> getAllClassSchedulesByGroupCode(@PathVariable String groupCode) {
+    public List<ScheduleElementDTO> getAllClassSchedulesByGroupCode(@PathVariable String groupCode) {
         log.debug("REST request to get all ScheduleElements by groupCode");
         return scheduleService.findAllByGroupCode(groupCode);
     }

@@ -14,7 +14,7 @@ import RecurringScheduleElement from '../../shared/model/domain/dto/recurring-sc
 import csr from './schedule-resources';
 import log from '../../config/log';
 import Appointment from './view/appointment';
-import { Typography } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import { RouteComponentProps } from 'react-router-dom';
 import ScheduleType from './schedule-types'
 import { StaticContext } from 'react-router';
@@ -23,6 +23,9 @@ import Header from './view/appointment-header';
 import Content from './view/appointment-content';
 import CommandButton from './view/appointment-command-button';
 import { Translate, translate} from 'react-jhipster';
+import downloadFile from 'js-file-download';
+import { toast } from 'react-toastify';
+import { error, exception } from 'console';
 
 interface IScheduleState {
   data: Array<ScheduleData>;
@@ -30,8 +33,9 @@ interface IScheduleState {
   currentDate: Date;
 };
 
+interface ISCheduleProps extends StateProps, RouteComponentProps<{ scheduleType: string }> {};
 
-export class Schedule extends React.PureComponent<RouteComponentProps<{ scheduleType: string }>, IScheduleState> {
+export class Schedule extends React.PureComponent<ISCheduleProps, IScheduleState> {
   constructor(props: Readonly<RouteComponentProps<{ scheduleType: string; }, StaticContext, unknown>>) {
     super(props);
 
@@ -87,14 +91,33 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
     );
   }
 
-  semesterHeading() {
-    return this.props.match.params.scheduleType === ScheduleType.semester && (
-      <>
-        <Typography variant="h4" component="h4" align='center'>
-          <Translate contentKey={'schedule.header.semester'}>Semester</Translate>
-        </Typography>
-      </>
-    );
+  renderHeader() {
+    return (<>
+        <Grid container justify="flex-end">
+          <Button variant="contained" color="primary" onClick={this.downloadCalendar} style={{marginRight: 20}}>
+            <Translate contentKey='schedule.header.exportCalendar'>Export</Translate>
+          </Button>
+        </Grid>
+        {this.props.match.params.scheduleType === ScheduleType.semester && (
+          <Typography variant="h4" component="h4" align='center'>
+            <Translate contentKey={'schedule.header.semester'}>Semester</Translate>
+          </Typography>
+        )}
+      </>);
+  }
+
+  downloadCalendar() {
+    axios.get<any>("/api/schedule/ica", { headers: { ['schedule-language']: translate('schedule.locale') }, responseType: 'blob' })
+    .then(r => {
+      if(r.data.type !== 'application/octet-stream') {  // HACK xD
+        throw Error('Invalid data format');
+      }
+      downloadFile(r.data, 'calendar.ics');
+    })
+    .catch(e => {
+      log.error(e);
+      toast.error(translate("schedule.notification.exportFailure"));
+    })
   }
 
   render() {
@@ -144,7 +167,7 @@ export class Schedule extends React.PureComponent<RouteComponentProps<{ schedule
           <Resources
             data={createScheduleResources()}
           />
-          {this.semesterHeading()}
+          {this.renderHeader()}
           {scheduleType === ScheduleType.week && <Toolbar />}
           {scheduleType === ScheduleType.week && <DateNavigator />}
           {scheduleType === ScheduleType.week && <TodayButton messages={{ today: translate('schedule.todayButtonText') }} />}

@@ -86,7 +86,6 @@ const lecturerDescription = (classes, appointmentData) => {
 }
 
 const placeDescription = (classes, appointmentData) => {
-  console.log(appointmentData);
   if(!appointmentData.room || !appointmentData.building)
     return (<></>);
   return (

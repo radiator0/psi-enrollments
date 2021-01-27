@@ -22,6 +22,7 @@
     "babel-loader": "^8.2.2",
     "bootstrap": "4.4.1",
     "bootswatch": "4.3.1",
+    "js-file-download": "^0.4.12",
     "loaders.css": "0.1.2",
     "lodash": "^4.17.20",
     "moment": "2.24.0",
