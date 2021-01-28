@@ -44,7 +44,11 @@
       "hideFullGroups": "Ukryj pełne grupy",
       "hideNotOverLimit": "Ukryj brak zapisu ponad stan",
       "filterLecturer": "Filtruj prowadzącego",
-      "lecturer": "Prowadzący"
+      "lecturer": "Prowadzący",
+      "yes": "Tak",
+      "no": "Nie",
+      "free": "Wolne",
+      "full": "Pełne"
     }
   }
 }

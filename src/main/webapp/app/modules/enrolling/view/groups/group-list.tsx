@@ -8,7 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import Row from './row';
+import Row, { renderLecturer, renderSchedule } from './row';
 import GroupsData from '../../groups-data';
 import { EnrollingAction } from '../../enrolling-action';
 import EnrollmentData from '../../../../modules/enrollments/enrollment-data';
@@ -16,9 +16,11 @@ import isEnrollmentAtive from '../../../../shared/model/domain/util/is-enrollmen
 import log from 'app/config/log';
 import { translate, Translate } from 'react-jhipster';
 import { IRequest } from 'app/shared/model/request.model';
-import { Checkbox, FormControlLabel, FormGroup, Grid, InputAdornment, TextField } from '@material-ui/core';
+import { Checkbox, FormControlLabel, FormGroup, Grid, IconButton, InputAdornment, Select, TextField } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
+import { group } from 'console';
+import ClearIcon from '@material-ui/icons/Clear';
 
 export type IGroupListProps = {
   enrollment: EnrollmentData;
@@ -30,10 +32,11 @@ export type IGroupListProps = {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IGroupListState {
   time: string;
-  hideFull: boolean;
-  hideNotOverLimit: boolean;
-  filterLecturer: boolean;
   lecturer: string;
+  schedule: string;
+  selectEnrolled: string;
+  selectOverLimit: string;
+  groupCode: string;
 }
 
 class GroupList extends Component<IGroupListProps, IGroupListState> {
@@ -41,10 +44,11 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
     super(props);
     this.state = {
       time: new Date().toLocaleTimeString(),
-      hideFull: false,
-      hideNotOverLimit: false,
-      filterLecturer: false,
       lecturer: '',
+      schedule: '',
+      selectEnrolled: '',
+      selectOverLimit: '',
+      groupCode: '',
     };
   }
 
@@ -56,13 +60,40 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
     }, 1000);
   }
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ ...this.state, [event.target.name]: event.target.checked });
+  handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+    const name = event.target.name;
+    this.setState({
+      ...this.state,
+      [name]: event.target.value,
+    });
+  };
+
+  clear = () => {
+    this.setState({
+      ...this.state,
+      lecturer: '',
+      schedule: '',
+      selectEnrolled: '',
+      selectOverLimit: '',
+      groupCode: '',
+    });
   };
 
   handleChangeLecturer = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       lecturer: event.target.value,
+    });
+  };
+
+  handleChangeSchedule = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      schedule: event.target.value,
+    });
+  };
+
+  handleChangeGroupCode = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      groupCode: event.target.value,
     });
   };
 
@@ -72,35 +103,6 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
         <Typography variant="h4" style={{ textAlign: 'center', paddingBottom: '10px' }}>
           <Translate contentKey={'enrolling.header.groups'}>Grupy</Translate>
         </Typography>
-        <FormGroup row style={{ paddingLeft: '140px' }}>
-          <FormControlLabel
-            style={{ marginBottom: '0' }}
-            control={<Checkbox checked={this.state.hideFull} onChange={this.handleChange} name="hideFull" color="primary" />}
-            label={translate('enrolling.filters.hideFullGroups')}
-          />
-          <FormControlLabel
-            style={{ marginBottom: '0' }}
-            control={
-              <Checkbox checked={this.state.hideNotOverLimit} onChange={this.handleChange} name="hideNotOverLimit" color="primary" />
-            }
-            label={translate('enrolling.filters.hideNotOverLimit')}
-          />
-          <FormControlLabel
-            style={{ marginBottom: '0' }}
-            control={<Checkbox checked={this.state.filterLecturer} onChange={this.handleChange} name="filterLecturer" color="primary" />}
-            label={translate('enrolling.filters.filterLecturer')}
-          />
-          {this.state.filterLecturer ? (
-            <TextField
-              id="standard-basic"
-              label={translate('enrolling.filters.lecturer')}
-              variant="outlined"
-              size="small"
-              value={this.state.lecturer}
-              onChange={this.handleChangeLecturer}
-            />
-          ) : null}
-        </FormGroup>
       </>
     );
   }
@@ -127,18 +129,33 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
 
   getGroupsData() {
     let filteredGroups = this.props.groupsData;
-    if (this.state.hideFull) {
-      filteredGroups = filteredGroups.filter(groupData => !groupData.isLimitReached);
+    if (this.state.selectEnrolled !== '') {
+      if (this.state.selectEnrolled === 'full') {
+        filteredGroups = filteredGroups.filter(groupData => groupData.isLimitReached);
+      } else if (this.state.selectEnrolled === 'free') {
+        filteredGroups = filteredGroups.filter(groupData => !groupData.isLimitReached);
+      }
     }
-    if (this.state.hideNotOverLimit) {
-      filteredGroups = filteredGroups.filter(groupData => groupData.canEnrollOverLimit);
+    if (this.state.selectOverLimit !== '') {
+      if (this.state.selectOverLimit === 'yes') {
+        filteredGroups = filteredGroups.filter(groupData => groupData.canEnrollOverLimit);
+      } else if (this.state.selectOverLimit === 'no') {
+        filteredGroups = filteredGroups.filter(groupData => !groupData.canEnrollOverLimit);
+      }
     }
-    if (this.state.filterLecturer && this.state.lecturer !== '') {
+    if (this.state.lecturer !== '') {
       filteredGroups = filteredGroups.filter(groupData => {
-        const lecturer = `${groupData.lecturerTitle + ' '}${groupData.lecturerFirstName + ' '}${groupData.lecturerSecondName + ' '}${
-          groupData.lecturerLastName + ' '
-        }`;
-        return lecturer.toLowerCase().includes(this.state.lecturer.toLowerCase());
+        return renderLecturer(groupData).toLowerCase().includes(this.state.lecturer.toLowerCase());
+      });
+    }
+    if (this.state.schedule !== '') {
+      filteredGroups = filteredGroups.filter(groupData => {
+        return renderSchedule(groupData).toLowerCase().includes(this.state.schedule.toLowerCase());
+      });
+    }
+    if (this.state.groupCode !== '') {
+      filteredGroups = filteredGroups.filter(groupData => {
+        return groupData.groupCode.toLowerCase().includes(this.state.groupCode.toLowerCase());
       });
     }
     return filteredGroups;
@@ -146,6 +163,7 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
 
   renderGroupsRows(currentDate: Date) {
     const { enrollment, requestOverLimit, onSelected } = this.props;
+    const { lecturer, schedule, selectEnrolled, selectOverLimit, groupCode } = this.state;
     const filteredGroups = this.getGroupsData();
     return (
       <TableContainer component={Paper}>
@@ -154,18 +172,63 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
             <TableRow>
               <TableCell align="right">
                 <Translate contentKey={'enrolling.group.code'}>Group code</Translate>
+                <br />
+                <Grid container>
+                  <Grid item xs={3}>
+                    {lecturer !== '' || schedule !== '' || selectEnrolled !== '' || selectOverLimit !== '' || groupCode !== '' ? (
+                      <IconButton size="small" style={{ marginRight: '10px' }}>
+                        <ClearIcon fontSize="small" onClick={() => this.clear()}></ClearIcon>
+                      </IconButton>
+                    ) : null}
+                  </Grid>
+                  <Grid item xs={9}>
+                    <TextField id="standard-basic" size="small" value={this.state.groupCode} onChange={this.handleChangeGroupCode} />
+                  </Grid>
+                </Grid>
               </TableCell>
               <TableCell align="right">
                 <Translate contentKey={'enrolling.group.enrolled'}>Enrolled</Translate>
+                <br />
+                <Select
+                  native
+                  value={this.state.selectEnrolled}
+                  onChange={this.handleChange}
+                  inputProps={{
+                    name: 'selectEnrolled',
+                    id: 'age-native-simple',
+                  }}
+                >
+                  <option aria-label="None" value="" />
+                  <option value={'free'}>{translate('enrolling.filters.free')}</option>
+                  <option value={'full'}>{translate('enrolling.filters.full')}</option>
+                </Select>
               </TableCell>
               <TableCell align="center">
                 <Translate contentKey={'enrolling.group.overLimit'}>Over limit</Translate>
+                <br />
+                <Select
+                  native
+                  value={this.state.selectOverLimit}
+                  onChange={this.handleChange}
+                  inputProps={{
+                    name: 'selectOverLimit',
+                    id: 'age-native-simple',
+                  }}
+                >
+                  <option aria-label="None" value="" />
+                  <option value={'yes'}>{translate('enrolling.filters.yes')}</option>
+                  <option value={'no'}>{translate('enrolling.filters.no')}</option>
+                </Select>
               </TableCell>
               <TableCell align="right">
                 <Translate contentKey={'enrolling.group.schedule'}>Schedule</Translate>
+                <br />
+                <TextField id="standard-basic" size="small" value={this.state.schedule} onChange={this.handleChangeSchedule} />
               </TableCell>
               <TableCell align="right">
                 <Translate contentKey={'enrolling.group.lecturer'}>Lecturer</Translate>
+                <br />
+                <TextField id="standard-basic" size="small" value={this.state.lecturer} onChange={this.handleChangeLecturer} />
               </TableCell>
               <TableCell align="right">
                 <TextField
@@ -179,10 +242,15 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
                   }}
                   value={this.state.time}
                   disabled={true}
-                  InputProps={{ startAdornment: ( 
-                    <InputAdornment position="end"> 
-                      <QueryBuilderIcon style={{paddingBottom:'2px',color: !isEnrollmentAtive(enrollment, currentDate) ? red[500] : 'black',}}/> 
-                    </InputAdornment> ), }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="end">
+                        <QueryBuilderIcon
+                          style={{ paddingBottom: '2px', color: !isEnrollmentAtive(enrollment, currentDate) ? red[500] : 'black' }}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </TableCell>
             </TableRow>

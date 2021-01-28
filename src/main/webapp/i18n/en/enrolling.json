@@ -44,7 +44,11 @@
       "hideFullGroups": "Hide full groups",
       "hideNotOverLimit": "Hide not over limit",
       "filterLecturer": "Filter lecturer",
-      "lecturer": "Lecturer"
+      "lecturer": "Lecturer",
+      "yes": "Yes",
+      "no": "No",
+      "free": "Free",
+      "full": "Full"
     }
   }
 }
