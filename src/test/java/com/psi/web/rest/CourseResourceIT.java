@@ -221,26 +221,6 @@ public class CourseResourceIT {
 
     @Test
     @Transactional
-    public void checkEctsIsRequired() throws Exception {
-        int databaseSizeBeforeTest = courseRepository.findAll().size();
-        // set the field null
-        course.setEcts(null);
-
-        // Create the Course, which fails.
-        CourseDTO courseDTO = courseMapper.toDto(course);
-
-
-        restCourseMockMvc.perform(post("/api/courses")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(courseDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Course> courseList = courseRepository.findAll();
-        assertThat(courseList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkFormIsRequired() throws Exception {
         int databaseSizeBeforeTest = courseRepository.findAll().size();
         // set the field null
@@ -276,7 +256,7 @@ public class CourseResourceIT {
             .andExpect(jsonPath("$.[*].ects").value(hasItem(DEFAULT_ECTS)))
             .andExpect(jsonPath("$.[*].form").value(hasItem(DEFAULT_FORM.toString())));
     }
-    
+
     @SuppressWarnings({"unchecked"})
     public void getAllCoursesWithEagerRelationshipsIsEnabled() throws Exception {
         when(courseServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
