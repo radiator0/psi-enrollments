@@ -108,11 +108,10 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
   }
 
   determinePossibleActionForGroup(groupsData: GroupsData, enrollment: EnrollmentData, currentDate: Date, requestOverLimit: IRequest) {
-    log.info(groupsData);
     if (!isEnrollmentAtive(enrollment, currentDate)) {
       return EnrollingAction.NoAction;
     }
-    if (requestOverLimit?.id) {
+    if (requestOverLimit?.id && !requestOverLimit?.isExamined){
       return EnrollingAction.RecallAsk;
     }
     if (groupsData.isStudentEnrolled) {
@@ -121,7 +120,7 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
     if (!groupsData.isLimitReached) {
       return EnrollingAction.Enroll;
     }
-    if (groupsData.canEnrollOverLimit) {
+    if (groupsData.canEnrollOverLimit && !requestOverLimit?.id) {
       return EnrollingAction.AskOverLimit;
     }
     return EnrollingAction.NoAction;

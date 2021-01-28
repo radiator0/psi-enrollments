@@ -30,7 +30,7 @@ id;code;is_enrollment_above_limit_allowed;people_limit;enrolled_count;is_full;co
 38;Z00-38a;true;0;0;false;18;8
 39;Z00-39a;false;0;0;false;19;9
 40;Z00-40a;false;0;0;false;20;10
-41;Z00-41a;true;1;0;false;11;1
+41;Z00-41a;true;0;0;false;11;1
 42;Z00-42a;true;1;0;false;12;2
 43;Z00-43a;true;1;0;false;13;3
 44;Z00-44a;true;1;0;false;14;4

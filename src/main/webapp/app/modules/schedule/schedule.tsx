@@ -122,7 +122,7 @@ export class Schedule extends React.PureComponent<ISCheduleProps, IScheduleState
   render() {
     const { data, createScheduleResources, currentDate } = this.state;
     const { scheduleType } = this.props.match.params;
-
+    log.info(data);
     return (
       <Paper className={scheduleType}>
         <Scheduler

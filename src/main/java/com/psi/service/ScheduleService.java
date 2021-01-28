@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -82,7 +84,7 @@ public class ScheduleService {
     public List<RecurringScheduleElementDTO> findAllRecurringScheduleElementsOfLastSemesterForUser(User user) {
         log.debug("Request to get all recurring schedule elements of last started semester for user: {} ", user.getLogin());
 
-        Map<Integer, List<ClassSchedule>> groupedSchedules;
+        Map<LocalDate, List<ClassSchedule>> groupedSchedules;
         if (userService.isUserStudent(user)) {
             groupedSchedules = findAllRecurringForStudent(userService.getStudentInstance(user));
         } else {
@@ -90,14 +92,14 @@ public class ScheduleService {
         }
 
         if (!groupedSchedules.isEmpty()) {
-            Integer lastSemesterNumber = Collections.max(groupedSchedules.keySet());
-
-            return groupedSchedules.get(lastSemesterNumber).stream()
-                .map(recurringScheduleElementMapper::toDto)
-                .collect(Collectors.toCollection(LinkedList::new));
-        } else {
-            return new LinkedList<>();
+            Optional<LocalDate> lastSemesterNumber =  groupedSchedules.keySet().stream().max(LocalDate::compareTo);
+            if(lastSemesterNumber.isPresent() && lastSemesterNumber.get() != null) {
+                return groupedSchedules.get(lastSemesterNumber.get()).stream()
+                    .map(recurringScheduleElementMapper::toDto)
+                    .collect(Collectors.toCollection(LinkedList::new));
+            }
         }
+        return new LinkedList<>();
     }
 
     /**
@@ -188,17 +190,17 @@ public class ScheduleService {
         }
     }
 
-    private Map<Integer, List<ClassSchedule>> findAllRecurringForStudent(Student student) {
+    private Map<LocalDate, List<ClassSchedule>> findAllRecurringForStudent(Student student) {
         return groupAndCollectClassSchedules(classScheduleRepository.findAll().stream().
             filter(s -> s.getClassGroup().getEnrollments().stream().anyMatch(e -> e.getStudent().equals(student))));
     }
 
-    private Map<Integer, List<ClassSchedule>> findAllRecurringForLecturer(Lecturer lecturer) {
+    private Map<LocalDate, List<ClassSchedule>> findAllRecurringForLecturer(Lecturer lecturer) {
         List<ClassSchedule> classSchedules = classScheduleRepository.findAllByLecturer(lecturer);
         return groupAndCollectClassSchedules(classSchedules.stream());
     }
 
-    private Map<Integer, List<ClassSchedule>> groupAndCollectClassSchedules(Stream<ClassSchedule> classSchedulesStream) {
-        return classSchedulesStream.collect(Collectors.groupingBy(s -> s.getClassGroup().getCourse().getEnrollmentDate().getSemester().getNumber()));
+    private Map<LocalDate, List<ClassSchedule>> groupAndCollectClassSchedules(Stream<ClassSchedule> classSchedulesStream) {
+        return classSchedulesStream.collect(Collectors.groupingBy(s -> s.getClassGroup().getCourse().getEnrollmentDate().getSemester().getStartDate()));
     }
 }
