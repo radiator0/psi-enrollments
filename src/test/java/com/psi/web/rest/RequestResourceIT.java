@@ -157,67 +157,6 @@ public class RequestResourceIT {
 
     @Test
     @Transactional
-    public void createRequestWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = requestRepository.findAll().size();
-
-        // Create the Request with an existing ID
-        request.setId(1L);
-        RequestDTO requestDTO = requestMapper.toDto(request);
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restRequestMockMvc.perform(post("/api/requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(requestDTO)))
-            .andExpect(status().is5xxServerError());
-
-        // Validate the Request in the database
-        List<Request> requestList = requestRepository.findAll();
-        assertThat(requestList).hasSize(databaseSizeBeforeCreate);
-    }
-
-
-    @Test
-    @Transactional
-    public void checkUuidIsRequired() throws Exception {
-        int databaseSizeBeforeTest = requestRepository.findAll().size();
-        // set the field null
-        request.setUuid(null);
-
-        // Create the Request, which fails.
-        RequestDTO requestDTO = requestMapper.toDto(request);
-
-
-        restRequestMockMvc.perform(post("/api/requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(requestDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Request> requestList = requestRepository.findAll();
-        assertThat(requestList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkDateIsRequired() throws Exception {
-        int databaseSizeBeforeTest = requestRepository.findAll().size();
-        // set the field null
-        request.setDate(null);
-
-        // Create the Request, which fails.
-        RequestDTO requestDTO = requestMapper.toDto(request);
-
-
-        restRequestMockMvc.perform(post("/api/requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(requestDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Request> requestList = requestRepository.findAll();
-        assertThat(requestList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkTextIsRequired() throws Exception {
         int databaseSizeBeforeTest = requestRepository.findAll().size();
         // set the field null
@@ -236,22 +175,6 @@ public class RequestResourceIT {
         assertThat(requestList).hasSize(databaseSizeBeforeTest);
     }
 
-    @Test
-    @Transactional
-    public void getRequest() throws Exception {
-        // Initialize the database
-        requestRepository.saveAndFlush(request);
-
-        // Get the request
-        restRequestMockMvc.perform(get("/api/requests/{id}", request.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(request.getId().intValue()))
-            .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID.toString()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.text").value(DEFAULT_TEXT))
-            .andExpect(jsonPath("$.isExamined").value(DEFAULT_IS_EXAMINED.booleanValue()));
-    }
     @Test
     @Transactional
     public void getNonExistingRequest() throws Exception {
