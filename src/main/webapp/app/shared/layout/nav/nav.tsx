@@ -193,18 +193,24 @@ const Nav = (props: INavProps) => {
                   <StudentAsks notExaminedCount={props.notExaminedCount} />
                 </>
               ) : (
-                  <LecturerAsks notExaminedCount={props.notExaminedCount} />
-                )}
+                <LecturerAsks notExaminedCount={props.notExaminedCount} />
+              )}
             </List>
           </>
         )}
-        {props.isAuthenticated && props.isSwaggerEnabled && props.isAdmin && <SwaggerMenu />}
+        {props.isAuthenticated && props.isSwaggerEnabled && process.env.NODE_ENV !== 'production' && (
+          <>
+            <Divider />
+            <List>
+              <SwaggerMenu />
+            </List>
+          </>
+        )}
+        <Divider />
       </Drawer>
     </>
   );
 };
-
-
 
 const mapStateToProps = ({ request }: IRootState) => ({
   notExaminedCount: request.notExaminedCount,
@@ -217,4 +223,4 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Nav)
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

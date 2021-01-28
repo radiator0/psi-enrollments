@@ -19,6 +19,7 @@ import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
 import InfoIcon from '@material-ui/icons/Info';
 import { NavLink } from 'react-router-dom';
+import ReplayIcon from '@material-ui/icons/Replay';
 
 const useRowStyles = makeStyles({
     root: {
@@ -51,7 +52,7 @@ const getActionButton = (row: GroupsData, action: EnrollingAction) => {
         case EnrollingAction.AskOverLimit:
             return (<LiveHelpIcon style={{ color: blue[500] }}></LiveHelpIcon>);
         case EnrollingAction.RecallAsk:
-            return (<SettingsBackupRestoreIcon style={{ color: blue[500] }}></SettingsBackupRestoreIcon>);
+            return (<ReplayIcon style={{ color: red[500] }}></ReplayIcon>);
         case EnrollingAction.Enroll:
             return (<PersonAddIcon ></PersonAddIcon>);
         case EnrollingAction.Disenroll:
@@ -90,7 +91,7 @@ function Row(props: IRowProps) {
                     {row.groupCode}
                     {renderInfoButton(row.groupCode)}
                 </TableCell>
-                <TableCell align="right">{`${row.enrolledCount}/${row.limit}`}</TableCell>
+                <TableCell align="right"><span  style={row.isLimitReached? { color: red[500] }:  { color: green[800] }}>{`${row.enrolledCount}/${row.limit}`}</span></TableCell>
                 <TableCell align="center">{renderCanEnrollOverLimit(row)}</TableCell>
                 <TableCell align="right">{renderSchedule(row)}</TableCell>
                 <TableCell align="right">{renderLecturer(row)}</TableCell>

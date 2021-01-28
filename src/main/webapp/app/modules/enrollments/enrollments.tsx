@@ -15,9 +15,10 @@ import axios from 'axios';
 import log from 'app/config/log';
 import EnrollmentData from './enrollment-data';
 import { Translate } from 'react-jhipster';
-import { TextField } from '@material-ui/core';
+import { InputAdornment, TextField } from '@material-ui/core';
 import isEnrollmentAtive from '../../shared/model/domain/util/is-enrollment-active';
 import { red } from '@material-ui/core/colors';
+import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 
 export type IEnrollmentsProps = StateProps;
 
@@ -96,11 +97,15 @@ class Enrollments extends Component<IEnrollmentsProps, IEnrollmentsState> {
                   inputProps={{
                     step: 1,
                     style: {
-                      color: !this.isAnyEnrollmentActive() ? red[300] : 'black'
+                      color: !this.isAnyEnrollmentActive() ? red[500] : 'black'
                     }
                   }}
                   value={this.state.time}
                   disabled={true}
+                  InputProps={{ startAdornment: ( 
+                  <InputAdornment position="end"> 
+                    <QueryBuilderIcon style={{paddingBottom:'2px',color: !this.isAnyEnrollmentActive() ? red[500] : 'black'}}/> 
+                  </InputAdornment> ), }}
                 />
               </TableCell>
             </TableRow>

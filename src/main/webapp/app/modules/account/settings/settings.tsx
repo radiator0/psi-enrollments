@@ -10,6 +10,7 @@ import { getSession } from 'app/shared/reducers/authentication';
 import { saveAccountSettings, reset } from './settings.reducer';
 import { RouteComponentProps } from 'react-router-dom';
 import Button from '@material-ui/core/Button/Button';
+import Typography from '@material-ui/core/Typography/Typography';
 
 export interface IUserSettingsProps extends StateProps, DispatchProps, RouteComponentProps {}
 
@@ -35,41 +36,13 @@ export const SettingsPage = (props: IUserSettingsProps) => {
   return (
     <div>
       <Row className="justify-content-center">
-        <Col md="8">
-          <h2 id="settings-title">
+        <Col md="4">
+          <Typography style={{ marginBottom: '10px' }} variant="h4" component="h4" align="center">           
             <Translate contentKey="settings.title" interpolate={{ username: props.account.login }}>
               User settings for {props.account.login}
             </Translate>
-          </h2>
+          </Typography>
           <AvForm id="settings-form" onValidSubmit={handleValidSubmit}>
-            {/* First name */}
-            <AvField
-              className="form-control"
-              name="firstName"
-              label={translate('settings.form.firstname')}
-              id="firstName"
-              placeholder={translate('settings.form.firstname.placeholder')}
-              validate={{
-                required: { value: true, errorMessage: translate('settings.messages.validate.firstname.required') },
-                minLength: { value: 1, errorMessage: translate('settings.messages.validate.firstname.minlength') },
-                maxLength: { value: 50, errorMessage: translate('settings.messages.validate.firstname.maxlength') },
-              }}
-              value={props.account.firstName}
-            />
-            {/* Last name */}
-            <AvField
-              className="form-control"
-              name="lastName"
-              label={translate('settings.form.lastname')}
-              id="lastName"
-              placeholder={translate('settings.form.lastname.placeholder')}
-              validate={{
-                required: { value: true, errorMessage: translate('settings.messages.validate.lastname.required') },
-                minLength: { value: 1, errorMessage: translate('settings.messages.validate.lastname.minlength') },
-                maxLength: { value: 50, errorMessage: translate('settings.messages.validate.lastname.maxlength') },
-              }}
-              value={props.account.lastName}
-            />
             {/* Email */}
             <AvField
               name="email"

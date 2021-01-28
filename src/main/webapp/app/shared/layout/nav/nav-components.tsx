@@ -49,9 +49,7 @@ export const EnrollmentsMenu = () => (
   <ListItem button component={RouterLink} activeClassName="nav-active" to="/enrollments">
     <Tooltip title={translate('global.menu.enrollments')}>
       <ListItemIcon>
-        <Badge badgeContent={12} color="primary">
-          <AssignmentIcon />
-        </Badge>
+        <AssignmentIcon />
       </ListItemIcon>
     </Tooltip>
     <ListItemText primary={translate('global.menu.enrollments')} />
@@ -59,7 +57,7 @@ export const EnrollmentsMenu = () => (
 );
 
 export interface LecturerAsksProps {
-  notExaminedCount: number
+  notExaminedCount: number;
 }
 
 export const LecturerAsks = (props: LecturerAsksProps) => (
@@ -76,11 +74,10 @@ export const LecturerAsks = (props: LecturerAsksProps) => (
 );
 
 export interface StudentAsksProps {
-  notExaminedCount: number
+  notExaminedCount: number;
 }
 
 export const StudentAsks = (props: StudentAsksProps) => (
-
   <ListItem button component={RouterLink} activeClassName="nav-active" to="/requests">
     <Tooltip title={translate('global.menu.requests')}>
       <ListItemIcon>
@@ -91,7 +88,7 @@ export const StudentAsks = (props: StudentAsksProps) => (
     </Tooltip>
     <ListItemText primary={translate('global.menu.requests')} />
   </ListItem>
-)
+);
 
 export const SwaggerMenu = () => (
   <ListItem button component={RouterLink} activeClassName="nav-active" to="/docs">

@@ -16,9 +16,10 @@ import isEnrollmentAtive from '../../../../shared/model/domain/util/is-enrollmen
 import log from 'app/config/log';
 import { translate, Translate } from 'react-jhipster';
 import { IRequest } from 'app/shared/model/request.model';
-import { Checkbox, FormControlLabel, FormGroup, Grid, TextField } from '@material-ui/core';
+import { Checkbox, FormControlLabel, FormGroup, Grid, InputAdornment, TextField } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import GroupData from '../../group-details/group-data';
+import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 
 export type IGroupListProps = {
   enrollment: EnrollmentData;
@@ -174,11 +175,15 @@ class GroupList extends Component<IGroupListProps, IGroupListState> {
                   inputProps={{
                     step: 1,
                     style: {
-                      color: !isEnrollmentAtive(enrollment, currentDate) ? red[300] : 'black',
+                      color: !isEnrollmentAtive(enrollment, currentDate) ? red[500] : 'black',
                     },
                   }}
                   value={this.state.time}
                   disabled={true}
+                  InputProps={{ startAdornment: ( 
+                    <InputAdornment position="end"> 
+                      <QueryBuilderIcon style={{paddingBottom:'2px',color: !isEnrollmentAtive(enrollment, currentDate) ? red[500] : 'black',}}/> 
+                    </InputAdornment> ), }}
                 />
               </TableCell>
             </TableRow>

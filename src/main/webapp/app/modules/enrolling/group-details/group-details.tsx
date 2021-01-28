@@ -78,7 +78,7 @@ class GroupDetails extends Component<RouteComponentProps<MatchParams>, IGroupDet
     const { isOk, data } = this.state;
     return isOk ? (
       <>
-        <IconButton onClick={() => this.props.history.goBack()}>
+        <IconButton onClick={() => this.props.history.goBack()} style={{position: 'absolute'}}>
           <ArrowBackIcon />
         </IconButton>
         <Typography style={{ marginBottom: '10px' }} variant="h4" component="h4" align="center">

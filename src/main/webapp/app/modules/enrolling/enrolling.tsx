@@ -24,6 +24,8 @@ import Modal from '../../shared/layout/modal';
 import { createEntity, getEntities, deleteEntity } from 'app/shared/reducers/request.reducer';
 import { IRootState } from 'app/shared/reducers';
 import { IRequest } from 'app/shared/model/request.model';
+import { IconButton } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 export interface IEnrollingProps extends StateProps, DispatchProps, RouteComponentProps<{}, StaticContext, { enrollment: EnrollmentData }> { };
 
@@ -281,6 +283,9 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     return (
       <>
         {this.state.modal()}
+        <IconButton onClick={() => this.props.history.goBack()} style={{position: 'absolute'}}>
+          <ArrowBackIcon />
+        </IconButton>
         {this.renderHeader()}
         <Grid style={gridStyle}>
           <div style={courseListStyle}>

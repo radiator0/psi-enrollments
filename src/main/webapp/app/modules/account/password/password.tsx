@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Translate, translate } from 'react-jhipster';
 import { connect } from 'react-redux';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
 import PasswordStrengthBar from 'app/shared/layout/password/password-strength-bar';
 import { savePassword, reset } from './password.reducer';
+import Typography from '@material-ui/core/Typography/Typography';
+import Button from '@material-ui/core/Button/Button';
 
 export interface IUserPasswordProps extends StateProps, DispatchProps {}
 
@@ -31,12 +33,12 @@ export const PasswordPage = (props: IUserPasswordProps) => {
   return (
     <div>
       <Row className="justify-content-center">
-        <Col md="8">
-          <h2 id="password-title">
+        <Col md="4">
+          <Typography style={{ marginBottom: '10px' }} variant="h4" component="h4" align="center">           
             <Translate contentKey="password.title" interpolate={{ username: props.account.login }}>
               Password for {props.account.login}
             </Translate>
-          </h2>
+          </Typography>
           <AvForm id="password-form" onValidSubmit={handleValidSubmit}>
             <AvField
               name="currentPassword"
@@ -84,7 +86,7 @@ export const PasswordPage = (props: IUserPasswordProps) => {
                 },
               }}
             />
-            <Button color="success" type="submit">
+            <Button variant="contained" color="primary" type="submit" style={{ margin: '4px' }}>
               <Translate contentKey="password.form.button">Save</Translate>
             </Button>
           </AvForm>

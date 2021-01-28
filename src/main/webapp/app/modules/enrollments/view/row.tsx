@@ -20,6 +20,7 @@ import { Translate } from 'react-jhipster';
 import Button from '@material-ui/core/Button/Button';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import isEnrollmentAtive from '../../../shared/model/domain/util/is-enrollment-active';
 
 const useRowStyles = makeStyles({
   root: {
@@ -51,7 +52,7 @@ function rightsIcon(date: Date) {
 
 function Row(props: IRowProps) {
   const { row, onSelected } = props;
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
 
   return (
@@ -72,7 +73,7 @@ function Row(props: IRowProps) {
           {`${row.rightStartDate.toLocaleDateString()} ${row.rightStartDate.toLocaleTimeString()}`}
         </TableCell>
         <TableCell align="right">
-          <Button variant="contained" color="primary" onClick={() => onSelected(row)} endIcon={<KeyboardArrowRightIcon />}>
+          <Button variant="contained" color={isEnrollmentAtive(row, new Date()) ? "primary" : "secondary"} onClick={() => onSelected(row)} endIcon={<KeyboardArrowRightIcon />}>
             <Translate contentKey={'enrollments.right.select'}>Select</Translate>
           </Button>
         </TableCell>
