@@ -145,18 +145,6 @@ public class RequestResourceIT {
 
     @Test
     @Transactional
-    public void createRequest() throws Exception {
-        int databaseSizeBeforeCreate = requestRepository.findAll().size();
-        // Create the Request
-        RequestDTO requestDTO = requestMapper.toDto(request);
-        restRequestMockMvc.perform(post("/api/requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(requestDTO)))
-            .andExpect(status().is5xxServerError());
-    }
-
-    @Test
-    @Transactional
     public void checkTextIsRequired() throws Exception {
         int databaseSizeBeforeTest = requestRepository.findAll().size();
         // set the field null
@@ -183,21 +171,4 @@ public class RequestResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
-    @Transactional
-    public void deleteRequest() throws Exception {
-        // Initialize the database
-        requestRepository.saveAndFlush(request);
-
-        int databaseSizeBeforeDelete = requestRepository.findAll().size();
-
-        // Delete the request
-        restRequestMockMvc.perform(delete("/api/requests/{id}", request.getId())
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
-
-        // Validate the database contains one less item
-        List<Request> requestList = requestRepository.findAll();
-        assertThat(requestList).hasSize(databaseSizeBeforeDelete - 1);
-    }
 }
