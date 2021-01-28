@@ -39,9 +39,12 @@ class Requests extends Component<IRequestsProps, IRequestsStates> {
   render() {
     const { requestList, loading, account } = this.props;
     const { open } = this.state;
-    const list = requestList.filter(r => !r.isExamined).sort((r1, r2) => Date.parse(r1.date) - Date.parse(r2.date));
     const isStudent = account.authorities[0] === AUTHORITIES.STUDENT;
     const isLecturer = account.authorities[0] === AUTHORITIES.LECTURER;
+    let list = requestList;
+    if(isLecturer) {
+      list = requestList.filter(r => !r.isExamined).sort((r1, r2) => Date.parse(r1.date) - Date.parse(r2.date));
+    }
     return (
       <React.Fragment>
         <Typography variant='h4' component='h4' align='center'>
@@ -116,7 +119,7 @@ class Requests extends Component<IRequestsProps, IRequestsStates> {
                                 <Translate contentKey="enrollmentsApp.action.accept">Accept</Translate>
                               </Button>
                             </ButtonGroup>
-                            : isStudent ?
+                            : isStudent && !req.isExamined?
                               <Button
                                 onClick={() => this.props.deleteEntity(req.id)}
                                 startIcon={<FontAwesomeIcon icon={faUndoAlt} />}
@@ -136,7 +139,9 @@ class Requests extends Component<IRequestsProps, IRequestsStates> {
                             <Typography variant="h6" gutterBottom component="div">
                               <Translate contentKey="enrollmentsApp.request.text">Request</Translate>
                             </Typography>
-                            <Typography variant="subtitle1">{req.text}</Typography>
+                            <span style={{ fontFamily: 'inherit', whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
+                              {req.text}
+                            </span>
                           </Box>
                         </Collapse>
                       </TableCell>

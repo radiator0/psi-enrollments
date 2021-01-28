@@ -18,7 +18,6 @@ import { translate, Translate } from 'react-jhipster';
 import { IRequest } from 'app/shared/model/request.model';
 import { Checkbox, FormControlLabel, FormGroup, Grid, InputAdornment, TextField } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
-import GroupData from '../../group-details/group-data';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 
 export type IGroupListProps = {

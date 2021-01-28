@@ -1,4 +1,4 @@
 id;uuid;date;text;is_examined;is_accepted;class_group_id;student_id
 1;312e6e10-356d-41f0-9dae-62352496ce76;2021-01-14T11:11:00;BLAGAM PRZYJM MIE;false;false;1;1
-31;357dba8e-0cd5-4ef0-b102-9c2698d60e03;2021-01-14T11:11:00;PLX PANIE PROWADZĄCY;false;false;31;1
+23;357dba8e-0cd5-4ef0-b102-9c2698d60e03;2021-01-14T11:11:00;PLX PANIE PROWADZĄCY;false;false;23;1
 41;357dba8e-0cd5-4ef0-b102-78920baf6642;2021-01-14T11:11:00;PROSZE O GRUPE;false;false;41;1
