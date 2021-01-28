@@ -15,7 +15,7 @@ id;login;password_hash;first_name;second_name;last_name;email;image_url;activate
 20;lecturer10;$2y$12$76EvVzs2UtfIZCBg4qVs8.tsi1ZPUdaSbPFJXeMI1LA9Bgna6CCeK;Tomisław;Apoloniusz;Curuś-Bachleda;lecturer10@localhost;;true;en;system;system
 101;student1;$2y$12$76EvVzs2UtfIZCBg4qVs8.tsi1ZPUdaSbPFJXeMI1LA9Bgna6CCeK;Jan;Paweł;Abacki;user1@localhost;;true;en;system;system
 102;student2;$2y$12$76EvVzs2UtfIZCBg4qVs8.tsi1ZPUdaSbPFJXeMI1LA9Bgna6CCeK;Adam;;Adamski;user2@localhost;;true;en;system;system
-103;student3;$2y$12$76EvVzs2UtfIZCBg4qVs8.tsi1ZPUdaSbPFJXeMI1LA9Bgna6CCeK;Tomasz;Adam;Tomaszewski;user3@localhost;;true;en;system;system
+103;student3;$2y$12$76EvVzs2UtfIZCBg4qVs8.tsi1ZPUdaSbPFJXeMI1LA9Bgna6CCeK;Tomasz;Adam;Tomaszewski;238379@student.pwr.edu.pl;;true;en;system;system
 104;student4;$2y$12$76EvVzs2UtfIZCBg4qVs8.tsi1ZPUdaSbPFJXeMI1LA9Bgna6CCeK;Paweł;Jan;Kowal;user4@localhost;;true;en;system;system
 105;student5;$2y$12$76EvVzs2UtfIZCBg4qVs8.tsi1ZPUdaSbPFJXeMI1LA9Bgna6CCeK;Gerwazy;;Pawłowski;user5localhost;;true;en;system;system
 106;student6;$2y$12$76EvVzs2UtfIZCBg4qVs8.tsi1ZPUdaSbPFJXeMI1LA9Bgna6CCeK;Erwin;;Adamski;user6@localhost;;true;en;system;system
