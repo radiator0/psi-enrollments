@@ -173,7 +173,11 @@ public class ScheduleService {
         }
 
         if(lecturer != null) {
-            event.getProperties().add(new Description(lecturer.getTitle() != null ? lecturer.getTitle() + " " : lecturer.getInternalUser().getFirstName() + " "));
+            String title = lecturer.getTitle();
+            String firstName = lecturer.getInternalUser().getFirstName();
+            String secondName = lecturer.getInternalUser().getSecondName();
+            String lastName = lecturer.getInternalUser().getLastName();
+            event.getProperties().add(new Description((title != null ? title + " " : "") + firstName + " " + (secondName != null ? secondName + " " : "") + lastName));
         }
 
         return event;

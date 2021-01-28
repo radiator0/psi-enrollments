@@ -9,6 +9,7 @@ import com.psi.service.mapper.EnrollmentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
  * Service Implementation for managing {@link Enrollment}.
  */
 @Service
-@Transactional
+@Transactional( propagation = Propagation.REQUIRES_NEW)
 public class EnrollingService {
 
     private final Logger log = LoggerFactory.getLogger(EnrollingService.class);
@@ -32,6 +33,8 @@ public class EnrollingService {
     private final EnrollmentMapper enrollmentMapper;
 
     private final UserService userService;
+
+    private static final Object lock = new Object();
 
     public EnrollingService(EnrollmentRepository enrollmentRepository, ClassGroupRepository classGroupRepository,
                             RequestRepository requestRepository, EnrollmentMapper enrollmentMapper, UserService userService) {
@@ -49,33 +52,32 @@ public class EnrollingService {
      * @param user student to enroll.
      * @return the persisted entity.
      */
-    @Transactional
     public EnrollmentDTO enrollStudent(Long groupId, User user) throws Exception {
         Instant requestDate = Instant.now();
 
-        Student student = userService.getStudentInstance(user);
-        log.debug("Request to enroll student : {}", student);
-        ClassGroup classGroup = classGroupRepository.getOne(groupId);
+        synchronized (lock) {
+            Student student = userService.getStudentInstance(user);
+            log.debug("Request to enroll student : {}", student);
+            ClassGroup classGroup = classGroupRepository.getOne(groupId);
+            validateTimeAndRights(requestDate, classGroup, student);
+            validateGroupNotFull(classGroup);
+            Set<Enrollment> collidingEnrollments = getCollidingEnrollments(classGroup, student);
+            for(Enrollment e : collidingEnrollments) {
+                enrollmentRepository.delete(e);
+            }
 
-        validateTimeAndRights(requestDate, classGroup, student);
-        validateGroupNotFull(classGroup);
+            requestRepository.deleteAll(classGroup.getRequests().stream()
+                .filter(r -> r.getStudent().equals(student) && !r.isIsExamined()).collect(Collectors.toList()));
 
-        Set<Enrollment> collidingEnrollments = getCollidingEnrollments(classGroup, student);
-        for(Enrollment e : collidingEnrollments) {
-            enrollmentRepository.delete(e);
+            Enrollment enrollment = new Enrollment();
+            enrollment.setStudent(student);
+            enrollment.setClassGroup(classGroup);
+            enrollment.setDate(requestDate);
+            enrollment.setIsAdministrative(false);
+
+            enrollment = enrollmentRepository.save(enrollment);
+            return enrollmentMapper.toDto(enrollment);
         }
-
-        requestRepository.deleteAll(classGroup.getRequests().stream()
-            .filter(r -> r.getStudent().equals(student) && !r.isIsExamined()).collect(Collectors.toList()));
-
-        Enrollment enrollment = new Enrollment();
-        enrollment.setStudent(student);
-        enrollment.setClassGroup(classGroup);
-        enrollment.setDate(requestDate);
-        enrollment.setIsAdministrative(false);
-
-        enrollment = enrollmentRepository.save(enrollment);
-        return enrollmentMapper.toDto(enrollment);
     }
 
     private void validateTimeAndRights(Instant requestDate, ClassGroup classGroup, Student student) throws Exception {  // TODO xD
@@ -84,21 +86,22 @@ public class EnrollingService {
             .findFirst().orElseThrow(() -> new Exception("Student has no rights to perform this enrollment"));
 
         if(requestDate.isBefore(correspondingRight.getStartDate())) {
-            throw new Exception("Student can not enroll in this moment.");
+            throw new RuntimeException("Student can not enroll in this moment.");
         }
         if(correspondingRight.getEnrollmentDate().getEnrollmentUnits().stream()
             .noneMatch(u -> u.getStartDate().isBefore(requestDate) && u.getEndDate().isAfter(requestDate))) {
-            throw new Exception("Student can not enroll because enrollments are not active.");
+            throw new RuntimeException("Student can not enroll because enrollments are not active.");
         }
 
         if(classGroup.getCourse().getSpecialties() != null && !classGroup.getCourse().getSpecialties().isEmpty()
             && !classGroup.getCourse().getSpecialties().contains(correspondingRight.getSpecialty())) {
-            throw new Exception("Student has no rights to enroll to a course with speciality restrictions.");
+            throw new RuntimeException("Student has no rights to enroll to a course with speciality restrictions.");
         }
     }
-    private void validateGroupNotFull(ClassGroup classGroup) throws Exception {  // TODO xD
+
+    private void validateGroupNotFull(ClassGroup classGroup) throws Exception {
         if (classGroup.getEnrollments().size() >= classGroup.getPeopleLimit()) {
-            throw new Exception("Student can not enroll because group is full.");
+            throw new RuntimeException("Student can not enroll because group is full.");
         }
     }
 
@@ -130,7 +133,6 @@ public class EnrollingService {
      * @param groupId group id to enroll student to.
      * @param user student to enroll.
      */
-    @Transactional
     public Long disenroll(Long groupId, User user) {
         Student student = userService.getStudentInstance(user);
         log.debug("Request to disenroll student : {}", student);

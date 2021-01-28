@@ -111,7 +111,7 @@ export class Schedule extends React.PureComponent<ISCheduleProps, IScheduleState
       if(r.data.type !== 'application/octet-stream') {  // HACK xD
         throw Error('Invalid data format');
       }
-      downloadFile(r.data, 'calendar.ics');
+      downloadFile(r.data, `calendar_${translate('schedule.locale')}.ics`);
     })
     .catch(e => {
       log.error(e);

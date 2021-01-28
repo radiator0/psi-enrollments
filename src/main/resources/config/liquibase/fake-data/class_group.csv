@@ -1,5 +1,6 @@
 id;code;is_enrollment_above_limit_allowed;people_limit;enrolled_count;is_full;course_id;main_lecturer_id
 1;Z00-01a;true;2;0;false;1;1
+2;Z03-02a;true;1;0;false;2;10
 11;Z00-11a;false;1;0;false;11;1
 12;Z00-12a;true;0;0;false;12;2
 13;Z00-13a;false;2;0;false;13;3
