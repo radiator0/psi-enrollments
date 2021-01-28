@@ -16,6 +16,7 @@ export const ACTION_TYPES = {
   DECLINE_REQUEST: 'request/DECLINE_REQUEST',
   NOT_EXAMINED_COUNT: 'request/NOT_EXAMINED_COUNT',
   RESET: 'request/RESET',
+  LOGOUT: 'authentication/LOGOUT',
 };
 
 const initialState = {
@@ -106,6 +107,7 @@ export default (state: RequestState = initialState, action): RequestState => {
         loading: false,
         notExaminedCount: action.payload.data,
       };
+    case ACTION_TYPES.LOGOUT:
     case ACTION_TYPES.RESET:
       return {
         ...initialState,
