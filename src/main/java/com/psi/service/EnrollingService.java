@@ -49,6 +49,7 @@ public class EnrollingService {
      * @param user student to enroll.
      * @return the persisted entity.
      */
+    @Transactional
     public EnrollmentDTO enrollStudent(Long groupId, User user) throws Exception {
         Instant requestDate = Instant.now();
 
@@ -129,6 +130,7 @@ public class EnrollingService {
      * @param groupId group id to enroll student to.
      * @param user student to enroll.
      */
+    @Transactional
     public Long disenroll(Long groupId, User user) {
         Student student = userService.getStudentInstance(user);
         log.debug("Request to disenroll student : {}", student);

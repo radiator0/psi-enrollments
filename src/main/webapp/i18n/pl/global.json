@@ -159,5 +159,5 @@
       "not.image": "Spodziewano się obrazu ale znaleziono \"{{ fileType }}\""
     }
   },
-  "footer": "To jest stopka"
+  "footer": "System zapisów Wydziału Informatyki i Zarządzania Politechniki Wrocławskiej V0.21.37"
 }

@@ -55,4 +55,5 @@ id;code;is_enrollment_above_limit_allowed;people_limit;enrolled_count;is_full;co
 151;Z01-51z;true;1;0;false;25;1
 152;Z02-52z;true;2;0;false;25;2
 153;Z03-53z;true;1;0;false;25;3
-
+1030;Z03-66d;true;1;0;false;103;3
+1040;Z03-77d;true;1;0;false;104;4

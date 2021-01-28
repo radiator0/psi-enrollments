@@ -16,3 +16,5 @@ id;name;short_name;code;ects;form;enrollment_date_id;course_unit_id
 23;Matematyka dyskretna;NULL;INZ001257W;3;Lecture;2;17
 24;Matematyka dyskretna;NULL;INZ001257C;2;Exercises;2;17
 25;Systemy nieoperacyjne;NULL;INZ001257C;2;Laboratory;2;NULL
+103;Zasoby ludzkie;NULL;INZ666257C;3;Lecture;3;NULL
+104;Programowanie na kartce;NULL;INZ777257C;3;Exercises;4;NULL
