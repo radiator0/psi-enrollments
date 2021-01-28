@@ -3,6 +3,7 @@ package com.psi.web.rest;
 import com.psi.domain.Lecturer;
 import com.psi.domain.Student;
 import com.psi.domain.User;
+import com.psi.security.AuthoritiesConstants;
 import com.psi.service.ClassGroupService;
 import com.psi.service.RequestService;
 import com.psi.service.UserService;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -28,7 +30,6 @@ import java.util.Optional;
 /**
  * REST controller for managing {@link com.psi.domain.Request}.
  */
-@ApiIgnore
 @RestController
 @RequestMapping("/api")
 public class RequestResource {
@@ -63,6 +64,7 @@ public class RequestResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new requestDTO, or with status {@code 400 (Bad Request)} if the request has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.STUDENT + "\")")
     @PostMapping("/requests")
     public ResponseEntity<RequestDTO> createRequest(@Valid @RequestBody RequestDTO requestDTO) throws URISyntaxException {
         if (requestDTO.getId() != null) {
@@ -103,6 +105,7 @@ public class RequestResource {
      * or with status {@code 400 (Bad Request)} if the id is not valid,
      * or with status {@code 500 (Internal Server Error)} if the requestDTO couldn't be accepted.
      */
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.LECTURER + "\")")
     @PostMapping("/requests/{id}/accept")
     public ResponseEntity<RequestDTO> acceptRequest(@PathVariable Long id) {
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
@@ -123,6 +126,7 @@ public class RequestResource {
      * or with status {@code 400 (Bad Request)} if the id is not valid,
      * or with status {@code 500 (Internal Server Error)} if the requestDTO couldn't be accepted.
      */
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.LECTURER + "\")")
     @PostMapping("/requests/{id}/decline")
     public ResponseEntity<RequestDTO> declineRequest(@PathVariable Long id) {
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
@@ -181,6 +185,7 @@ public class RequestResource {
      * @param id the id of the requestDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.STUDENT + "\")")
     @DeleteMapping("/requests/{id}")
     public ResponseEntity<Void> deleteRequest(@PathVariable Long id) {
         User user = userService.getUserWithAuthorities().orElseThrow(() -> new RequestResource.RequestResourceException("User cannot be found"));
