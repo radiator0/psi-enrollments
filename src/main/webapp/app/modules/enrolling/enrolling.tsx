@@ -198,8 +198,8 @@ class Enrolling extends Component<IEnrollingProps, IEnrollingState> {
     if (!group.isLimitReached) {
       // we can enroll!
       const collisionText = this.createCollisionMessage(this.getGroupsToDisenrollFromBeforeEnrolling(group))
-      this.showModal(translate('enrolling.modal.attention'), `${translate('enrolling.modal.placeInGroup')}${collisionText.length === 0 || '\n'}\n${collisionText}`,
-        [cancelModalOption(() => { }), confirmAndEnrollModalOption(() => { this.enroll(group); this.recallAskOverLimit(askOverLimit) }),
+      this.showModal(translate('enrolling.modal.attention'), `${translate('enrolling.modal.placeInGroup')}${collisionText.length === 0 ? '' : '\n'}\n${collisionText}`,
+        [cancelModalOption(() => { }), confirmAndEnrollModalOption(() => this.enroll(group)),
         confirmModalOption(() => this.recallAskOverLimit(askOverLimit))], true, null)
     }
     else {
