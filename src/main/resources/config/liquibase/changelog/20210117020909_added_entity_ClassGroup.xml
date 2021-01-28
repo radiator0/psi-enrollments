@@ -65,6 +65,7 @@
             <column name="enrolled_count" type="numeric"/>
             <column name="is_full" type="boolean"/>
             <column name="course_id" type="numeric"/>
+            <column name="main_lecturer_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
