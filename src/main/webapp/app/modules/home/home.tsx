@@ -52,7 +52,7 @@ export const Home = (props: IHomeProp) => {
         </Typography>
       ) : null}
       <Typography variant="h6" component="h6" align="center" style={{marginTop: '10px'}}>
-        TestBuild1<Translate contentKey={'home.timeLineHeader'}>How will your race for the best groups look like?</Translate>
+        <Translate contentKey={'home.timeLineHeader'}>How will your race for the best groups look like?</Translate>
       </Typography>
       <Timeline align="alternate" className={classes.top}>
         <TimelineItem>
