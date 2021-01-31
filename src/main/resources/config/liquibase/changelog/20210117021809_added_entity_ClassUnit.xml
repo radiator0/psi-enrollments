@@ -59,6 +59,7 @@
             <column name="start_time" type="datetime"/>
             <column name="end_time" type="datetime"/>
             <column name="class_group_id" type="numeric"/>
+            <column name="room_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
